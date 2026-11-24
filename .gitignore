@@ -13,3 +13,14 @@ data/raw/*
 # Tool/editor artefacts
 .idea/
 .vscode/
+
+# Node/Vite
+node_modules/
+dist/
+coverage/
+.vite/
+*.tsbuildinfo
+
+# Test output
+test-results/
+playwright-report/

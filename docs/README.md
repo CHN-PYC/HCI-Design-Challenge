@@ -27,7 +27,7 @@
 3. [`01-project-definition/README.md`](01-project-definition/README.md)：已经形成的项目方向。
 4. [`06-meetings/README.md`](06-meetings/README.md)：三次会议的原始脉络。
 5. [`02-research/README.md`](02-research/README.md) 与 [`03-design/README.md`](03-design/README.md)：待验证的研究与设计工作。
-6. [`04-engineering/system-design.md`](04-engineering/system-design.md) → [`04-engineering/module-design.md`](04-engineering/module-design.md)：工程设计与模块实现契约。
+6. [`04-engineering/system-design.md`](04-engineering/system-design.md) → [`04-engineering/module-design.md`](04-engineering/module-design.md) → [`04-engineering/atdd.md`](04-engineering/atdd.md)：工程设计、模块契约与 ATDD 原型。
 
 ## 状态标签
 

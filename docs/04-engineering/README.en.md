@@ -4,12 +4,13 @@
 
 ## Current status
 
-The **system design → module design** engineering baseline is complete. The third meeting confirmed front-end/back-end separation, TypeScript + component-based front-end development, and reserved backend interfaces. The concrete framework, database, and code implementation are still undecided. The design documents cover the seven Figma screens and use interchangeable Mock Adapters.
+The **system design → module design** engineering baseline is complete, and the React/Vite/TypeScript prototype scaffold has been initialised. The third meeting confirmed front-end/back-end separation, TypeScript + component-based front-end development, and reserved backend interfaces. The front-end framework and local Mock are now in place; the real backend, database, and third-party services remain undecided.
 
 ## Design order
 
 1. [System design](system-design.en.md): boundaries, architecture, domain model, API contract, security, and non-functional constraints.
 2. [Module design](module-design.en.md): routes, module responsibilities, state, repository interfaces, error handling, and acceptance scenarios.
+3. [ATDD prototype scaffold](atdd.en.md): acceptance conditions, RED→GREEN log, implemented scope, and human hand-off boundaries.
 
 System design precedes module design. The module document must not introduce a data owner or external dependency that the system design has not defined.
 
@@ -28,15 +29,16 @@ System design precedes module design. The module document must not introduce a d
 
 - [System design](system-design.en.md)
 - [Module design](module-design.en.md)
+- [ATDD prototype scaffold](atdd.en.md)
 - [API candidate inventory](api-inventory.en.md)
 - [Technology-stack decision log](tech-stack.en.md)
 
 ## Undecided
 
 - App platform and target devices
-- Concrete front-end framework, backend, and data-storage technologies
-- Whether a runnable prototype is needed beyond Figma
+- Backend, database, and real third-party services
+- Prototype deployment and real permission flows
 - Third-party API substitutions and fallback strategies
 - Version control, branching, review, and task-collaboration conventions
 
-React + Vite remains a reference implementation; TypeScript and componentisation were confirmed at the third meeting.
+React 19 + Vite 8 + TypeScript 5.9 are now used by the scaffold; the backend and database remain undecided.

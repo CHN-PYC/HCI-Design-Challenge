@@ -2,7 +2,7 @@
 
 本仓库基于小组截至 **2026-11-24** 的 [Google Doc 源文档](https://docs.google.com/document/d/1saT3KarlYWZEsDZ_4e_jiKFE5pDmFoJ5wQ47QorzcoU/edit?tab=t.0) 初始化，用于集中管理问题探索、用户研究、原型设计与后续开发资料。
 
-> 当前源文档记录到 **Stage 0 – Problem Exploration**，并已补入第三次会议纪要。Figma 7 屏设计、系统/模块设计基线和中英双语文档已归档；最终功能范围、具体框架与可运行代码仍未确定。
+> 当前源文档记录到 **Stage 0 – Problem Exploration**，并已补入第三次会议纪要。Figma 7 屏设计、系统/模块设计基线、V0–V3 问卷和可运行的 React/Vite 原型脚手架均已归档；最终功能范围、真实后端与品牌资产仍未确定。
 
 ## 项目快照
 
@@ -12,10 +12,10 @@
 | 产品方向 | 基于智能手机的主动式健康管理系统（proactive health management system） |
 | 预期用户 | General public |
 | 初始研究参与者 | University students |
-| 现阶段 | Stage 0；第三次会议已确认现有 UI/UX、前后端分离和 TypeScript + 组件方向，待用户研究与具体技术决策 |
+| 现阶段 | Stage 0；Figma、系统/模块设计、问卷版本与 ATDD 原型脚手架已完成，待用户研究与真实后端 |
 | 产品名称 | NutriPal（Figma 原型名）；问卷使用 Nourish，待统一 |
 | 最终功能范围 | 未确定，须由问卷、访谈及竞品分析决定；工程文档将其视为设计基线 |
-| 技术栈 | 前后端分离、TypeScript + 前端组件已确认；具体框架和数据库待定 |
+| 技术栈 | 前端 React 19 + Vite 8 + TypeScript 5.9 已落地；后端与数据库待定 |
 | 源文档快照 | [`docs/00-source/google-doc-snapshot-2026-11-24-v2.md`](docs/00-source/google-doc-snapshot-2026-11-24-v2.md) |
 | Figma 设计稿 | [`design/figma/README.md`](design/figma/README.md) |
 | 设计归档 | [`design/exports/2026-11-24-nutripal/`](design/exports/2026-11-24-nutripal/README.md) |
@@ -23,6 +23,7 @@
 | 系统设计 | [`docs/04-engineering/system-design.md`](docs/04-engineering/system-design.md) |
 | 模块设计 | [`docs/04-engineering/module-design.md`](docs/04-engineering/module-design.md) |
 | English design docs | [`System Design`](docs/04-engineering/system-design.en.md) · [`Module Design`](docs/04-engineering/module-design.en.md) |
+| ATDD 原型脚手架 | [`docs/04-engineering/atdd.md`](docs/04-engineering/atdd.md) · [`src/README.md`](src/README.md) |
 
 ## 已经形成的方向性结论
 
@@ -53,11 +54,26 @@
 ├── design/
 │   ├── figma/                         # Figma 文件/链接说明与版本记录
 │   └── exports/                       # 原型截图、导出稿与评审素材
-├── src/                               # 应用代码；待技术栈确定后初始化
+├── src/                               # React/Vite/TypeScript 原型与 ATDD 验收测试
 └── assets/                            # 演示、展示与交付通用素材
 ```
 
 完整目录说明见 [`docs/README.md`](docs/README.md)。
+
+## 运行原型
+
+```bash
+npm install
+npm run dev
+```
+
+验证命令：
+
+```bash
+npm test
+npm run lint
+npm run build
+```
 
 ## 当前待办与决策门槛
 

@@ -1,0 +1,58 @@
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
+import { HomePage } from "../pages/HomePage";
+import { NudgesSettingsPage } from "../pages/NudgesSettingsPage";
+import { NudgePreviewPage } from "../pages/NudgePreviewPage";
+import { PlanPage } from "../pages/PlanPage";
+import { PreferencesPage } from "../pages/PreferencesPage";
+import { ScanPage } from "../pages/ScanPage";
+import { ShoppingListPage } from "../pages/ShoppingListPage";
+import { AppShell } from "./AppShell";
+import { useProfile } from "./profile-context";
+import { ProfileProvider } from "./ProfileProvider";
+
+function RequireOnboarding() {
+  const { profile } = useProfile();
+
+  if (!profile.onboardingCompleted) {
+    return <Navigate to="/preferences" replace />;
+  }
+
+  return <Outlet />;
+}
+
+function AppRoutes() {
+  const { profile } = useProfile();
+
+  return (
+    <Routes>
+      <Route path="/preferences" element={<PreferencesPage />} />
+      <Route element={<RequireOnboarding />}>
+        <Route path="/nudges/preview" element={<NudgePreviewPage />} />
+        <Route element={<AppShell />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/plan" element={<PlanPage />} />
+          <Route path="/plan/shopping-list" element={<ShoppingListPage />} />
+          <Route path="/scan" element={<ScanPage />} />
+          <Route path="/nudges/settings" element={<NudgesSettingsPage />} />
+        </Route>
+      </Route>
+      <Route
+        path="*"
+        element={
+          <Navigate
+            to={profile.onboardingCompleted ? "/home" : "/preferences"}
+            replace
+          />
+        }
+      />
+    </Routes>
+  );
+}
+
+export function AppRouter() {
+  return (
+    <ProfileProvider>
+      <AppRoutes />
+    </ProfileProvider>
+  );
+}

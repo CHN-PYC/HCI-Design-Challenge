@@ -1,12 +1,50 @@
-# 应用代码
+# NutriPal Prototype
 
-> 尚未初始化框架或依赖。
+ATDD-driven React/Vite/TypeScript scaffold for the NutriPal mobile-first PWA prototype.
 
-源文档把“选择技术栈”列为第三次会议任务，因此这里只预留代码目录，不提前创建 React、Flutter、原生 iOS/Android 或其他项目骨架。
+## Requirements
 
-技术栈确定后，请先更新：
+- Node.js 22.12 or newer; Node 24 is the local baseline
+- npm 12
 
-1. [`docs/04-engineering/tech-stack.md`](../docs/04-engineering/tech-stack.md)
-2. 本目录的启动与开发说明
-3. 根目录 `.gitignore`
-4. CI/测试与协作约定（如需要）
+## Commands
+
+```bash
+npm install
+npm run dev
+npm test
+npm run test:acceptance
+npm run lint
+npm run build
+npm run preview
+```
+
+## Current scope
+
+- Application shell and primary navigation
+- Onboarding redirect for new users
+- F01 preference capture with local Mock persistence
+- F02 home summary and a recommendation preview
+- Route placeholders for Plan, Shopping List, Scan, Nudge settings and the F04 nudge preview
+
+The current data layer is a local storage Mock. It is deliberately isolated behind `src/data/profile-repository.ts` so it can be replaced by the `/api/v1` contract later.
+
+## Structure
+
+- `src/app`: routing, onboarding guard, app shell and profile context
+- `src/pages`: screen-level modules
+- `src/domain`: domain types
+- `src/data`: local Mock repositories
+- `src/acceptance`: ATDD acceptance tests
+- `src/test`: test environment setup
+
+## ATDD rule
+
+Before implementing the next behavior:
+
+1. Add one acceptance assertion under `src/acceptance/`.
+2. Run it and confirm it fails for the expected missing behavior.
+3. Add the minimum implementation.
+4. Re-run the acceptance suite, lint and build.
+
+See `docs/04-engineering/atdd.md` for the current acceptance baseline and manual hand-off boundaries.

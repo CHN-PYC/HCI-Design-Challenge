@@ -17,7 +17,7 @@
 | D-09 | System architecture and API boundary | Drafted (pending review) | [System design](../04-engineering/system-design.en.md) |
 | D-10 | Module responsibilities and routing contract | Drafted (pending review) | [Module design](../04-engineering/module-design.en.md) |
 | D-11 | First-version mock/real capability boundary | Drafted (pending review) | Recipe, scan, notification, and location capabilities are reserved through adapter interfaces |
-| D-12 | Bilingual design documentation | Completed | All 12 design-document pairs have a Chinese default and an English `.en.md` version |
+| D-12 | Bilingual design documentation | Completed | All 13 design/engineering-document pairs have a Chinese default and an English `.en.md` version |
 | D-13 | HCI design-principle mapping | Not started | Post-meeting task: identify which HCI principles apply to research, design, implementation, and iteration |
 
 ## Decision template
