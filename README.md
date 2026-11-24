@@ -13,10 +13,12 @@
 | 预期用户 | General public |
 | 初始研究参与者 | University students |
 | 现阶段 | Stage 0；研究设计、竞品分析与原型准备 |
-| 产品名称 | 未确定 |
+| 产品名称 | NutriPal（Figma 原型名称） |
 | 最终功能范围 | 未确定，须由问卷、访谈及竞品分析决定 |
 | 技术栈 | 待第三次会议决定 |
 | 源文档快照 | [`docs/00-source/google-doc-snapshot-2026-11-24.md`](docs/00-source/google-doc-snapshot-2026-11-24.md) |
+| Figma 设计稿 | [`design/figma/README.md`](design/figma/README.md) |
+| 设计归档 | [`design/exports/2026-11-24-nutripal/`](design/exports/2026-11-24-nutripal/README.md) |
 
 ## 已经形成的方向性结论
 

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NutriPal App Screens · Front end Export</title>
+<style>
+/* ==========================================================
+   NutriPal: design tokens
+   #1E1A3C / #6E6A8A / #FFFFFF come from the Figma file;
+   the accent and surface colours are approximations.
+   ========================================================== */
+:root{
+  --ink:#1E1A3C;
+  --muted:#6E6A8A;
+  --white:#FFFFFF;
+  --bg:#F6F4EF;
+  --surface:#FFFFFF;
+  --line:#ECE9F2;
+  --soft:#F3F1F8;
+  --accent:#2FA66A;
+  --accent-soft:#E4F5EC;
+  --amber:#F4A23C;
+  --amber-soft:#FFF2DF;
+  --coral:#F0645A;
+  --violet:#7B5CF0;
+  --violet-soft:#EFEAFF;
+  --r-lg:24px; --r-md:16px; --r-sm:12px; --r-pill:999px;
+  --font: ui-rounded, "SF Pro Rounded", -apple-system, "Segoe UI", system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);color:var(--ink);background:
+  radial-gradient(circle at 10% 0%, #E9F6EE 0, transparent 40%),
+  radial-gradient(circle at 90% 10%, #F1ECFF 0, transparent 40%), var(--bg);
+  padding:48px 32px 96px}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+
+/* ---------- Gallery header ---------- */
+.page-head{max-width:1200px;margin:0 auto 36px}
+.page-head h1{font-size:40px;letter-spacing:-.02em}
+.page-head p{color:var(--muted);margin-top:6px}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.jump a{font-size:13px;text-decoration:none;color:var(--ink);background:var(--white);border:1px solid var(--line);padding:6px 12px;border-radius:var(--r-pill)}
+.jump a:hover{border-color:var(--ink)}
+.gallery{display:flex;flex-wrap:wrap;gap:48px 40px;justify-content:center;max-width:1800px;margin:0 auto}
+.screen-wrap{display:flex;flex-direction:column;gap:14px}
+.label{display:flex;gap:10px;align-items:baseline}
+.label b{background:var(--ink);color:var(--white);font-size:12px;padding:3px 8px;border-radius:6px}
+.label span{font-weight:600;font-size:15px}
+
+/* ---------- Phone shell: iPhone 390×844 ---------- */
+.phone{width:390px;height:844px;background:var(--bg);border-radius:48px;position:relative;overflow:hidden;
+  box-shadow:0 0 0 10px #fff,0 0 0 11px var(--line),0 30px 60px -20px rgba(30,26,60,.25);display:flex;flex-direction:column}
+.status{height:50px;flex:none;display:flex;justify-content:space-between;align-items:center;padding:14px 30px 0;font-weight:600;font-size:16px}
+.status .icons{display:flex;gap:6px;align-items:center}
+.status .bat{width:24px;height:12px;border:1.5px solid currentColor;border-radius:4px;position:relative}
+.status .bat::after{content:"";position:absolute;inset:1.5px;right:5px;background:currentColor;border-radius:2px}
+.content{flex:1;overflow-y:auto;padding:8px 20px 110px;scrollbar-width:none}
+.content::-webkit-scrollbar{display:none}
+
+/* ---------- Shared components ---------- */
+.h1{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.sub{color:var(--muted);font-size:14px;line-height:1.45}
+.section{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:22px 0 10px}
+.row{display:flex;align-items:center;gap:10px}
+.between{display:flex;justify-content:space-between;align-items:center}
+.link{color:var(--accent);font-weight:600;font-size:14px}
+.card{background:var(--surface);border-radius:var(--r-lg);padding:16px;box-shadow:0 1px 0 var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 14px;border-radius:var(--r-pill);background:var(--white);border:1.5px solid var(--line);font-size:14px;font-weight:500;transition:.15s}
+.chip.on{background:var(--ink);border-color:var(--ink);color:var(--white)}
+.chip.sm{padding:5px 10px;font-size:12px}
+.btn-primary{width:100%;height:56px;border-radius:var(--r-md);background:var(--ink);color:var(--white);font-weight:700;font-size:17px;margin-top:22px}
+.btn-primary:active{transform:scale(.98)}
+.btn-ghost{flex:1;height:48px;border-radius:var(--r-md);background:var(--soft);font-weight:600}
+.toggle{width:51px;height:31px;border-radius:var(--r-pill);background:#D9D6E3;position:relative;flex:none;transition:.2s}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.15);transition:.2s}
+.toggle.on{background:var(--accent)}
+.toggle.on::after{left:22px}
+.seg{display:flex;background:var(--soft);border-radius:var(--r-sm);padding:3px;margin-top:14px}
+.seg button{flex:1;height:34px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted)}
+.seg button.on{background:var(--white);color:var(--ink);box-shadow:0 1px 3px rgba(30,26,60,.12)}
+.icon-tile{width:44px;height:44px;border-radius:var(--r-sm);background:var(--soft);display:grid;place-items:center;font-size:22px;flex:none}
+.tag{font-size:12px;font-weight:600;padding:4px 10px;border-radius:var(--r-pill);background:var(--white)}
+
+/* ---------- Tab bar ---------- */
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:88px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);
+  border-top:1px solid var(--line);display:flex;justify-content:space-around;align-items:flex-start;padding-top:10px}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:600;color:var(--muted);width:60px}
+.tab svg{width:24px;height:24px}
+.tab.on{color:var(--ink)}
+.scan-btn{width:56px;height:56px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;margin-top:-22px;box-shadow:0 8px 18px -6px rgba(47,166,106,.6)}
+
+/* ---------- F01 ---------- */
+.progress{display:flex;gap:6px;align-items:center}
+.progress i{height:6px;flex:1;border-radius:3px;background:var(--line)}
+.progress i.done{background:var(--accent)}
+.progress em{font-style:normal;font-size:13px;color:var(--muted);margin-left:6px}
+.cuisines{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.cuisine{background:var(--white);border:1.5px solid var(--line);border-radius:var(--r-md);padding:10px 0 8px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:600}
+.cuisine span{font-size:26px}
+.cuisine.on{border-color:var(--accent);background:var(--accent-soft)}
+
+/* ---------- F02 ---------- */
+.avatar{width:44px;height:44px;border-radius:50%;background:var(--amber-soft);display:grid;place-items:center;font-size:24px}
+.summary{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:18px;margin-top:18px}
+.summary .kcal{font-size:34px;font-weight:800}
+.summary .kcal small{font-size:14px;font-weight:500;opacity:.7}
+.bar{height:8px;background:rgba(255,255,255,.15);border-radius:4px;margin:12px 0 14px;overflow:hidden}
+.bar i{display:block;height:100%;width:65%;background:var(--accent);border-radius:4px}
+.macros{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.macros div{background:rgba(255,255,255,.08);border-radius:var(--r-sm);padding:8px 10px}
+.macros b{display:block;font-size:17px}
+.macros span{font-size:12px;opacity:.7}
+.rec{padding:0;overflow:hidden}
+.rec-hero{height:130px;background:linear-gradient(135deg,#FFE7D1,#FFD0C4);position:relative;display:grid;place-items:center;font-size:64px}
+.rec-hero .tags{position:absolute;top:12px;left:12px;display:flex;gap:6px}
+.rec-body{padding:14px 16px 16px}
+.rec-body h3{font-size:18px}
+.meta{font-size:13px;color:var(--muted);margin-top:4px}
+.why{display:flex;gap:8px;background:var(--violet-soft);border-radius:var(--r-sm);padding:10px 12px;margin-top:12px;font-size:13px;line-height:1.4}
+.mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mini{background:var(--white);border-radius:var(--r-md);padding:14px}
+.mini .e{font-size:32px}
+.mini h4{font-size:14px;margin-top:6px}
+
+/* ---------- F03 ---------- */
+.week{display:flex;justify-content:space-between;margin-top:16px}
+.day{width:44px;padding:8px 0;border-radius:var(--r-sm);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--muted)}
+.day b{font-size:17px;color:var(--ink)}
+.day.on{background:var(--ink);color:rgba(255,255,255,.7)}
+.day.on b{color:#fff}
+.constraints{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.constraints div{background:var(--white);border-radius:var(--r-sm);padding:10px;font-size:14px;font-weight:700}
+.constraints span{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:2px}
+.meal{display:flex;align-items:center;gap:12px;background:var(--white);border-radius:var(--r-md);padding:12px;margin-bottom:8px}
+.meal .when{font-size:12px;color:var(--muted)}
+.meal h4{font-size:15px;margin:1px 0}
+.meal .swap{margin-left:auto;width:34px;height:34px;border-radius:50%;background:var(--soft);font-size:16px}
+.shop-cta{display:flex;align-items:center;gap:12px;background:var(--accent-soft);border-radius:var(--r-md);padding:14px;margin-top:10px}
+.shop-cta .e{font-size:26px}
+.shop-cta .arrow{margin-left:auto;font-size:20px;color:var(--accent);font-weight:700}
+
+/* ---------- F04 ---------- */
+.lock{background:linear-gradient(170deg,#DCEFE3 0%,#EDE7FB 55%,#FCEBDD 100%)}
+.lock-time{text-align:center;margin:18px 0 22px}
+.lock-time p{font-size:16px;font-weight:600;color:var(--muted)}
+.lock-time h2{font-size:84px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.notif{display:flex;gap:12px;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);border-radius:22px;padding:14px}
+.notif .app{width:38px;height:38px;border-radius:10px;background:var(--accent);display:grid;place-items:center;font-size:20px;flex:none}
+.notif small{font-size:11px;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.notif h4{font-size:15px;margin:2px 0}
+.notif p{font-size:14px;line-height:1.35}
+.suggest{margin-top:14px;border-radius:26px;padding:18px}
+.badge-ai{display:inline-block;font-size:11px;letter-spacing:.06em;font-weight:800;color:var(--violet);background:var(--violet-soft);padding:5px 10px;border-radius:var(--r-pill)}
+.because{font-size:13px;font-weight:700;color:var(--muted);margin:16px 0 8px}
+.ctx{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ctx div{background:var(--soft);border-radius:var(--r-sm);padding:9px 10px;font-size:13px;font-weight:600}
+.why-link{text-align:center;font-size:13px;color:var(--muted);margin-top:14px}
+
+/* ---------- F05 ---------- */
+.set-row{display:flex;align-items:center;gap:12px;padding:12px 0}
+.set-row + .set-row{border-top:1px solid var(--line)}
+.set-row h4{font-size:15px}
+.set-row p{font-size:12px;color:var(--muted)}
+.set-row .toggle{margin-left:auto}
+.snooze{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.explain{background:var(--amber-soft);border-radius:var(--r-lg);padding:16px;margin-top:14px}
+.explain h4{font-size:15px;margin-bottom:10px}
+.explain .r{display:flex;gap:10px;font-size:14px;padding:5px 0}
+.explain .fb{display:block;margin-top:10px;font-size:13px;font-weight:700;color:var(--ink)}
+
+/* ---------- F06 ---------- */
+.cam{height:380px;flex:none;background:radial-gradient(circle at 50% 55%,#5A4A3A 0,#2A2420 60%,#17141A 100%);position:relative;color:#fff;margin-top:-50px;padding-top:50px}
+.cam-top{display:flex;justify-content:space-between;align-items:center;padding:10px 20px}
+.cam-top button{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;font-size:16px}
+.cam-top span{font-weight:700}
+.cam .dish{position:absolute;left:50%;top:58%;transform:translate(-50%,-50%);font-size:130px}
+.scan-frame{position:absolute;left:50%;top:58%;width:230px;height:230px;transform:translate(-50%,-50%);border-radius:28px;
+  background:
+   linear-gradient(#fff,#fff) top left/36px 4px no-repeat, linear-gradient(#fff,#fff) top left/4px 36px no-repeat,
+   linear-gradient(#fff,#fff) top right/36px 4px no-repeat, linear-gradient(#fff,#fff) top right/4px 36px no-repeat,
+   linear-gradient(#fff,#fff) bottom left/36px 4px no-repeat, linear-gradient(#fff,#fff) bottom left/4px 36px no-repeat,
+   linear-gradient(#fff,#fff) bottom right/36px 4px no-repeat, linear-gradient(#fff,#fff) bottom right/4px 36px no-repeat}
+.detected{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);background:var(--accent);font-size:13px;font-weight:700;padding:6px 14px;border-radius:var(--r-pill)}
+.sheet{flex:1;background:var(--white);border-radius:28px 28px 0 0;margin-top:-26px;position:relative;padding:20px 20px 40px;overflow-y:auto;scrollbar-width:none}
+.sheet h3{font-size:22px}
+.match{background:var(--accent-soft);color:var(--accent);font-weight:800;font-size:13px;padding:6px 10px;border-radius:var(--r-pill)}
+.kcal-big{font-size:40px;font-weight:800;letter-spacing:-.02em}
+.kcal-big small{font-size:15px;font-weight:600;color:var(--muted)}
+.stepper{display:flex;align-items:center;gap:14px;background:var(--soft);border-radius:var(--r-pill);padding:4px}
+.stepper button{width:34px;height:34px;border-radius:50%;background:var(--white);font-size:18px;font-weight:700}
+.stepper b{min-width:12px;text-align:center}
+.macro-row{display:grid;grid-template-columns:58px 1fr 44px;gap:10px;align-items:center;font-size:14px;margin-top:10px}
+.macro-row .t{height:8px;background:var(--soft);border-radius:4px;overflow:hidden}
+.macro-row .t i{display:block;height:100%;border-radius:4px}
+.macro-row b{text-align:right}
+
+/* ---------- F03b ---------- */
+.back{width:40px;height:40px;border-radius:50%;background:var(--white);display:grid;place-items:center;font-size:18px;flex:none}
+.budget{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:18px;margin-top:16px}
+.budget .amt{font-size:32px;font-weight:800}
+.budget .amt small{font-size:14px;font-weight:500;opacity:.7}
+.budget .left{background:rgba(47,166,106,.25);color:#9BE5BD;font-size:13px;font-weight:700;padding:6px 10px;border-radius:var(--r-pill)}
+.budget .bar i{width:35%}
+.budget p{font-size:13px;opacity:.8}
+.check{display:flex;align-items:center;gap:12px;background:var(--white);border-radius:var(--r-md);padding:12px;margin-bottom:8px;width:100%;text-align:left}
+.check .box{width:24px;height:24px;border-radius:8px;border:2px solid #CFCBDC;display:grid;place-items:center;flex:none;color:#fff;font-size:14px}
+.check .e{font-size:24px}
+.check h4{font-size:15px}
+.check p{font-size:12px;color:var(--muted)}
+.check .price{margin-left:auto;font-weight:700}
+.check.done .box{background:var(--accent);border-color:var(--accent)}
+.check.done h4{text-decoration:line-through;color:var(--muted)}
+.pantry{display:flex;flex-wrap:wrap;gap:8px}
+.pantry span{background:var(--accent-soft);padding:7px 12px;border-radius:var(--r-pill);font-size:13px;font-weight:600}
+
+/* placeholder copy (not readable from the Figma file) */
+.ph{outline:1.5px dashed var(--amber);outline-offset:2px}
+body.hide-ph .ph{outline:none}
+.ph-toggle{font-size:13px;margin-top:12px;color:var(--muted);display:flex;gap:8px;align-items:center}
+
+@media (max-width:460px){
+  body{padding:24px 8px 96px}
+  .phone{transform:scale(.88);transform-origin:top center;margin-bottom:-100px}
+}
+@media print{
+  body{padding:0}
+  .page-head .jump,.ph-toggle{display:none}
+  .gallery{display:block}
+  .screen-wrap{break-inside:avoid;page-break-after:always;align-items:center;padding-top:20px}
+  .phone{box-shadow:0 0 0 1px var(--line)}
+}
+</style>
+</head>
+<body>
+
+<header class="page-head">
+  <h1>NutriPal 🥗</h1>
+  <p>Healthy eating app · 6 core features (F01–F06) · iPhone 390×844 · 7 screens</p>
+  <nav class="jump">
+    <a href="#f01">F01 Preferences</a><a href="#f02">F02 Recommendations</a><a href="#f03">F03 Meal Plan</a>
+    <a href="#f03b">F03b Shopping List</a><a href="#f04">F04 Proactive</a><a href="#f05">F05 Nudges</a><a href="#f06">F06 Scan</a>
+  </nav>
+  <label class="ph-toggle"><input type="checkbox" id="phToggle" checked> Highlight placeholder copy (dashed amber outline)</label>
+</header>
+
+<!-- Reusable SVG icons -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-plan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-scan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="3.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 16V11a6 6 0 1 1 12 0v5l1.5 2h-15zM10 21h4"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+</svg>
+
+<template id="tpl-status">
+  <div class="status"><span>9:41</span><span class="icons">
+    <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor"><path d="M8 2.2c2.3 0 4.4.9 6 2.4l1.2-1.3A10.4 10.4 0 0 0 8 .4 10.4 10.4 0 0 0 .8 3.3L2 4.6a8.6 8.6 0 0 1 6-2.4zm0 3.6c1.3 0 2.5.5 3.4 1.3l1.2-1.3A6.7 6.7 0 0 0 8 4a6.7 6.7 0 0 0-4.6 1.8l1.2 1.3c.9-.8 2.1-1.3 3.4-1.3zM8 9.4a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6z"/></svg>
+    <i class="bat"></i></span></div>
+</template>
+
+<template id="tpl-tabbar">
+  <nav class="tabbar">
+    <button class="tab" data-tab="home"><svg><use href="#i-home"/></svg>Home</button>
+    <button class="tab" data-tab="plan"><svg><use href="#i-plan"/></svg>Plan</button>
+    <button class="tab" data-tab="scan"><span class="scan-btn"><svg width="26" height="26"><use href="#i-scan"/></svg></span></button>
+    <button class="tab" data-tab="nudges"><svg><use href="#i-bell"/></svg>Nudges</button>
+    <button class="tab" data-tab="me"><svg><use href="#i-user"/></svg>Me</button>
+  </nav>
+</template>
+
+<main class="gallery">
+
+<!-- ================= F01 · Dietary & Cultural Preferences ================= -->
+<section class="screen-wrap" id="f01">
+  <div class="label"><b>F01</b><span>Dietary &amp; Cultural Preferences</span></div>
+  <div class="phone">
+    <div data-status></div>
+    <div class="content">
+      <div class="progress"><i class="done"></i><i class="done"></i><i></i><i></i><em>2 / 4</em></div>
+      <div style="margin-top:22px">
+        <h1 class="h1">What do you love to eat? 😋</h1>
+        <p class="sub" style="margin-top:8px">Pick the cuisines you eat often — we’ll keep your meals familiar and tasty.</p>
+      </div>
+      <h2 class="section">Cuisines</h2>
+      <div class="cuisines" data-multi>
+        <button class="cuisine on"><span>🥟</span>Chinese</button>
+        <button class="cuisine"><span class="ph">🍛</span>Indian</button>
+        <button class="cuisine on"><span class="ph">🍝</span>Italian</button>
+        <button class="cuisine"><span class="ph">🍣</span>Japanese</button>
+        <button class="cuisine"><span class="ph">🌮</span>Mexican</button>
+        <button class="cuisine"><span class="ph">🫒</span>Mediterr.</button>
+        <button class="cuisine"><span class="ph">🥧</span>British</button>
+        <button class="cuisine"><span class="ph">🍜</span>Korean</button>
+      </div>
+      <h2 class="section">Diet style</h2>
+      <div class="chips" data-multi>
+        <button class="chip on">Vegetarian</button>
+        <button class="chip ph">Vegan</button>
+        <button class="chip ph">Pescatarian</button>
+        <button class="chip ph">Halal</button>
+        <button class="chip ph">Low-carb</button>
+        <button class="chip ph">No preference</button>
+      </div>
+      <h2 class="section">Avoid &amp; allergies</h2>
+      <div class="chips" data-multi>
+        <button class="chip ph">Nuts</button>
+        <button class="chip ph">Dairy</button>
+        <button class="chip ph">Gluten</button>
+        <button class="chip ph">Shellfish</button>
+        <button class="chip ph">Pork</button>
+      </div>
+      <button class="btn-primary">Continue</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= F02 · Personalised Meal Recommendations ================= -->
+<section class="screen-wrap" id="f02">
+  <div class="label"><b>F02</b><span>Personalised Meal Recommendations</span></div>
+  <div class="phone">
+    <div data-status></div>
+    <div class="content">
+      <div class="between">
+        <div><h1 class="h1" style="font-size:24px">Good evening, Alex 👋</h1><p class="sub">What’s on your plate today?</p></div>
+        <div class="avatar">🧑🏻</div>
+      </div>
+      <div class="summary">
+        <div class="kcal">1,240 <small>/ 1,900 kcal today</small></div>
+        <div class="bar"><i></i></div>
+        <div class="macros">
+          <div><b>62g</b><span>Protein</span></div>
+          <div><b>140g</b><span>Carbs</span></div>
+          <div><b>38g</b><span>Fat</span></div>
+        </div>
+      </div>
+      <div class="between" style="margin:22px 0 10px"><h2 style="font-size:18px">Picked for you ✨</h2><a class="link">See all</a></div>
+      <article class="card rec">
+        <div class="rec-hero">
+          <div class="tags"><span class="tag">🌶 Sichuan</span><span class="tag">💪 High-protein</span></div>🍲
+        </div>
+        <div class="rec-body">
+          <h3>Mapo Tofu &amp; Brown Rice</h3>
+          <p class="meta">⏱ 25 min &nbsp; 🔥 520 kcal &nbsp; 💷 £3.20</p>
+          <div class="why"><span>💡</span><span><b>Why this?</b> You love Sichuan food and need +30g protein today.</span></div>
+        </div>
+      </article>
+      <div class="mini-grid">
+        <div class="mini"><div class="e">🥗</div><h4>Halloumi Quinoa Bowl</h4><p class="meta">450 kcal · 15 min</p></div>
+        <div class="mini"><div class="e">🍱</div><h4>Miso Salmon Rice</h4><p class="meta">580 kcal · 20 min</p></div>
+      </div>
+    </div>
+    <div data-tabbar="home"></div>
+  </div>
+</section>
+
+<!-- ================= F03 · Practical Meal Planning ================= -->
+<section class="screen-wrap" id="f03">
+  <div class="label"><b>F03</b><span>Practical Meal Planning</span></div>
+  <div class="phone">
+    <div data-status></div>
+    <div class="content">
+      <div class="between">
+        <div><p class="sub">Week of 23 Nov</p><h1 class="h1">My Meal Plan 🗓</h1></div>
+        <button class="chip">↻ Regenerate</button>
+      </div>
+      <div class="week" data-single>
+        <button class="day"><span>Mon</span><b>23</b></button>
+        <button class="day on"><span>Tue</span><b>24</b></button>
+        <button class="day"><span>Wed</span><b>25</b></button>
+        <button class="day"><span>Thu</span><b>26</b></button>
+        <button class="day"><span>Fri</span><b>27</b></button>
+        <button class="day"><span>Sat</span><b>28</b></button>
+        <button class="day"><span>Sun</span><b>29</b></button>
+      </div>
+      <div class="constraints">
+        <div>💷 £35/wk<span>Budget</span></div>
+        <div>⏱ ≤ 30 min<span>Cook time</span></div>
+        <div>🧊 6 items<span>Pantry</span></div>
+      </div>
+      <div class="between" style="margin:20px 0 10px"><h2 style="font-size:16px">Using what you have</h2><a class="link">Edit</a></div>
+      <div class="chips">
+        <span class="chip sm">🥚 Eggs</span><span class="chip sm">🥬 Spinach</span><span class="chip sm">🍚 White rice</span>
+        <span class="chip sm">🥕 Carrots</span><span class="chip sm">🥫 Soy sauce</span>
+      </div>
+      <h2 style="font-size:16px;margin:20px 0 10px">Tuesday’s meals</h2>
+      <div>
+        <div class="meal"><div class="icon-tile">🍳</div><div><p class="when">Breakfast · 8:00</p><h4>Spinach &amp; Feta Omelette</h4><p class="meta" style="margin:0">10 min · £1.10 · 380 kcal</p></div><button class="swap">⇄</button></div>
+        <div class="meal"><div class="icon-tile">🍚</div><div><p class="when">Lunch · 12:30</p><h4>Chicken Rice Bowl</h4><p class="meta" style="margin:0">20 min · £2.40 · 560 kcal</p></div><button class="swap">⇄</button></div>
+        <div class="meal"><div class="icon-tile">🍅</div><div><p class="when">Dinner · 19:00</p><h4>Tomato Egg Stir-fry</h4><p class="meta" style="margin:0">15 min · £1.60 · 490 kcal</p></div><button class="swap">⇄</button></div>
+      </div>
+      <a class="shop-cta" href="#f03b" style="text-decoration:none;color:inherit">
+        <span class="e">🛒</span><div><h4>Shopping list</h4><p class="sub" style="font-size:13px">Only 4 items to buy · £12.40</p></div><span class="arrow">→</span>
+      </a>
+    </div>
+    <div data-tabbar="plan"></div>
+  </div>
+</section>
+
+<!-- ================= F03b · Shopping List ================= -->
+<section class="screen-wrap" id="f03b">
+  <div class="label"><b>F03b</b><span>Shopping List (from Meal Plan)</span></div>
+  <div class="phone">
+    <div data-status></div>
+    <div class="content">
+      <div class="row">
+        <a class="back" href="#f03" style="text-decoration:none;color:inherit">‹</a>
+        <div><h1 class="h1" style="font-size:24px">Shopping List 🛒</h1><p class="sub">For Tue–Sun · 18 planned meals</p></div>
+      </div>
+      <div class="budget">
+        <div class="between"><div class="amt">£12.40 <small>of £35 budget</small></div><span class="left">✨ £22.60 left</span></div>
+        <div class="bar"><i></i></div>
+        <p>Using 6 ingredients you already have saves ≈ £9.80</p>
+      </div>
+      <div class="between" style="margin:20px 0 10px"><h2 style="font-size:16px">To buy · 4 items</h2><span class="sub" style="font-size:13px">Tap to tick off</span></div>
+      <div data-checklist>
+        <button class="check"><span class="box"></span><span class="e">🧀</span><div><h4>Feta cheese</h4><p>200 g · for Omelette</p></div><span class="price">£2.20</span></button>
+        <button class="check ph"><span class="box"></span><span class="e">🍗</span><div><h4>Chicken thighs</h4><p>500 g · for Rice Bowl</p></div><span class="price">£4.50</span></button>
+        <button class="check ph"><span class="box"></span><span class="e">🍅</span><div><h4>Tomatoes</h4><p>6 pcs · for Stir-fry</p></div><span class="price">£1.90</span></button>
+        <button class="check ph"><span class="box"></span><span class="e">🧅</span><div><h4>Spring onions</h4><p>1 bunch · for Stir-fry</p></div><span class="price">£3.80</span></button>
+      </div>
+      <h2 style="font-size:16px;margin:20px 0 10px">Already in your pantry ✓</h2>
+      <div class="pantry">
+        <span>🥚 Eggs</span><span>🥬 Spinach</span><span>🍚 White rice</span><span>🥕 Carrots</span><span>🥫 Soy sauce</span><span>🍋 Lemon</span>
+      </div>
+      <button class="btn-primary ph">Order for delivery</button>
+    </div>
+    <div data-tabbar="plan"></div>
+  </div>
+</section>
+
+<!-- ================= F04 · Context-Aware Proactive Assistance ================= -->
+<section class="screen-wrap" id="f04">
+  <div class="label"><b>F04</b><span>Context-Aware Proactive Assistance</span></div>
+  <div class="phone lock">
+    <div data-status></div>
+    <div class="content" style="padding-bottom:40px">
+      <div class="lock-time"><p>Tuesday 24 November</p><h2>18:42</h2></div>
+      <div class="notif">
+        <div class="app">🥗</div>
+        <div style="flex:1">
+          <div class="between"><small>NUTRIPAL</small><small style="letter-spacing:0;font-weight:500">now</small></div>
+          <h4>Heading home? 🏃‍♀️</h4>
+          <p>Dinner in 15 min using your leftover rice — tap for the recipe.</p>
+        </div>
+      </div>
+      <div class="card suggest">
+        <span class="badge-ai">✨ SMART SUGGESTION</span>
+        <div class="row" style="margin-top:14px">
+          <div class="icon-tile" style="width:56px;height:56px;font-size:30px">🍅</div>
+          <div><h3 style="font-size:18px">Tomato Egg Stir-fry</h3><p class="meta">15 min · 490 kcal · 28g protein</p></div>
+        </div>
+        <p class="because">Because right now…</p>
+        <div class="ctx">
+          <div>📍 Leaving the gym</div><div>🕕 4h since lunch</div>
+          <div>💪 Protein 62/110g</div><div>🍚 Rice expires tomorrow</div>
+        </div>
+        <button class="btn-primary ph" style="margin-top:16px">Start cooking</button>
+        <div class="row" style="margin-top:8px"><button class="btn-ghost">Other ideas</button><button class="btn-ghost">Not now</button></div>
+        <p class="why-link"><a href="#f05" style="color:inherit">ⓘ  Why am I seeing this?</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= F05 · Notification Control & Explanation ================= -->
+<section class="screen-wrap" id="f05">
+  <div class="label"><b>F05</b><span>Notification Control &amp; Explanation</span></div>
+  <div class="phone">
+    <div data-status></div>
+    <div class="content">
+      <h1 class="h1">Nudge settings 🔔</h1>
+      <p class="sub" style="margin-top:4px">You decide when NutriPal speaks up.</p>
+      <div class="card" style="margin-top:18px">
+        <div class="set-row" style="padding-top:0">
+          <div class="icon-tile">✨</div>
+          <div><h4>Proactive suggestions</h4><p>Meal ideas based on time, place &amp; goals</p></div>
+          <button class="toggle on"></button>
+        </div>
+        <div class="snooze"><span>⏸ Snooze:</span>
+          <span class="chips" data-single style="gap:6px">
+            <button class="chip sm ph">1 hour</button><button class="chip sm ph">Today</button><button class="chip sm ph">1 week</button>
+          </span>
+        </div>
+        <div class="seg" data-single>
+          <button>Fewer</button><button class="on">Balanced</button><button>More</button>
+        </div>
+      </div>
+      <div class="card" style="margin-top:12px;padding:6px 16px">
+        <div class="set-row"><div class="icon-tile">🌙</div><div><h4>Quiet hours</h4><p>22:00 – 07:30</p></div><button class="toggle on"></button></div>
+        <div class="set-row"><div class="icon-tile">🍽</div><div><h4>Meal ideas</h4></div><button class="toggle on"></button></div>
+        <div class="set-row"><div class="icon-tile">💧</div><div><h4>Hydration reminders</h4></div><button class="toggle"></button></div>
+        <div class="set-row"><div class="icon-tile">🍎</div><div><h4>Snack swaps</h4></div><button class="toggle on"></button></div>
+      </div>
+      <div class="explain">
+        <h4>💡 Why you got the last nudge</h4>
+        <div class="r"><span>📍</span>You were leaving the gym</div>
+        <div class="r"><span>🕕</span>4 hours since your last meal</div>
+        <div class="r"><span>💪</span>Protein below today’s goal</div>
+        <div class="r"><span>🍚</span>Rice in your pantry expires soon</div>
+        <a class="fb">Not helpful? Tell us →</a>
+      </div>
+    </div>
+    <div data-tabbar="nudges"></div>
+  </div>
+</section>
+
+<!-- ================= F06 · AI Food Recognition & Calorie Estimation ================= -->
+<section class="screen-wrap" id="f06">
+  <div class="label"><b>F06</b><span>AI Food Recognition &amp; Calorie Estimation</span></div>
+  <div class="phone">
+    <div data-status style="position:relative;z-index:2;color:#fff"></div>
+    <div class="cam">
+      <div class="cam-top"><button>✕</button><span>Scan food</span><button>⚡</button></div>
+      <div class="dish">🍜</div>
+      <div class="scan-frame"></div>
+      <span class="detected">✓ Detected</span>
+    </div>
+    <div class="sheet">
+      <div class="between" style="align-items:flex-start">
+        <div><h3>Beef Noodle Soup</h3><a class="link" style="font-size:13px">Not right? Edit dish ✎</a></div>
+        <span class="match">92% match</span>
+      </div>
+      <div class="between" style="margin-top:16px">
+        <div><div class="kcal-big">≈ <span id="kcal">610</span> <small>kcal</small></div><p class="sub" style="font-size:12px">Estimated for 1 bowl (≈550 g)</p></div>
+        <div class="stepper"><button data-step="-1">−</button><b id="qty">1</b><button data-step="1">+</button></div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="macro-row"><span>Protein</span><span class="t"><i style="width:62%;background:var(--accent)"></i></span><b data-base="34">34 g</b></div>
+        <div class="macro-row"><span>Carbs</span><span class="t"><i style="width:78%;background:var(--amber)"></i></span><b data-base="72">72 g</b></div>
+        <div class="macro-row"><span>Fat</span><span class="t"><i style="width:40%;background:var(--coral)"></i></span><b data-base="18">18 g</b></div>
+      </div>
+      <h2 class="section" style="margin-top:18px">Detected ingredients</h2>
+      <div class="chips">
+        <span class="chip sm ph">🥩 Beef</span><span class="chip sm ph">🍜 Noodles</span><span class="chip sm ph">🥬 Bok choy</span><span class="chip sm ph">🧅 Spring onion</span>
+      </div>
+      <button class="btn-primary ph">Add to today’s log</button>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// Inject shared status bar + tab bar
+const statusTpl = document.getElementById('tpl-status');
+document.querySelectorAll('[data-status]').forEach(el => {
+  const node = statusTpl.content.firstElementChild.cloneNode(true);
+  if (el.getAttribute('style')) node.setAttribute('style', el.getAttribute('style'));
+  el.replaceWith(node);
+});
+const tabTpl = document.getElementById('tpl-tabbar');
+document.querySelectorAll('[data-tabbar]').forEach(el => {
+  const node = tabTpl.content.firstElementChild.cloneNode(true);
+  node.querySelector(`[data-tab="${el.dataset.tabbar}"]`)?.classList.add('on');
+  el.replaceWith(node);
+});
+const tabTargets = {home:'#f02', plan:'#f03', scan:'#f06', nudges:'#f05', me:'#f01'};
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => location.hash = tabTargets[t.dataset.tab]));
+
+// Multi-select chips / tiles
+document.querySelectorAll('[data-multi] > button').forEach(b => b.addEventListener('click', () => b.classList.toggle('on')));
+// Single-select groups
+document.querySelectorAll('[data-single]').forEach(g => g.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+  g.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on');
+})));
+// Toggles
+document.querySelectorAll('.toggle').forEach(t => t.addEventListener('click', () => t.classList.toggle('on')));
+// Shopping checklist
+document.querySelectorAll('[data-checklist] .check').forEach(c => c.addEventListener('click', () => {
+  c.classList.toggle('done'); c.querySelector('.box').textContent = c.classList.contains('done') ? '✓' : '';
+}));
+// Portion stepper
+let qty = 1;
+document.querySelectorAll('[data-step]').forEach(b => b.addEventListener('click', () => {
+  qty = Math.min(5, Math.max(1, qty + Number(b.dataset.step)));
+  document.getElementById('qty').textContent = qty;
+  document.getElementById('kcal').textContent = (610 * qty).toLocaleString();
+  document.querySelectorAll('.macro-row b').forEach(m => m.textContent = m.dataset.base * qty + ' g');
+}));
+// Placeholder highlight
+document.getElementById('phToggle').addEventListener('change', e => document.body.classList.toggle('hide-ph', !e.target.checked));
+</script>
+</body>
+</html>
