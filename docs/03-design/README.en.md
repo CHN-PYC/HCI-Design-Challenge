@@ -21,6 +21,7 @@ The seven-screen Figma design is archived, and the supporting [system design](..
 - [Figma prototype specification](figma-spec.en.md)
 - [System design](../04-engineering/system-design.en.md)
 - [Module design](../04-engineering/module-design.en.md)
+- [Figma prototype fidelity audit](figma-implementation-audit.en.md)
 - Design link and version: [`../../design/figma/README.en.md`](../../design/figma/README.en.md)
 - Exports and review screenshots: [`../../design/exports/README.en.md`](../../design/exports/README.en.md)
 

@@ -2,9 +2,11 @@
 
 **语言：[中文](atdd.md) | [English](atdd.en.md)**
 
-> - 状态：脚手架已完成，自动验收通过。
+> - 状态：脚手架已完成，自动验收通过；**Figma 视觉/交互还原未完成**。
 > - 日期：2026-11-24
 > - 实现栈：React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
+
+> 当前差距与逐屏清单见 [Figma 原型实现一致性审计](../03-design/figma-implementation-audit.md)。4 条测试验证的是脚手架路由与最小流程，不代表完整 Figma 还原。
 
 ## 1. 本轮验收范围
 

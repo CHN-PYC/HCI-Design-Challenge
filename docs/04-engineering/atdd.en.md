@@ -2,9 +2,11 @@
 
 **Language: [中文](atdd.md) | English**
 
-> - Status: scaffold complete; automated acceptance checks pass.
+> - Status: scaffold complete and automated acceptance checks pass; **Figma visual/interaction fidelity is not complete**.
 > - Date: 2026-11-24
 > - Stack: React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
+
+> See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit.en.md) for the screen-by-screen gaps. The four tests validate scaffold routing and a minimal flow, not full Figma restoration.
 
 ## 1. Acceptance Scope
 

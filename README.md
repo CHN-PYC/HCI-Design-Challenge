@@ -12,7 +12,7 @@
 | 产品方向 | 基于智能手机的主动式健康管理系统（proactive health management system） |
 | 预期用户 | General public |
 | 初始研究参与者 | University students |
-| 现阶段 | Stage 0；Figma、系统/模块设计、问卷版本与 ATDD 原型脚手架已完成，待用户研究与真实后端 |
+| 现阶段 | Stage 0；文档与 ATDD 脚手架已完成；Figma 视觉/交互还原审计未通过，待逐屏修复 |
 | 产品名称 | NutriPal（Figma 原型名）；问卷使用 Nourish，待统一 |
 | 最终功能范围 | 未确定，须由问卷、访谈及竞品分析决定；工程文档将其视为设计基线 |
 | 技术栈 | 前端 React 19 + Vite 8 + TypeScript 5.9 已落地；后端与数据库待定 |

@@ -21,6 +21,8 @@ npm run preview
 
 ## Current scope
 
+> This is an engineering scaffold, not a finished UI restoration. F03–F06 are currently placeholders; see `docs/03-design/figma-implementation-audit.md`.
+
 - Application shell and primary navigation
 - Onboarding redirect for new users
 - F01 preference capture with local Mock persistence
