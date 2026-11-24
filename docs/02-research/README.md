@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | 问卷版本 | V3 已归档 | 21 道参与者题 + Russell 修订与设计映射报告 |
 | 文化/种族、通知偏好、核心功能偏好 | 已完成 | Q4–5、Q15–18、Q20 覆盖相关维度 |
-| 伦理声明 | 部分完成 | 已有参与者基础说明；缺联系人、数据保留期、退出/删除和审批信息 |
+| 伦理声明 | 部分完成 | 负责人、联系方式、课程审批要求已确认；缺数据保存、保留期、退出/删除和投诉渠道 |
 | 认知预测试 | 待开始 | 计划 3–5 名目标用户，尚未执行 |
 | 正式发放与数据分析 | 待开始 | 受伦理信息补齐和预测试阻塞 |
 | 竞品搜索与人工核对 | 要求已记录 | 第二次会议待办，负责人 @全体成员 |
@@ -31,7 +31,7 @@
 - [V3 参与者问卷](questionnaire/questionnaire-v3-participant.md)
 - [V3 修订与设计映射报告](questionnaire/questionnaire-v3-design-report.md)
 - [原始 DOCX 与文本快照](questionnaire/source/README.md)
-- [伦理声明待办](questionnaire/ethics-statement.md)
+- [伦理声明状态](questionnaire/ethics-statement.md)
 - [竞品分析工作区](competitor-analysis/README.md)
 - [竞品矩阵模板](competitor-analysis/competitor-matrix.csv)
 

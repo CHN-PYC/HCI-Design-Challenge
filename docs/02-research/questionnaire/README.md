@@ -2,7 +2,7 @@
 
 ## 当前版本
 
-V3 已完成 21 题参与者问卷和内部修订报告，但尚未完成伦理信息补齐、认知预测试或正式发放。
+V3 已完成 21 题参与者问卷和内部修订报告。研究负责人、联系方式和课程审批要求已确认；数据管理信息、认知预测试与正式发放仍待完成。
 
 - **参与者版**：[`questionnaire-v3-participant.md`](questionnaire-v3-participant.md)
 - **内部修订报告**：[`questionnaire-v3-design-report.md`](questionnaire-v3-design-report.md)
@@ -35,12 +35,13 @@ V3 已完成 21 题参与者问卷和内部修订报告，但尚未完成伦理�
 - [V3 参与者版题目](questionnaire-v3-participant.md)：21 道题，包含成年筛选、文化背景、通知偏好和核心功能需求。
 - [V3 修订与设计映射报告](questionnaire-v3-design-report.md)：记录 Russell 常见错误检查、题目前后映射和 F01–F06 设计对应关系。
 - [原始 DOCX](source/Nourish_Questionnaire_V3_CN.docx) 与[文本快照](source/Nourish_Questionnaire_V3_CN.md)。
-- [伦理声明](ethics-statement.md)：已补参与者前言，但仍缺联系人、数据保留期、删除/退出方式和审批信息。
+- [伦理声明](ethics-statement.md)：已补负责人、联系方式、课程审批要求与同意入口，但仍缺数据存储位置、保留期、删除/退出方式和投诉渠道。
 - [V0 题目草案](question-bank.md)：已被 V3 取代，仅保留历史记录。
 
 ## 发布门槛
 
-- [ ] 补齐伦理联系人、数据保留期、退出/删除方式及课程审批信息。
+- [x] 确认研究负责人、联系邮箱、课程/机构与正式审批要求。
+- [ ] 补齐数据存储位置、访问权限、保留期、退出/删除方式和投诉渠道。
 - [ ] 确认产品范围仅为饮食/营养，还是还需要活动与作息模块。
 - [ ] 完成 3–5 名目标用户的认知预测试，并记录实际完成时间与理解问题。
 - [ ] 所有题目可回答、无引导性表述，并区分单选/多选/开放题。
