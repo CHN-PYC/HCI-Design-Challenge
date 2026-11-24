@@ -4,6 +4,7 @@
 >
 > - Source: [`Nourish_Questionnaire_V3_CN.docx`](source/Nourish_Questionnaire_V3_CN.docx)
 > - Participant-facing version: [`questionnaire-v3-participant.md`](questionnaire-v3-participant.md)
+> - Provenance note: the V2/V3 revision reports describe a 20-question original; the separately supplied V1 PDF contains 23 questions. The report text is preserved as-is and should not be treated as a complete V1-to-V3 mapping.
 
 评估对象：原版《健康饮食习惯与智能饮食 APP 用户需求调查问卷》（20题，4页）\
 评估依据：课程课件《Questionnaires – part 2》中的 Russell’s list of 12 common mistakes in questionnaires。

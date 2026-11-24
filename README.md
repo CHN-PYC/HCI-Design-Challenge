@@ -19,7 +19,7 @@
 | 源文档快照 | [`docs/00-source/google-doc-snapshot-2026-11-24-v2.md`](docs/00-source/google-doc-snapshot-2026-11-24-v2.md) |
 | Figma 设计稿 | [`design/figma/README.md`](design/figma/README.md) |
 | 设计归档 | [`design/exports/2026-11-24-nutripal/`](design/exports/2026-11-24-nutripal/README.md) |
-| 用户研究问卷 | [`docs/02-research/questionnaire/questionnaire-v3-participant.md`](docs/02-research/questionnaire/questionnaire-v3-participant.md)（V3 已归档；V4 修订与预测试待完成） |
+| 用户研究问卷 | [`docs/02-research/questionnaire/questionnaire-v3-participant.md`](docs/02-research/questionnaire/questionnaire-v3-participant.md)（V3 为当前第三版；预测试待完成） |
 | 系统设计 | [`docs/04-engineering/system-design.md`](docs/04-engineering/system-design.md) |
 | 模块设计 | [`docs/04-engineering/module-design.md`](docs/04-engineering/module-design.md) |
 | English design docs | [`System Design`](docs/04-engineering/system-design.en.md) · [`Module Design`](docs/04-engineering/module-design.en.md) |
@@ -61,9 +61,9 @@
 
 ## 当前待办与决策门槛
 
-1. 按第三次会议完成问卷 V4，并进行 3–5 人认知预测试。
+1. 完成 V3 的 3–5 人认知预测试，并确定样本与招募安排。
 2. 完成经人工核实的竞品分析，并据此确定首轮基础功能。
-3. 落实第三次会议决定：梳理交互模糊点、完成问卷 V4 和 HCI 设计原则映射，并确定具体开发方式。
+3. 落实第三次会议决定：梳理交互模糊点、完成 HCI 设计原则映射，并确定具体开发方式。
 4. 评审现有可点击流，补充缺失的演示态，并安排用户原型测试。
 5. 评审系统设计和模块设计，确认设计缺口与首版 Mock 范围后再进入代码实现。
 
