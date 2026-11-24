@@ -1,5 +1,7 @@
 # 设计决策记录
 
+**语言：[中文](design-decisions.md) | [English](design-decisions.en.md)**
+
 ## 决策状态
 
 | ID | 决策 | 状态 | 说明 |
@@ -15,6 +17,7 @@
 | D-09 | 系统架构与 API 边界 | 已成稿（待评审） | [系统设计](../04-engineering/system-design.md) |
 | D-10 | 模块职责与路由契约 | 已成稿（待评审） | [模块设计](../04-engineering/module-design.md) |
 | D-11 | 首版 Mock/真实能力边界 | 已成稿（待评审） | 食谱、扫描、通知和位置能力均通过 Adapter 预留 |
+| D-12 | 设计文档双语版本 | 已完成 | 12 组设计文档均提供中文默认版与 English `.en.md` |
 
 ## 决策模板
 

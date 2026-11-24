@@ -21,6 +21,7 @@
 | 设计归档 | [`design/exports/2026-11-24-nutripal/`](design/exports/2026-11-24-nutripal/README.md) |
 | 系统设计 | [`docs/04-engineering/system-design.md`](docs/04-engineering/system-design.md) |
 | 模块设计 | [`docs/04-engineering/module-design.md`](docs/04-engineering/module-design.md) |
+| English design docs | [`System Design`](docs/04-engineering/system-design.en.md) · [`Module Design`](docs/04-engineering/module-design.en.md) |
 
 ## 已经形成的方向性结论
 

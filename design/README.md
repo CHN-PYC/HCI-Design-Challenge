@@ -1,5 +1,7 @@
 # 设计文件
 
+**语言：[中文](README.md) | [English](README.en.md)**
+
 - `figma/`：Figma 文件链接、权限说明与版本记录。
 - `exports/`：原型页面截图、组件预览与评审用导出文件。
 

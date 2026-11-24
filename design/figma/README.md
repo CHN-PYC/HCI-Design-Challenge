@@ -1,5 +1,7 @@
 # Figma 工作区
 
+**语言：[中文](README.md) | [English](README.en.md)**
+
 ## 文件索引
 
 | 名称 | 链接 | 版本/日期 | 状态 |

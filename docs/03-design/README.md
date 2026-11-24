@@ -1,5 +1,7 @@
 # 设计与原型
 
+**语言：[中文](README.md) | [English](README.en.md)**
+
 ## 当前阶段
 
 已有 7 屏 Figma 设计归档，并完成配套的 [系统设计](../04-engineering/system-design.md) 与 [模块设计](../04-engineering/module-design.md)。设计语言和统一的页面框架可以从现有设计稿评审形成基线；具体功能仍需用户研究验证。

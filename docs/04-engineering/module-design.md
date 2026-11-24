@@ -1,5 +1,7 @@
 # NutriPal 模块设计
 
+**语言：[中文](module-design.md) | [English](module-design.en.md)**
+
 > - 状态：设计基线 v0.1（2026-11-24）
 > - 上位设计：[系统设计](system-design.md)
 > - 实现范围：模块边界、状态、接口和验收规则；不包含代码实现。

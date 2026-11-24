@@ -1,5 +1,7 @@
 # NutriPal Figma 设计归档（2026-11-24）
 
+**语言：[中文](README.md) | [English](README.en.md)**
+
 ![NutriPal 七个核心屏幕](screens-gallery.png)
 
 ## 来源

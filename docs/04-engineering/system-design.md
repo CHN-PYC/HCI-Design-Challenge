@@ -1,5 +1,7 @@
 # NutriPal 系统设计
 
+**语言：[中文](system-design.md) | [English](system-design.en.md)**
+
 > - 状态：设计基线 v0.1（2026-11-24）
 > - 设计基线：[Figma 7 屏归档](../../design/figma/README.md)
 > - 后续文档：[模块设计](module-design.md)
@@ -160,9 +162,9 @@ classDiagram
     }
     class HealthTargets {
       +number dailyCalories
-      +number proteinG
-      +number carbsG
-      +number fatG
+      +number proteinTargetG
+      +number carbsTargetG
+      +number fatTargetG
       +number weeklyBudget
       +number maxCookMinutes
     }
@@ -323,6 +325,8 @@ classDiagram
 | GET | `/nudges/next` | 粗粒度 `NudgeContext` 查询参数 | `Nudge` 或 `204 No Content` | Nudges |
 | POST | `/food-scans` | `FoodScanInput` | `FoodScanResult` | Food Scan |
 | POST | `/food-logs` | `FoodLogInput` | `FoodLogEntry` | Food Scan / Daily Log |
+
+`GET /recommendations` 的 `limit` 默认 3，允许 1–10；F02 的 `See all` 使用 10。
 
 `GET /nudges/next` 接受 `date`、`localTime`、`coarseLocation`、`activityContext`、`lastMealAt`、`proteinShortfallG` 和重复的 `expiringPantryItems` 参数。只允许城市/地区等粗略位置，不得发送精确坐标或连续轨迹。
 
