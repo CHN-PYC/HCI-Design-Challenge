@@ -2,7 +2,7 @@
 
 本仓库基于小组截至 **2026-11-24** 的 [Google Doc 源文档](https://docs.google.com/document/d/1saT3KarlYWZEsDZ_4e_jiKFE5pDmFoJ5wQ47QorzcoU/edit?tab=t.0) 初始化，用于集中管理问题探索、用户研究、原型设计与后续开发资料。
 
-> 当前源文档记录到 **Stage 0 – Problem Exploration**，包含前两次会议结论和第三次会议待讨论事项。文档尚未记录最终功能范围、设计语言、技术栈、Figma 成品或可执行代码，因此本仓库也不会提前假定这些决定。
+> 当前源文档记录到 **Stage 0 – Problem Exploration**，包含前两次会议结论和第三次会议待讨论事项。Figma 7 屏设计和系统/模块设计基线已归档；最终功能范围、技术栈和可运行代码仍未确定。
 
 ## 项目快照
 
@@ -12,13 +12,15 @@
 | 产品方向 | 基于智能手机的主动式健康管理系统（proactive health management system） |
 | 预期用户 | General public |
 | 初始研究参与者 | University students |
-| 现阶段 | Stage 0；研究设计、竞品分析与原型准备 |
+| 现阶段 | Stage 0；已有 Figma 设计、系统设计与模块设计基线，待用户研究和技术决策 |
 | 产品名称 | NutriPal（Figma 原型名称） |
-| 最终功能范围 | 未确定，须由问卷、访谈及竞品分析决定 |
-| 技术栈 | 待第三次会议决定 |
+| 最终功能范围 | 未确定，须由问卷、访谈及竞品分析决定；工程文档将其视为设计基线 |
+| 技术栈 | 未锁定；系统契约技术中立，参考 React + Vite + TypeScript |
 | 源文档快照 | [`docs/00-source/google-doc-snapshot-2026-11-24.md`](docs/00-source/google-doc-snapshot-2026-11-24.md) |
 | Figma 设计稿 | [`design/figma/README.md`](design/figma/README.md) |
 | 设计归档 | [`design/exports/2026-11-24-nutripal/`](design/exports/2026-11-24-nutripal/README.md) |
+| 系统设计 | [`docs/04-engineering/system-design.md`](docs/04-engineering/system-design.md) |
+| 模块设计 | [`docs/04-engineering/module-design.md`](docs/04-engineering/module-design.md) |
 
 ## 已经形成的方向性结论
 
@@ -60,7 +62,8 @@
 1. 完成并审核问卷：补充种族/文化背景、通知偏好、核心功能偏好，并在顶部加入伦理声明。
 2. 完成经人工核实的竞品分析，并据此确定首轮基础功能。
 3. 召开第三次会议，确定 App 设计语言、交互逻辑、技术栈及合作开发方式。
-4. 在统一页面框架后再开始 Figma 原型，明确外部 API 依赖并实现可点击跳转。
+4. 评审现有可点击流，补充缺失的演示态，并安排用户原型测试。
+5. 评审系统设计和模块设计，确认设计缺口与首版 Mock 范围后再进入代码实现。
 
 可执行任务、负责人和原文依据统一记录在 [`docs/05-team/task-board.md`](docs/05-team/task-board.md)。
 

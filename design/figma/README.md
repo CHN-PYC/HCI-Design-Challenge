@@ -15,6 +15,7 @@
 - 画板规格：iPhone 390 × 844；共 7 个屏幕
 - 静态副本、预览图与验收记录：[`../exports/2026-11-24-nutripal/`](../exports/2026-11-24-nutripal/README.md)
 - 该文件夹记录的是**设计稿归档**，不是后端或可上线的 App 实现。
+- 工程契约：[`../../docs/04-engineering/system-design.md`](../../docs/04-engineering/system-design.md)、[`../../docs/04-engineering/module-design.md`](../../docs/04-engineering/module-design.md)。
 
 ## 画板清单
 

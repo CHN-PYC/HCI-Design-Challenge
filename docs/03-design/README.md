@@ -2,7 +2,7 @@
 
 ## 当前阶段
 
-处于设计准备阶段。源文档已规定原型协作和可行性边界，但设计语言、交互逻辑、页面框架和具体功能仍待确定。
+已有 7 屏 Figma 设计归档，并完成配套的 [系统设计](../04-engineering/system-design.md) 与 [模块设计](../04-engineering/module-design.md)。设计语言和统一的页面框架可以从现有设计稿评审形成基线；具体功能仍需用户研究验证。
 
 ## 已记录的约束
 
@@ -17,6 +17,8 @@
 
 - [设计决策记录](design-decisions.md)
 - [Figma 原型规范](figma-spec.md)
+- [系统设计](../04-engineering/system-design.md)
+- [模块设计](../04-engineering/module-design.md)
 - 设计链接与版本：[`../../design/figma/README.md`](../../design/figma/README.md)
 - 导出与评审截图：[`../../design/exports/README.md`](../../design/exports/README.md)
 
