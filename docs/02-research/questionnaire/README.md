@@ -15,10 +15,11 @@ V3 已归档，共 21 题，是当前第三版；研究负责人、伦理说明�
 
 | 版本 | 文件 | 题数 | 说明 |
 | --- | --- | --- | --- |
-| V1 | [`history/V1-健康饮食APP_用户调查问卷_23题.pdf`](source/history/V1-健康饮食APP_用户调查问卷_23题.pdf) | 23 | 第一版，4 页匿名问卷 |
-| V2 | [`history/V2-Nourish_Questionnaire_Revision_CN.docx`](source/history/V2-Nourish_Questionnaire_Revision_CN.docx) | 22 | 第二版，含修订报告 |
-| V3 | [`Nourish_Questionnaire_V3_CN.docx`](source/Nourish_Questionnaire_V3_CN.docx) | 21 | 第三版，当前归档版本 |
-> 版本序号依据小组确认：PDF 是第一版，`Nourish_Questionnaire_Revision_CN.docx` 是第二版，当前 V3 是第三版。
+| V0 / 原始版 | [`history/V0-健康饮食APP_用户调查问卷_20题.pdf`](source/history/V0-健康饮食APP_用户调查问卷_20题.pdf) | 20 | 最初版本，4 页匿名问卷 |
+| V1 | [`history/V1-健康饮食APP_用户调查问卷_23题.pdf`](source/history/V1-健康饮食APP_用户调查问卷_23题.pdf) | 23 | 第一次修订版，4 页匿名问卷 |
+| V2 | [`history/V2-Nourish_Questionnaire_Revision_CN.docx`](source/history/V2-Nourish_Questionnaire_Revision_CN.docx) | 22 | 第二次修订版，含修订报告 |
+| V3 | [`Nourish_Questionnaire_V3_CN.docx`](source/Nourish_Questionnaire_V3_CN.docx) | 21 | 第三次修订版，当前归档版本 |
+> 版本序号依据小组确认：20 题 PDF 是最初版本，23 题 PDF 是第一次修订，`Nourish_Questionnaire_Revision_CN.docx` 是第二次修订，当前 V3 是第三次修订。
 
 > 命名提示：问卷文件使用 **Nourish**，现有 Figma 与工程文档使用 **NutriPal**。正式发布前必须确认最终产品名，避免外发材料不一致。
 
