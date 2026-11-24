@@ -2,7 +2,7 @@
 
 本仓库基于小组截至 **2026-11-24** 的 [Google Doc 源文档](https://docs.google.com/document/d/1saT3KarlYWZEsDZ_4e_jiKFE5pDmFoJ5wQ47QorzcoU/edit?tab=t.0) 初始化，用于集中管理问题探索、用户研究、原型设计与后续开发资料。
 
-> 当前源文档记录到 **Stage 0 – Problem Exploration**，包含前两次会议结论和第三次会议待讨论事项。Figma 7 屏设计和系统/模块设计基线已归档；最终功能范围、技术栈和可运行代码仍未确定。
+> 当前源文档记录到 **Stage 0 – Problem Exploration**，并已补入第三次会议纪要。Figma 7 屏设计、系统/模块设计基线和中英双语文档已归档；最终功能范围、具体框架与可运行代码仍未确定。
 
 ## 项目快照
 
@@ -12,14 +12,14 @@
 | 产品方向 | 基于智能手机的主动式健康管理系统（proactive health management system） |
 | 预期用户 | General public |
 | 初始研究参与者 | University students |
-| 现阶段 | Stage 0；已有 Figma 设计、系统设计与模块设计基线，待用户研究和技术决策 |
-| 产品名称 | NutriPal（Figma 原型名称） |
+| 现阶段 | Stage 0；第三次会议已确认现有 UI/UX、前后端分离和 TypeScript + 组件方向，待用户研究与具体技术决策 |
+| 产品名称 | NutriPal（Figma 原型名）；问卷使用 Nourish，待统一 |
 | 最终功能范围 | 未确定，须由问卷、访谈及竞品分析决定；工程文档将其视为设计基线 |
-| 技术栈 | 未锁定；系统契约技术中立，参考 React + Vite + TypeScript |
-| 源文档快照 | [`docs/00-source/google-doc-snapshot-2026-11-24.md`](docs/00-source/google-doc-snapshot-2026-11-24.md) |
+| 技术栈 | 前后端分离、TypeScript + 前端组件已确认；具体框架和数据库待定 |
+| 源文档快照 | [`docs/00-source/google-doc-snapshot-2026-11-24-v2.md`](docs/00-source/google-doc-snapshot-2026-11-24-v2.md) |
 | Figma 设计稿 | [`design/figma/README.md`](design/figma/README.md) |
 | 设计归档 | [`design/exports/2026-11-24-nutripal/`](design/exports/2026-11-24-nutripal/README.md) |
-| 用户研究问卷 | [`docs/02-research/questionnaire/questionnaire-v3-participant.md`](docs/02-research/questionnaire/questionnaire-v3-participant.md)（V3；伦理说明已完成，预测试待完成） |
+| 用户研究问卷 | [`docs/02-research/questionnaire/questionnaire-v3-participant.md`](docs/02-research/questionnaire/questionnaire-v3-participant.md)（V3 已归档；V4 修订与预测试待完成） |
 | 系统设计 | [`docs/04-engineering/system-design.md`](docs/04-engineering/system-design.md) |
 | 模块设计 | [`docs/04-engineering/module-design.md`](docs/04-engineering/module-design.md) |
 | English design docs | [`System Design`](docs/04-engineering/system-design.en.md) · [`Module Design`](docs/04-engineering/module-design.en.md) |
@@ -61,9 +61,9 @@
 
 ## 当前待办与决策门槛
 
-1. 完成并审核问卷：补充种族/文化背景、通知偏好、核心功能偏好，并在顶部加入伦理声明。
+1. 按第三次会议完成问卷 V4，并进行 3–5 人认知预测试。
 2. 完成经人工核实的竞品分析，并据此确定首轮基础功能。
-3. 召开第三次会议，确定 App 设计语言、交互逻辑、技术栈及合作开发方式。
+3. 落实第三次会议决定：梳理交互模糊点、完成问卷 V4 和 HCI 设计原则映射，并确定具体开发方式。
 4. 评审现有可点击流，补充缺失的演示态，并安排用户原型测试。
 5. 评审系统设计和模块设计，确认设计缺口与首版 Mock 范围后再进入代码实现。
 

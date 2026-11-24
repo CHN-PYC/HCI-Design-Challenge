@@ -59,7 +59,7 @@ Excluded:
 5. **User control:** Proactive suggestions must explain their reason and support postponement, frequency adjustment, and disabling.
 6. **Data minimisation:** Raw images, precise trajectories, and unnecessary health information are not stored.
 7. **Visible degradation:** When a third-party capability is unavailable, the interface explicitly shows the degraded result instead of fabricating “live” data.
-8. **Technology neutral:** This document does not lock a framework; React + Vite + TypeScript is only a later reference implementation.
+8. **Framework-neutral:** The third meeting confirmed TypeScript + front-end components and reserved backend interfaces; the concrete framework is not locked, and React + Vite is only a reference implementation.
 
 ## 3. Architecture Design
 

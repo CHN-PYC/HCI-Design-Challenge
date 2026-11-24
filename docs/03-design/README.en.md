@@ -4,11 +4,11 @@
 
 ## Current stage
 
-The seven-screen Figma design is archived, and the supporting [system design](../04-engineering/system-design.en.md) and [module design](../04-engineering/module-design.en.md) are complete. The existing designs can establish a baseline for the design language and shared page framework; individual features still require user-research validation.
+The seven-screen Figma design is archived, and the supporting [system design](../04-engineering/system-design.en.md) and [module design](../04-engineering/module-design.en.md) are complete. The third meeting confirmed the existing NutriPal UI/UX and app interaction approach; the next focus is resolving interaction ambiguities and validating individual features.
 
 ## Recorded constraints
 
-- The third meeting must choose the app design language and interaction logic.
+- The third meeting selected the existing UI/UX and app interaction approach; remaining interaction ambiguities still need resolution.
 - Several page concepts should be prepared first, then the team selects one shared framework before parallel development to prevent visual inconsistencies.
 - The Figma prototype must support clickable navigation between screens.
 - The first prototype round does not need to implement real data import, photo recognition, or other underlying capabilities.
@@ -24,9 +24,10 @@ The seven-screen Figma design is archived, and the supporting [system design](..
 - Design link and version: [`../../design/figma/README.en.md`](../../design/figma/README.en.md)
 - Exports and review screenshots: [`../../design/exports/README.en.md`](../../design/exports/README.en.md)
 
-## Prerequisites before starting Figma
+## Pre-review and pre-delivery checklist
 
-- [ ] The third meeting confirms the design language and interaction principles.
+- [x] The third meeting confirms the existing UI/UX and app interaction approach.
+- [ ] Review and close the remaining interaction ambiguities.
 - [ ] User research and competitor analysis identify the core user problem.
 - [ ] The first-round core features and page list are selected.
 - [ ] The API dependencies and mock data needed by each page are identified.
