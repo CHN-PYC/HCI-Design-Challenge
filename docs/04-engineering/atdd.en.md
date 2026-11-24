@@ -32,6 +32,7 @@ Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/
 - F02 nutrition summary and one recommendation-card example.
 - Accessible page shells for F03, F03b, F04, F05 and F06.
 - Vitest + Testing Library acceptance-test environment.
+- Web App Manifest, 192/512 icons, Apple touch icon and an offline-shell Service Worker.
 - ESLint, TypeScript checks, production build and CI.
 
 ## 4. Verification Commands
@@ -52,12 +53,16 @@ npm run build
 6. F04 simulated proactive nudge.
 7. F06 portion adjustment and daily log.
 
-## 6. Human Stop Points
+## 6. Confirmed Implementation Baselines
 
-- Final Figma visual tokens, typography and product name: colours are currently approximations from the archived HTML/design notes.
-- Final recipe, food and avatar assets plus final copy: fixtures, emoji and example copy are used now.
-- Real backend, login, API keys, third-party authorisation and deployment account.
-- Final camera, notification and location permissions and privacy copy.
-- User-research conclusions and MVP lock before implementing real recommendation, planning or nudge rules.
+- **Visuals and copy:** use the [Figma seven-screen archive](../../design/exports/2026-11-24-nutripal/README.en.md) as the sole prototype baseline, including its page structure, copy and approximate visual tokens; do not wait for another asset-approval round.
+- **Images and brand:** reuse the archive’s emoji, placeholder imagery and `NutriPal` name; use provisional same-palette icons where the archive has no dedicated asset and keep them replaceable.
+- **Backend:** use only local Mock data and reserved Repository/API contracts during the prototype phase; do not wait for login, a database, API keys or third-party authorisation.
+- **Permissions and privacy:** follow common mobile/Web practice by requesting permission only after a user action, explaining the purpose first, and handling denial and service failure. The prototype does not request real camera, location or notification permissions or use sensitive real data.
+- **Research and MVP:** implement the Figma hypotheses and label them as assumptions; never describe Mock results as validated findings or medical advice.
+- **PWA:** include a manifest, app icons, theme colours and an offline shell that can be installed/previewed locally. Binding a production domain and deployment account remains an owner-level release action.
 
-Until these are supplied, Mock behaviour must not be presented as real recognition, medical advice or production notifications.
+## 7. Remaining Manual Release Steps
+
+- Connect the production domain and deployment account; local PWA preview and CI do not depend on this.
+- If real third-party services replace Mock later, provide the relevant API credentials and authorisation.

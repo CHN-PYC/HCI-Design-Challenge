@@ -17,6 +17,7 @@ System design precedes module design. The module document must not introduce a d
 ## Established boundaries
 
 - The first version is a mobile-first Web/PWA reference design, using 390px as the design baseline; the final platform is still unconfirmed.
+- The scaffold includes a Web App Manifest, app icons and a production offline shell.
 - The front-end direction is confirmed: TypeScript + front-end components, with reserved backend interfaces.
 - The front end obtains domain data only through Repositories/API Clients; UI code must not directly call third-party APIs or browser storage.
 - The backend is reserved as a modular monolith with an `/api/v1` API prefix; no server is implemented at this stage.

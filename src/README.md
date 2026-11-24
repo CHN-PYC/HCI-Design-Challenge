@@ -26,6 +26,9 @@ npm run preview
 - F01 preference capture with local Mock persistence
 - F02 home summary and a recommendation preview
 - Route placeholders for Plan, Shopping List, Scan, Nudge settings and the F04 nudge preview
+- Installable Web App Manifest and production offline shell
+
+The PWA paths currently assume deployment at the domain root. If the final host uses a subpath, update Vite `base`, manifest URLs and the service-worker registration together before release.
 
 The current data layer is a local storage Mock. It is deliberately isolated behind `src/data/profile-repository.ts` so it can be replaced by the `/api/v1` contract later.
 

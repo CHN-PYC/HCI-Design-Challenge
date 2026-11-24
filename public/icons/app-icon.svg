@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="NutriPal app icon">
+  <rect width="512" height="512" rx="112" fill="#f6f4ef"/>
+  <circle cx="256" cy="256" r="172" fill="#1e1a3c"/>
+  <path d="M122 254h268c-8 86-58 142-134 142s-126-56-134-142Z" fill="#fff" opacity=".96"/>
+  <path d="M181 232c31-62 84-94 155-84-8 65-51 108-136 121-13 2-23-24-19-37Z" fill="#2fa66a"/>
+  <path d="M322 165c-7 59-33 100-84 126" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="12"/>
+</svg>
