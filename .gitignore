@@ -1,0 +1,15 @@
+.DS_Store
+*.log
+
+# Local environment files
+.env
+.env.*
+!.env.example
+
+# Raw research material may contain participant-identifying information
+data/raw/*
+!data/raw/README.md
+
+# Tool/editor artefacts
+.idea/
+.vscode/
