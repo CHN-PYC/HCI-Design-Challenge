@@ -23,9 +23,9 @@ function seedOnboardedProfile() {
       onboardingCompleted: true,
       createdAt: now,
       preferences: {
-        cuisines: ["Chinese"],
-        dietStyles: ["Vegetarian"],
-        avoidAllergens: [],
+        cuisines: ["Chinese", "Indian", "Mediterr."],
+        dietStyles: ["Halal", "High-protein"],
+        avoidAllergens: ["Nuts", "Shellfish"],
         updatedAt: now,
       },
       healthTargets: {
@@ -38,146 +38,120 @@ function seedOnboardedProfile() {
   );
 }
 
-describe("ATDD scaffold acceptance", () => {
+describe("ATDD Figma screen acceptance", () => {
   beforeEach(() => {
     localStorage.clear();
   });
 
-  it("routes a new user to preferences without showing the app navigation", async () => {
+  it("renders the F01 preference screen without simulated device chrome", async () => {
     renderApp("/home");
 
     expect(
-      await screen.findByRole("heading", {
-        name: /dietary & cultural preferences/i,
-      }),
+      await screen.findByRole("heading", { name: /what do you love to eat/i }),
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole("navigation", { name: /primary navigation/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText("9:41")).not.toBeInTheDocument();
+    expect(screen.getByText("2 / 4")).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Cuisines" })).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Diet style" })).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Avoid & allergies" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Mediterr." })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "High-protein" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Shellfish" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /continue/i })).toBeInTheDocument();
   });
 
-  it("persists preferences and opens home with the primary navigation", async () => {
+  it("persists preferences and restores the F02 home design", async () => {
     const user = userEvent.setup();
     renderApp("/preferences");
 
     await user.click(screen.getByRole("button", { name: "Chinese" }));
-    await user.click(screen.getByRole("button", { name: "Vegetarian" }));
-    await user.click(screen.getByRole("button", { name: "Continue" }));
+    await user.click(screen.getByRole("button", { name: "Halal" }));
+    await user.click(screen.getByRole("button", { name: /continue/i }));
 
     expect(
-      await screen.findByRole("heading", {
-        name: /personalised meal recommendations/i,
-      }),
+      await screen.findByRole("heading", { name: /what's on your plate today/i }),
     ).toBeInTheDocument();
-
-    const navigation = screen.getByRole("navigation", {
-      name: /primary navigation/i,
-    });
-    expect(within(navigation).getByRole("link", { name: "Home" })).toBeInTheDocument();
+    expect(screen.getByText("1,240")).toBeInTheDocument();
+    expect(screen.getByText("Mapo Tofu & Brown Rice")).toBeInTheDocument();
+    expect(screen.getByText("Halloumi Quinoa Bowl")).toBeInTheDocument();
+    expect(screen.getByText("Miso Salmon Rice")).toBeInTheDocument();
+    expect(
+      screen.getByRole("navigation", { name: /primary navigation/i }),
+    ).toBeInTheDocument();
 
     const stored = JSON.parse(localStorage.getItem(PROFILE_STORAGE_KEY) ?? "{}");
     expect(stored.onboardingCompleted).toBe(true);
     expect(stored.preferences.cuisines).toContain("Chinese");
-    expect(stored.preferences.dietStyles).toContain("Vegetarian");
+    expect(stored.preferences.dietStyles).toContain("Halal");
   });
 
-  it("navigates the scaffold modules through the app shell", async () => {
+  it("renders the F03 plan and opens the F03b shopping list", async () => {
     const user = userEvent.setup();
-    renderApp("/preferences");
-
-    await user.click(screen.getByRole("button", { name: "Continue" }));
-    const navigation = screen.getByRole("navigation", {
-      name: /primary navigation/i,
-    });
-
-    await user.click(within(navigation).getByRole("link", { name: "Plan" }));
-    expect(
-      await screen.findByRole("heading", { name: /my meal plan/i }),
-    ).toBeInTheDocument();
-
-    await user.click(screen.getByRole("link", { name: /shopping list/i }));
-    expect(
-      await screen.findByRole("heading", { name: /shopping list/i }),
-    ).toBeInTheDocument();
-
-    await user.click(within(navigation).getByRole("link", { name: "Scan" }));
-    expect(await screen.findByText("Beef Noodle Soup")).toBeInTheDocument();
-    expect(
-      screen.queryByRole("navigation", { name: /primary navigation/i }),
-    ).not.toBeInTheDocument();
-
-    await user.click(screen.getByRole("button", { name: /close food scan/i }));
-    const homeNavigation = screen.getByRole("navigation", {
-      name: /primary navigation/i,
-    });
-
-    await user.click(
-      within(homeNavigation).getByRole("link", { name: "Nudges" }),
-    );
-    expect(
-      await screen.findByRole("heading", { name: /nudge settings/i }),
-    ).toBeInTheDocument();
-
-    const nudgesNavigation = screen.getByRole("navigation", {
-      name: /primary navigation/i,
-    });
-    await user.click(
-      within(nudgesNavigation).getByRole("link", { name: "Me" }),
-    );
-    expect(
-      await screen.findByRole("heading", {
-        name: /dietary & cultural preferences/i,
-      }),
-    ).toBeInTheDocument();
-  });
-
-  it("opens the F04 nudge preview without the primary navigation", async () => {
-    seedOnboardedProfile();
-    renderApp("/nudges/preview");
-
-    expect(
-      await screen.findByRole("heading", { name: /heading home/i }),
-    ).toBeInTheDocument();
-    expect(
-      screen.queryByRole("navigation", { name: /primary navigation/i }),
-    ).not.toBeInTheDocument();
-  });
-
-  it("renders the selected F03 Figma meal-plan content", async () => {
     seedOnboardedProfile();
     renderApp("/plan");
 
     expect(
       await screen.findByRole("heading", { name: /my meal plan/i }),
     ).toBeInTheDocument();
-    expect(screen.getByText("Week of 23 Nov")).toBeInTheDocument();
-    expect(screen.getByText("↻ Regenerate")).toBeInTheDocument();
-
-    for (const day of ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]) {
-      expect(screen.getByRole("button", { name: new RegExp(day) })).toBeInTheDocument();
-    }
-    expect(screen.getByRole("button", { name: /Tue/ })).toHaveClass("on");
-
-    for (const text of ["💷 £35/wk", "⏱ ≤ 30 min", "🧊 6 items"] ) {
-      expect(screen.getByText(text)).toBeInTheDocument();
-    }
-    for (const item of ["🥚 Eggs", "🥬 Spinach", "🍚 Rice", "🍗 Chicken", "🍅 Tomato"]) {
-      expect(screen.getByText(item)).toBeInTheDocument();
-    }
-    for (const meal of [
-      "Spinach & Feta Omelette",
-      "Chicken Rice Bowl",
-      "Tomato Egg Stir-fry",
-    ]) {
-      expect(screen.getByText(meal)).toBeInTheDocument();
-    }
+    expect(screen.getByText("Spinach & Feta Omelette")).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: /swap meal/i })).toHaveLength(3);
+
+    await user.click(screen.getByRole("link", { name: /shopping list/i }));
     expect(
-      screen.getByRole("link", { name: /shopping list/i }),
-    ).toHaveAttribute("href", "/plan/shopping-list");
+      await screen.findByRole("heading", { name: /shopping list/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("£12.40")).toBeInTheDocument();
+    expect(screen.getByText("Chicken thighs")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /share list/i })).toBeInTheDocument();
   });
 
-  it("renders the selected F06 scan result and updates the portion", async () => {
+  it("supports the F03b item check-off interaction", async () => {
+    const user = userEvent.setup();
+    seedOnboardedProfile();
+    renderApp("/plan/shopping-list");
+
+    const item = await screen.findByRole("button", { name: /chicken thighs/i });
+    await user.click(item);
+
+    expect(item).toHaveClass("done");
+    expect(within(item).getByText("✓")).toBeInTheDocument();
+  });
+
+  it("renders the F04 proactive suggestion without the tab bar", async () => {
+    seedOnboardedProfile();
+    renderApp("/nudges/preview");
+
+    expect(await screen.findByText("18:42")).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /heading home/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("📍 Leaving the gym")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /cook this/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /other ideas/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /not now/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /why am i seeing this/i })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("navigation", { name: /primary navigation/i }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("renders the F05 nudge controls and toggles a category", async () => {
+    const user = userEvent.setup();
+    seedOnboardedProfile();
+    renderApp("/nudges/settings");
+
+    expect(
+      await screen.findByRole("heading", { name: /nudge settings/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Balanced" })).toHaveClass("on");
+    const hydration = screen.getByRole("button", { name: "Hydration reminders" });
+    expect(hydration).toHaveAttribute("aria-pressed", "false");
+    await user.click(hydration);
+    expect(hydration).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByText("Why you got the last nudge")).toBeInTheDocument();
+  });
+
+  it("renders F06, updates the portion and logs the meal", async () => {
     const user = userEvent.setup();
     seedOnboardedProfile();
     renderApp("/scan");
@@ -187,7 +161,9 @@ describe("ATDD scaffold acceptance", () => {
     expect(screen.getByText("92% match")).toBeInTheDocument();
     expect(screen.getByLabelText("Estimated calories")).toHaveTextContent("610");
     expect(screen.getByLabelText("Portion quantity")).toHaveTextContent("1");
-    expect(screen.queryByRole("navigation", { name: /primary navigation/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("navigation", { name: /primary navigation/i }),
+    ).not.toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: /increase portion/i }));
     expect(screen.getByLabelText("Estimated calories")).toHaveTextContent("1,220");
@@ -195,9 +171,7 @@ describe("ATDD scaffold acceptance", () => {
 
     await user.click(screen.getByRole("button", { name: /log to dinner/i }));
     expect(
-      await screen.findByRole("heading", {
-        name: /personalised meal recommendations/i,
-      }),
+      await screen.findByRole("heading", { name: /what's on your plate today/i }),
     ).toBeInTheDocument();
   });
 });

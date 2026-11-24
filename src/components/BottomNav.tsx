@@ -20,8 +20,8 @@ function PlanIcon() {
 function ScanIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 24 24">
-      <path d="M16 10h-2l-1.5-2h-4L7 10H6a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1Z" />
-      <circle cx="11" cy="15" r="3.2" />
+      <path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2" />
+      <circle cx="12" cy="12" r="3.5" />
     </svg>
   );
 }
@@ -43,48 +43,31 @@ function UserIcon() {
   );
 }
 
-const tabs = [
-  { label: "Home", to: "/home", icon: <HomeIcon /> },
-  { label: "Plan", to: "/plan", icon: <PlanIcon /> },
-  { label: "Nudges", to: "/nudges/settings", icon: <BellIcon /> },
-  { label: "Me", to: "/preferences?mode=edit", icon: <UserIcon /> },
-];
+const tabClass = ({ isActive }: { isActive: boolean }) =>
+  isActive ? "tab on" : "tab";
 
 export function BottomNav() {
   return (
     <nav aria-label="Primary navigation" className="tabbar">
-      <NavLink
-        className={({ isActive }) => (isActive ? "tab on" : "tab")}
-        end
-        to="/home"
-      >
-        {tabs[0].icon}
+      <NavLink className={tabClass} end to="/home">
+        <HomeIcon />
         <span>Home</span>
       </NavLink>
-      <NavLink
-        className={({ isActive }) => (isActive ? "tab on" : "tab")}
-        to="/plan"
-      >
-        {tabs[1].icon}
+      <NavLink className={tabClass} to="/plan">
+        <PlanIcon />
         <span>Plan</span>
       </NavLink>
-      <NavLink aria-label="Scan" className="tab" to="/scan">
-        <span className="scan-btn">
+      <NavLink aria-label="Scan" className="scan-tab" to="/scan">
+        <span className="scan-fab">
           <ScanIcon />
         </span>
       </NavLink>
-      <NavLink
-        className={({ isActive }) => (isActive ? "tab on" : "tab")}
-        to="/nudges/settings"
-      >
-        {tabs[2].icon}
+      <NavLink className={tabClass} to="/nudges/settings">
+        <BellIcon />
         <span>Nudges</span>
       </NavLink>
-      <NavLink
-        className={({ isActive }) => (isActive ? "tab on" : "tab")}
-        to={tabs[3].to}
-      >
-        {tabs[3].icon}
+      <NavLink className={tabClass} to="/me">
+        <UserIcon />
         <span>Me</span>
       </NavLink>
     </nav>

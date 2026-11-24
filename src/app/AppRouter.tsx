@@ -1,5 +1,6 @@
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import { HomePage } from "../pages/HomePage";
+import { MePage } from "../pages/MePage";
 import { NudgesSettingsPage } from "../pages/NudgesSettingsPage";
 import { NudgePreviewPage } from "../pages/NudgePreviewPage";
 import { PlanPage } from "../pages/PlanPage";
@@ -34,6 +35,7 @@ function AppRoutes() {
           <Route path="/plan/shopping-list" element={<ShoppingListPage />} />
           <Route path="/scan" element={<ScanPage />} />
           <Route path="/nudges/settings" element={<NudgesSettingsPage />} />
+          <Route path="/me" element={<MePage />} />
         </Route>
       </Route>
       <Route

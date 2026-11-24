@@ -14,7 +14,7 @@ function ScanFrame() {
     >
       <path
         d="M0 37V11C0 8.08262 1.15893 5.28473 3.22183 3.22183C5.28473 1.15893 8.08262 0 11 0H37M197 0H223C225.917 0 228.715 1.15893 230.778 3.22183C232.841 5.28473 234 8.08262 234 11V37M234 177V203C234 205.917 232.841 208.715 230.778 210.778C228.715 212.841 225.917 214 223 214H197M37 214H11C8.08262 214 5.28473 212.841 3.22183 210.778C1.15893 208.715 0 205.917 0 203V177"
-        stroke="#FFC83D"
+        stroke="#FFFFFF"
         strokeLinecap="round"
         strokeWidth="5"
       />
@@ -103,17 +103,17 @@ export function ScanPage() {
         <div className="scan-macros">
           <div className="scan-macro">
             <span>Protein</span>
-            <i><b style={{ width: "62%", background: "#38B6FF" }} /></i>
+            <i><b style={{ width: "62%", background: "var(--accent)" }} /></i>
             <strong>{BASE_MACROS.protein * portion} g</strong>
           </div>
           <div className="scan-macro">
             <span>Carbs</span>
-            <i><b style={{ width: "78%", background: "#FFC83D" }} /></i>
+            <i><b style={{ width: "78%", background: "var(--amber)" }} /></i>
             <strong>{BASE_MACROS.carbs * portion} g</strong>
           </div>
           <div className="scan-macro">
             <span>Fat</span>
-            <i><b style={{ width: "40%", background: "#FF5C8A" }} /></i>
+            <i><b style={{ width: "40%", background: "var(--coral)" }} /></i>
             <strong>{BASE_MACROS.fat * portion} g</strong>
           </div>
         </div>
@@ -132,11 +132,12 @@ export function ScanPage() {
         </div>
 
         <button
+          aria-label="Log to Dinner — add to today's log"
           className="scan-log-button"
           onClick={() => navigate("/home")}
           type="button"
         >
-          Log to Dinner ✓
+          Add to today’s log
         </button>
       </section>
     </main>

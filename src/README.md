@@ -21,15 +21,16 @@ npm run preview
 
 ## Current scope
 
-> This is an engineering scaffold, not a finished UI restoration. F03–F06 are currently placeholders; see `docs/03-design/figma-implementation-audit.md`.
-
-- Application shell and primary navigation
+- Full-viewport application shell without simulated phone chrome or status bar
+- Archived Figma screens F01–F06 and F03b implemented as one interactive prototype
 - Onboarding redirect for new users
-- F01 preference capture with local Mock persistence
-- F02 home summary and a recommendation preview
-- F03 meal-plan content restored from the selected Figma node, with interactive day selection
-- F06 scan-result screen with working portion calculations and log-return flow
-- Route placeholders for Shopping List, Nudge settings and the F04 nudge preview
+- F01 preference capture and Me edit mode with local Mock persistence
+- F02 recommendations with switchable picks and expandable discovery
+- F03 meal plan with day selection, pantry editing, swaps and regeneration
+- F03b shopping checklist, budget summary, sharing hand-off and order demo
+- F04 contextual nudge preview with alternate ideas and dismissal
+- F05 interactive nudge settings and recent-nudge explanation
+- F06 scan result with working portion calculations and log-return flow
 - Installable Web App Manifest and production offline shell
 
 The PWA paths currently assume deployment at the domain root. If the final host uses a subpath, update Vite `base`, manifest URLs and the service-worker registration together before release.
