@@ -31,6 +31,7 @@
   --ink: #1e1a3c;
   --muted: #6e6a8a;
   --surface: #ffffff;
+  --bg: #fff7ec;
   --background: #fff7ec;
   --line: #eee6da;
   --purple: #7b5cff;
@@ -374,6 +375,294 @@ h3 {
   inset: 1.5px 5px 1.5px 1.5px;
   background: currentColor;
   border-radius: 2px;
+}
+
+.status--light {
+  color: #fff;
+}
+
+.app-shell--scan {
+  background: #15122b;
+}
+
+.app-shell--scan .app-content {
+  overflow: hidden;
+}
+
+.scan-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #15122b;
+}
+
+.scan-camera {
+  position: relative;
+  flex: none;
+  height: 290px;
+  overflow: hidden;
+  background: radial-gradient(50% 50% at 50% 50%, #4a3b2a 0%, #15122b 100%);
+  color: #fff;
+}
+
+.scan-camera-top {
+  position: absolute;
+  top: 6px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 350px;
+  height: 36px;
+}
+
+.scan-camera-top strong {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.scan-round-button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 18%);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.scan-dish {
+  position: absolute;
+  top: 56px;
+  left: 120px;
+  font-size: 150px;
+  line-height: 1;
+}
+
+.scan-frame {
+  position: absolute;
+  top: 44px;
+  left: 75px;
+  width: 240px;
+  height: 220px;
+}
+
+.scan-detected {
+  position: absolute;
+  top: 238px;
+  left: 151.5px;
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.scan-sheet {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  margin-top: -28px;
+  padding: 10px 20px 28px;
+  border-radius: 30px 30px 0 0;
+  background: var(--bg);
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.scan-sheet::-webkit-scrollbar {
+  display: none;
+}
+
+.scan-sheet-handle {
+  align-self: center;
+  width: 40px;
+  height: 5px;
+  border-radius: 3px;
+  background: #dcd5c9;
+}
+
+.scan-result-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.scan-result-heading h1 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 22px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.scan-edit {
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--purple);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.scan-match {
+  flex: none;
+  padding: 5px 10px;
+  border-radius: 99px;
+  background: #dff7ea;
+  color: #137a4b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.scan-calorie-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 12px 12px 16px;
+  border-radius: 22px;
+  background: linear-gradient(90deg, #ff8a3d 0%, #ff5c8a 100%);
+  color: #fff;
+}
+
+.scan-calories {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.scan-calories small {
+  color: #ffe3d3;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.scan-estimate {
+  margin: 0;
+  color: #ffe3d3;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.scan-stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  border-radius: 14px;
+  background: rgb(255 255 255 / 25%);
+}
+
+.scan-stepper button {
+  min-width: 24px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.scan-stepper b {
+  min-width: 12px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.scan-macros {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: var(--surface);
+}
+
+.scan-macro {
+  display: grid;
+  grid-template-columns: 58px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.scan-macro > span {
+  font-weight: 800;
+}
+
+.scan-macro > i {
+  display: block;
+  height: 10px;
+  border-radius: 5px;
+  background: #f1ece4;
+  overflow: hidden;
+}
+
+.scan-macro > i > b {
+  display: block;
+  height: 10px;
+  border-radius: 5px;
+}
+
+.scan-macro > strong {
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.scan-ingredients {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.scan-ingredients h2 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.scan-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.scan-chip {
+  padding: 10px 16px;
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.scan-log-button {
+  flex: none;
+  width: 100%;
+  min-height: 56px;
+  margin-top: auto;
+  border: 0;
+  border-radius: 18px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
 }
 
 .tabbar {

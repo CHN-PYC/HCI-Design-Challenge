@@ -28,7 +28,8 @@ npm run preview
 - F01 preference capture with local Mock persistence
 - F02 home summary and a recommendation preview
 - F03 meal-plan content restored from the selected Figma node, with interactive day selection
-- Route placeholders for Shopping List, Scan, Nudge settings and the F04 nudge preview
+- F06 scan-result screen with working portion calculations and log-return flow
+- Route placeholders for Shopping List, Nudge settings and the F04 nudge preview
 - Installable Web App Manifest and production offline shell
 
 The PWA paths currently assume deployment at the domain root. If the final host uses a subpath, update Vite `base`, manifest URLs and the service-worker registration together before release.

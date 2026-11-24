@@ -101,16 +101,29 @@ describe("ATDD scaffold acceptance", () => {
     ).toBeInTheDocument();
 
     await user.click(within(navigation).getByRole("link", { name: "Scan" }));
+    expect(await screen.findByText("Beef Noodle Soup")).toBeInTheDocument();
     expect(
-      await screen.findByRole("heading", { name: /food scan/i }),
-    ).toBeInTheDocument();
+      screen.queryByRole("navigation", { name: /primary navigation/i }),
+    ).not.toBeInTheDocument();
 
-    await user.click(within(navigation).getByRole("link", { name: "Nudges" }));
+    await user.click(screen.getByRole("button", { name: /close food scan/i }));
+    const homeNavigation = screen.getByRole("navigation", {
+      name: /primary navigation/i,
+    });
+
+    await user.click(
+      within(homeNavigation).getByRole("link", { name: "Nudges" }),
+    );
     expect(
       await screen.findByRole("heading", { name: /nudge settings/i }),
     ).toBeInTheDocument();
 
-    await user.click(within(navigation).getByRole("link", { name: "Me" }));
+    const nudgesNavigation = screen.getByRole("navigation", {
+      name: /primary navigation/i,
+    });
+    await user.click(
+      within(nudgesNavigation).getByRole("link", { name: "Me" }),
+    );
     expect(
       await screen.findByRole("heading", {
         name: /dietary & cultural preferences/i,
@@ -162,5 +175,29 @@ describe("ATDD scaffold acceptance", () => {
     expect(
       screen.getByRole("link", { name: /shopping list/i }),
     ).toHaveAttribute("href", "/plan/shopping-list");
+  });
+
+  it("renders the selected F06 scan result and updates the portion", async () => {
+    const user = userEvent.setup();
+    seedOnboardedProfile();
+    renderApp("/scan");
+
+    expect(await screen.findByText("Scan food")).toBeInTheDocument();
+    expect(screen.getByText("Beef Noodle Soup")).toBeInTheDocument();
+    expect(screen.getByText("92% match")).toBeInTheDocument();
+    expect(screen.getByLabelText("Estimated calories")).toHaveTextContent("610");
+    expect(screen.getByLabelText("Portion quantity")).toHaveTextContent("1");
+    expect(screen.queryByRole("navigation", { name: /primary navigation/i })).not.toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /increase portion/i }));
+    expect(screen.getByLabelText("Estimated calories")).toHaveTextContent("1,220");
+    expect(screen.getByText("68 g")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: /log to dinner/i }));
+    expect(
+      await screen.findByRole("heading", {
+        name: /personalised meal recommendations/i,
+      }),
+    ).toBeInTheDocument();
   });
 });

@@ -6,7 +6,7 @@
 > - Date: 2026-11-24
 > - Stack: React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
 
-> See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit.en.md) for the screen-by-screen gaps. The five tests validate scaffold routing, the minimal flow and the selected F03 design, not full Figma restoration.
+> See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit.en.md) for the screen-by-screen gaps. The six tests validate scaffold routing, the minimal flow, F03 and F06, not full Figma restoration.
 
 ## 1. Acceptance Scope
 
@@ -17,6 +17,7 @@
 | AC-03 | An onboarded user uses bottom navigation | Plan, Shopping List, Scan, Nudges and Me are reachable |
 | AC-04 | An onboarded user opens `/nudges/preview` | F04 proactive-preview state appears without primary navigation |
 | AC-05 | An onboarded user opens `/plan` | Restores the selected F03 Figma content: week, constraints, pantry, meals and shopping-list entry |
+| AC-06 | An onboarded user opens `/scan` | Restores F06; portion changes recalculate calories/macros and Log to Dinner returns home |
 
 Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/acceptance/app.acceptance.test.tsx).
 
@@ -27,6 +28,7 @@ Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/
 3. AC-03 first failed because `/plan` and the other routes were missing; page shells and navigation made it pass.
 4. AC-04 first failed because the F04 route was missing; the preview page made it pass.
 5. AC-05 first failed because F03 was still a placeholder; it passed after implementing the Figma node read via TemPad (`4:62`, content `4:74`).
+6. AC-06 first failed because F06 was still a placeholder; it passed after implementing the Figma `5:226` scan-result screen, calculation and log-return flow.
 
 ## 3. Scaffold Contents
 
@@ -34,7 +36,7 @@ Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/
 - Routes, onboarding guard, shared App Shell and bottom navigation.
 - F01 preference selection and `localStorage` Mock persistence.
 - F02 nutrition summary and one recommendation-card example.
-- F03 content restored from the selected Figma node with working day selection; F03b, F04, F05 and F06 remain accessible page shells.
+- F03 and F06 are implemented from their Figma nodes; F03b, F04 and F05 remain accessible page shells.
 - Vitest + Testing Library acceptance-test environment.
 - Web App Manifest, 192/512 icons, Apple touch icon and an offline-shell Service Worker.
 - ESLint, TypeScript checks, production build and CI.
@@ -55,7 +57,7 @@ npm run build
 4. F03b shopping-list generation and persisted checks.
 5. F05 persisted settings and quiet-hours precedence.
 6. F04 simulated proactive nudge.
-7. F06 portion adjustment and daily log.
+7. F06 “Edit dish” feedback sheet and real scan integration.
 
 ## 6. Confirmed Implementation Baselines
 

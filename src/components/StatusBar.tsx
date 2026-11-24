@@ -1,6 +1,13 @@
-export function StatusBar() {
+interface StatusBarProps {
+  light?: boolean;
+}
+
+export function StatusBar({ light = false }: StatusBarProps) {
   return (
-    <div className="status" aria-label="Status bar">
+    <div
+      aria-label="Status bar"
+      className={light ? "status status--light" : "status"}
+    >
       <span>9:41</span>
       <span className="status__icons" aria-hidden="true">
         <svg viewBox="0 0 18 12" width="18" height="12" fill="currentColor">
