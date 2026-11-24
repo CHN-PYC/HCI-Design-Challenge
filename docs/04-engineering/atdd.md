@@ -6,7 +6,7 @@
 > - 日期：2026-11-24
 > - 实现栈：React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
 
-> 当前差距与逐屏清单见 [Figma 原型实现一致性审计](../03-design/figma-implementation-audit.md)。4 条测试验证的是脚手架路由与最小流程，不代表完整 Figma 还原。
+> 当前差距与逐屏清单见 [Figma 原型实现一致性审计](../03-design/figma-implementation-audit.md)。5 条测试验证的是脚手架路由、最小流程和已选中的 F03 设计，不代表完整 Figma 还原。
 
 ## 1. 本轮验收范围
 
@@ -16,6 +16,7 @@
 | AC-02 | 用户选择偏好并点击 Continue | 偏好写入本地 Mock，进入 F02，显示主导航 |
 | AC-03 | 已完成引导的用户使用底部导航 | Plan、Shopping List、Scan、Nudges 和 Me 均可到达 |
 | AC-04 | 已完成引导的用户进入 `/nudges/preview` | 显示 F04 主动建议预览，且不显示主导航 |
+| AC-05 | 已完成引导的用户进入 `/plan` | 还原 Figma 选中的 F03 内容：周日期、预算/时间/储藏物、食材、三餐与购物清单入口 |
 
 自动验收文件：[`src/acceptance/app.acceptance.test.tsx`](../../src/acceptance/app.acceptance.test.tsx)。
 
@@ -25,6 +26,7 @@
 2. AC-02 首次运行因 F01 没有 Cuisine/Diet 控件而失败；实现偏好选择和本地持久化后通过。
 3. AC-03 首次运行因 `/plan` 等路由缺失而失败；补齐页面壳与导航后通过。
 4. AC-04 首次运行因 F04 路由缺失而失败；补充预览页后通过。
+5. AC-05 首次运行因 F03 仍是占位页而失败；按 TemPad 读取的 Figma 节点 `4:62` / 内容节点 `4:74` 实现后通过。
 
 ## 3. 已搭建内容
 
@@ -32,7 +34,7 @@
 - 路由、onboarding guard、共享 App Shell 和底部导航。
 - F01 偏好选择与 `localStorage` Mock 持久化。
 - F02 营养摘要与一张推荐卡示例。
-- F03、F03b、F04、F05、F06 的可访问页面壳。
+- F03 按选中 Figma 节点实现完整内容与日期选择；F03b、F04、F05、F06 仍为可访问页面壳。
 - Vitest + Testing Library 验收测试环境。
 - Web App Manifest、192/512 图标、Apple touch icon 和离线 shell Service Worker。
 - ESLint、TypeScript 检查、生产构建和 CI。
@@ -59,7 +61,7 @@ npm run build
 
 1. F01 编辑模式返回来源页。
 2. F02 See all 展开推荐。
-3. F03 餐单查看与替换。
+3. F03 的 Regenerate、餐单替换和编辑约束交互。
 4. F03b 从餐单生成购物清单并保存勾选。
 5. F05 设置持久化与免打扰优先级。
 6. F04 模拟主动建议。

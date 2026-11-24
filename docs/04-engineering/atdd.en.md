@@ -6,7 +6,7 @@
 > - Date: 2026-11-24
 > - Stack: React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
 
-> See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit.en.md) for the screen-by-screen gaps. The four tests validate scaffold routing and a minimal flow, not full Figma restoration.
+> See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit.en.md) for the screen-by-screen gaps. The five tests validate scaffold routing, the minimal flow and the selected F03 design, not full Figma restoration.
 
 ## 1. Acceptance Scope
 
@@ -16,6 +16,7 @@
 | AC-02 | User selects preferences and clicks Continue | Preferences persist to the local Mock; F02 opens with primary navigation |
 | AC-03 | An onboarded user uses bottom navigation | Plan, Shopping List, Scan, Nudges and Me are reachable |
 | AC-04 | An onboarded user opens `/nudges/preview` | F04 proactive-preview state appears without primary navigation |
+| AC-05 | An onboarded user opens `/plan` | Restores the selected F03 Figma content: week, constraints, pantry, meals and shopping-list entry |
 
 Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/acceptance/app.acceptance.test.tsx).
 
@@ -25,6 +26,7 @@ Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/
 2. AC-02 first failed because F01 had no Cuisine/Diet controls; preference selection and local persistence made it pass.
 3. AC-03 first failed because `/plan` and the other routes were missing; page shells and navigation made it pass.
 4. AC-04 first failed because the F04 route was missing; the preview page made it pass.
+5. AC-05 first failed because F03 was still a placeholder; it passed after implementing the Figma node read via TemPad (`4:62`, content `4:74`).
 
 ## 3. Scaffold Contents
 
@@ -32,7 +34,7 @@ Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/
 - Routes, onboarding guard, shared App Shell and bottom navigation.
 - F01 preference selection and `localStorage` Mock persistence.
 - F02 nutrition summary and one recommendation-card example.
-- Accessible page shells for F03, F03b, F04, F05 and F06.
+- F03 content restored from the selected Figma node with working day selection; F03b, F04, F05 and F06 remain accessible page shells.
 - Vitest + Testing Library acceptance-test environment.
 - Web App Manifest, 192/512 icons, Apple touch icon and an offline-shell Service Worker.
 - ESLint, TypeScript checks, production build and CI.
@@ -49,7 +51,7 @@ npm run build
 
 1. F01 edit mode returns to the source page.
 2. F02 See all expands recommendations.
-3. F03 meal plan viewing and swapping.
+3. F03 Regenerate, meal swapping and constraint editing.
 4. F03b shopping-list generation and persisted checks.
 5. F05 persisted settings and quiet-hours precedence.
 6. F04 simulated proactive nudge.

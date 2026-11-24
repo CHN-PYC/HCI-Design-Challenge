@@ -92,10 +92,10 @@ describe("ATDD scaffold acceptance", () => {
 
     await user.click(within(navigation).getByRole("link", { name: "Plan" }));
     expect(
-      await screen.findByRole("heading", { name: /practical meal planning/i }),
+      await screen.findByRole("heading", { name: /my meal plan/i }),
     ).toBeInTheDocument();
 
-    await user.click(screen.getByRole("link", { name: /open shopping list/i }));
+    await user.click(screen.getByRole("link", { name: /shopping list/i }));
     expect(
       await screen.findByRole("heading", { name: /shopping list/i }),
     ).toBeInTheDocument();
@@ -128,5 +128,39 @@ describe("ATDD scaffold acceptance", () => {
     expect(
       screen.queryByRole("navigation", { name: /primary navigation/i }),
     ).not.toBeInTheDocument();
+  });
+
+  it("renders the selected F03 Figma meal-plan content", async () => {
+    seedOnboardedProfile();
+    renderApp("/plan");
+
+    expect(
+      await screen.findByRole("heading", { name: /my meal plan/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Week of 23 Nov")).toBeInTheDocument();
+    expect(screen.getByText("↻ Regenerate")).toBeInTheDocument();
+
+    for (const day of ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]) {
+      expect(screen.getByRole("button", { name: new RegExp(day) })).toBeInTheDocument();
+    }
+    expect(screen.getByRole("button", { name: /Tue/ })).toHaveClass("on");
+
+    for (const text of ["💷 £35/wk", "⏱ ≤ 30 min", "🧊 6 items"] ) {
+      expect(screen.getByText(text)).toBeInTheDocument();
+    }
+    for (const item of ["🥚 Eggs", "🥬 Spinach", "🍚 Rice", "🍗 Chicken", "🍅 Tomato"]) {
+      expect(screen.getByText(item)).toBeInTheDocument();
+    }
+    for (const meal of [
+      "Spinach & Feta Omelette",
+      "Chicken Rice Bowl",
+      "Tomato Egg Stir-fry",
+    ]) {
+      expect(screen.getByText(meal)).toBeInTheDocument();
+    }
+    expect(screen.getAllByRole("button", { name: /swap meal/i })).toHaveLength(3);
+    expect(
+      screen.getByRole("link", { name: /shopping list/i }),
+    ).toHaveAttribute("href", "/plan/shopping-list");
   });
 });
