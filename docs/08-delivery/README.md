@@ -21,6 +21,7 @@
 
 ## 当前可复用材料
 
+- 考核要求整理与自查清单：`assessment-brief.md`
 - 问题背景与参考文献：`../01-project-definition/background-and-rationale.md`
 - 选题比较：`../01-project-definition/topic-selection-and-qoc.md`
 - 会议记录：`../06-meetings/`
