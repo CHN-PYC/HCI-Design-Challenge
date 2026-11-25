@@ -58,6 +58,9 @@ describe("ATDD Figma screen acceptance", () => {
     expect(screen.getByRole("button", { name: "High-protein" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Shellfish" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /continue/i })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("group", { name: "Language" }),
+    ).not.toBeInTheDocument();
   });
 
   it("persists preferences and restores the F02 home design", async () => {
@@ -125,7 +128,7 @@ describe("ATDD Figma screen acceptance", () => {
     expect(
       screen.getByRole("heading", { name: /heading home/i }),
     ).toBeInTheDocument();
-    expect(screen.getByText("📍 Leaving the gym")).toBeInTheDocument();
+    expect(screen.getByText("Leaving the gym")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /cook this/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /other ideas/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /not now/i })).toBeInTheDocument();
@@ -173,5 +176,52 @@ describe("ATDD Figma screen acceptance", () => {
     expect(
       await screen.findByRole("heading", { name: /what's on your plate today/i }),
     ).toBeInTheDocument();
+  });
+
+  it("switches between English and Chinese and remembers the choice", async () => {
+    const user = userEvent.setup();
+    seedOnboardedProfile();
+    const firstRender = renderApp("/me");
+
+    expect(
+      await screen.findByRole("heading", { name: /^Me/i }),
+    ).toBeInTheDocument();
+
+    const languageGroup = screen.getByRole("group", { name: "Language" });
+    await user.click(within(languageGroup).getByRole("button", { name: "中文" }));
+
+    expect(screen.getByRole("heading", { name: /^我/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "首页" })).toBeInTheDocument();
+    expect(localStorage.getItem("nutripal.v1.language")).toBe("zh");
+
+    firstRender.unmount();
+    renderApp("/home");
+
+    expect(
+      await screen.findByRole("heading", { name: /晚上好/ }),
+    ).toBeInTheDocument();
+  });
+
+  it("renders every screen without emoji glyphs", async () => {
+    seedOnboardedProfile();
+    const routes = [
+      "/home",
+      "/plan",
+      "/plan/shopping-list",
+      "/nudges/settings",
+      "/nudges/preview",
+      "/me",
+      "/preferences",
+      "/scan",
+    ];
+
+    for (const route of routes) {
+      const view = renderApp(route);
+      await screen.findByRole("main");
+      expect(document.querySelector("main")?.textContent ?? "").not.toMatch(
+        /\p{Extended_Pictographic}/u,
+      );
+      view.unmount();
+    }
   });
 });

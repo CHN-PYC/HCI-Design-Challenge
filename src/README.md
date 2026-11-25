@@ -22,6 +22,8 @@ npm run preview
 ## Current scope
 
 - Full-viewport application shell without simulated phone chrome or status bar
+- English and Chinese interface with a persisted language switch in Me
+- Consistent vector icon set throughout the interface, with no emoji glyphs
 - Archived Figma screens F01–F06 and F03b implemented as one interactive prototype
 - Onboarding redirect for new users
 - F01 preference capture and Me edit mode with local Mock persistence

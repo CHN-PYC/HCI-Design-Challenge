@@ -25,7 +25,8 @@
   color: #1e1a3c;
   background: #ebe6dc;
   font-family: "Nunito", ui-rounded, "SF Pro Rounded", -apple-system,
-    BlinkMacSystemFont, "Segoe UI", sans-serif;
+    BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Noto Sans SC", sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   --ink: #1e1a3c;
@@ -177,7 +178,18 @@ p {
   border: 0;
   border-radius: 50%;
   background: var(--amber-soft);
-  font-size: 25px;
+  color: var(--ink);
+}
+
+.heading-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.heading-with-icon svg {
+  flex: none;
+  color: var(--purple);
 }
 
 .daily-summary {
@@ -285,6 +297,33 @@ p {
   text-decoration: none;
 }
 
+.language-switch {
+  display: flex;
+  flex: none;
+  padding: 3px;
+  border-radius: 999px;
+  background: var(--soft);
+}
+
+.language-switch button {
+  min-width: 35px;
+  height: 32px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.language-switch button.on {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 1px 4px rgb(30 26 60 / 12%);
+}
+
 .featured-card,
 .mini-card,
 .settings-card,
@@ -338,12 +377,17 @@ p {
   box-shadow: 0 2px 8px rgb(30 26 60 / 8%);
 }
 
-.featured-emoji {
+.featured-glyph {
+  display: grid;
+  place-items: center;
   position: relative;
   z-index: 1;
-  font-size: 64px;
-  line-height: 1;
-  filter: drop-shadow(0 6px 8px rgb(30 26 60 / 13%));
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 52%);
+  color: var(--ink);
+  box-shadow: 0 8px 22px rgb(30 26 60 / 9%);
 }
 
 .plate-shadow {
@@ -377,6 +421,12 @@ p {
   font-weight: 700;
 }
 
+.recipe-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .why-card {
   display: flex;
   align-items: flex-start;
@@ -393,6 +443,12 @@ p {
 
 .why-card b {
   font-weight: 900;
+}
+
+.why-card > svg {
+  flex: none;
+  margin-top: 1px;
+  color: var(--purple);
 }
 
 .mini-grid {
@@ -425,8 +481,8 @@ p {
 }
 
 .mini-card > span {
-  font-size: 32px;
-  line-height: 1.1;
+  color: var(--purple);
+  line-height: 1;
 }
 
 .mini-card strong {
@@ -469,7 +525,7 @@ p {
   height: 42px;
   border-radius: 12px;
   background: var(--soft);
-  font-size: 24px;
+  color: var(--purple);
 }
 
 .explore-card > span:nth-child(2) {
@@ -519,6 +575,9 @@ p {
 }
 
 .soft-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   flex: none;
   margin-top: 8px;
   padding: 8px 12px;
@@ -583,13 +642,19 @@ p {
 }
 
 .constraint strong {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 4px;
   overflow: hidden;
   color: var(--ink);
   font-size: 14px;
   font-weight: 900;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.constraint strong svg {
+  flex: none;
 }
 
 .constraint span {
@@ -666,7 +731,7 @@ p {
   width: 48px;
   height: 48px;
   border-radius: 14px;
-  font-size: 25px;
+  color: var(--ink);
 }
 
 .meal-copy {
@@ -721,7 +786,9 @@ p {
 }
 
 .shopping-cta-icon {
-  font-size: 25px;
+  display: flex;
+  flex: none;
+  color: var(--amber);
 }
 
 .shopping-cta > span:nth-child(2) {
@@ -742,8 +809,8 @@ p {
 }
 
 .shopping-cta > b {
+  display: flex;
   color: var(--accent);
-  font-size: 22px;
 }
 
 .inline-status {
@@ -862,6 +929,9 @@ p {
 }
 
 .snooze-row > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   flex: none;
   color: var(--muted);
   font-size: 13px;
@@ -927,6 +997,9 @@ p {
 }
 
 .explanation-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   margin-bottom: 9px;
   font-size: 15px;
   font-weight: 900;
@@ -939,6 +1012,11 @@ p {
   color: var(--ink);
   font-size: 14px;
   font-weight: 600;
+}
+
+.explanation-card > p svg {
+  flex: none;
+  color: var(--muted);
 }
 
 .feedback-link {
@@ -1029,6 +1107,9 @@ p {
 }
 
 .budget-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   flex: none;
   padding: 7px 10px;
   border-radius: 999px;
@@ -1090,8 +1171,11 @@ p {
   font-weight: 900;
 }
 
-.check-emoji {
-  font-size: 24px;
+.check-glyph {
+  display: grid;
+  place-items: center;
+  flex: none;
+  color: var(--muted);
 }
 
 .check-copy {
@@ -1145,12 +1229,20 @@ p {
 }
 
 .pantry-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 7px 12px;
   border-radius: 999px;
   background: var(--accent-soft);
   color: var(--ink);
   font-size: 13px;
   font-weight: 700;
+}
+
+.pantry-list span svg {
+  flex: none;
+  color: var(--accent);
 }
 
 .primary-button {
@@ -1197,11 +1289,15 @@ p {
 }
 
 .preferences-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   min-height: 40px;
 }
 
 .setup-progress {
   display: flex;
+  flex: 1;
   align-items: center;
   gap: 6px;
   height: 24px;
@@ -1297,9 +1393,9 @@ p {
   color: var(--ink);
 }
 
-.cuisine-tile > span {
-  font-size: 26px;
-  line-height: 1;
+.cuisine-tile > svg {
+  flex: none;
+  color: var(--ink);
 }
 
 .cuisine-tile small {
@@ -1358,6 +1454,18 @@ p {
 
 /* Me */
 
+.me-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.me-header > div {
+  flex: 1;
+  min-width: 0;
+}
+
 .me-header p {
   max-width: 340px;
 }
@@ -1380,7 +1488,7 @@ p {
   height: 58px;
   border-radius: 50%;
   background: var(--amber-soft);
-  font-size: 32px;
+  color: var(--ink);
 }
 
 .profile-banner > div {
@@ -1447,6 +1555,35 @@ p {
 
 .goal-card--budget {
   background: var(--amber-soft);
+}
+
+.language-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 14px 15px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.language-copy {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.language-copy strong {
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.language-copy small {
+  margin-top: 1px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .me-card {
@@ -1579,6 +1716,12 @@ p {
   font-size: 17px;
 }
 
+.privacy-note > svg {
+  flex: none;
+  margin-top: 1px;
+  color: var(--muted);
+}
+
 .privacy-note p {
   font-size: 12px;
   font-weight: 600;
@@ -1694,7 +1837,9 @@ p {
 }
 
 .smart-label {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 5px 10px;
   border-radius: 999px;
   background: var(--violet-soft);
@@ -1751,6 +1896,7 @@ p {
 .context-grid span {
   display: flex;
   align-items: center;
+  gap: 6px;
   min-height: 42px;
   padding: 8px 10px;
   border-radius: 12px;
@@ -1759,6 +1905,11 @@ p {
   font-size: 13px;
   font-weight: 700;
   line-height: 1.25;
+}
+
+.context-grid span svg {
+  flex: none;
+  color: var(--muted);
 }
 
 .suggestion-sheet .primary-button {
@@ -1784,7 +1935,10 @@ p {
 }
 
 .why-link {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
   margin: 14px auto 0;
   padding: 0;
   border: 0;
@@ -1923,12 +2077,11 @@ p {
   font-weight: 900;
 }
 
-.scan-dish {
+.scan-illustration {
   position: absolute;
   top: 54%;
   left: 50%;
-  font-size: clamp(104px, 34vw, 150px);
-  line-height: 1;
+  width: min(255px, 66vw);
   filter: drop-shadow(0 12px 18px rgb(0 0 0 / 32%));
   transform: translate(-50%, -50%);
 }
@@ -1943,6 +2096,9 @@ p {
 }
 
 .scan-detected {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   position: absolute;
   z-index: 2;
   bottom: 34px;
@@ -1998,6 +2154,9 @@ p {
 }
 
 .scan-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   margin-top: 2px;
   padding: 0;
   border: 0;
@@ -2141,6 +2300,9 @@ p {
 }
 
 .scan-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   padding: 8px 13px;
   border: 1.5px solid var(--line);
   border-radius: 999px;
@@ -2150,7 +2312,16 @@ p {
   font-weight: 700;
 }
 
+.scan-chip svg {
+  flex: none;
+  color: var(--muted);
+}
+
 .scan-log-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
   flex: none;
   width: 100%;
   min-height: 56px;

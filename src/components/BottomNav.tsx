@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useI18n } from "../i18n/useI18n";
 
 function HomeIcon() {
   return (
@@ -47,28 +48,30 @@ const tabClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? "tab on" : "tab";
 
 export function BottomNav() {
+  const { t } = useI18n();
+
   return (
-    <nav aria-label="Primary navigation" className="tabbar">
+    <nav aria-label={t("Primary navigation", "主导航")} className="tabbar">
       <NavLink className={tabClass} end to="/home">
         <HomeIcon />
-        <span>Home</span>
+        <span>{t("Home", "首页")}</span>
       </NavLink>
       <NavLink className={tabClass} to="/plan">
         <PlanIcon />
-        <span>Plan</span>
+        <span>{t("Plan", "餐单")}</span>
       </NavLink>
-      <NavLink aria-label="Scan" className="scan-tab" to="/scan">
+      <NavLink aria-label={t("Scan", "扫描")} className="scan-tab" to="/scan">
         <span className="scan-fab">
           <ScanIcon />
         </span>
       </NavLink>
       <NavLink className={tabClass} to="/nudges/settings">
         <BellIcon />
-        <span>Nudges</span>
+        <span>{t("Nudges", "提醒")}</span>
       </NavLink>
       <NavLink className={tabClass} to="/me">
         <UserIcon />
-        <span>Me</span>
+        <span>{t("Me", "我")}</span>
       </NavLink>
     </nav>
   );
