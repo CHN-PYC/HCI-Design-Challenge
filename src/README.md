@@ -35,7 +35,7 @@ npm run preview
 - F06 scan result with working portion calculations and log-return flow
 - Installable Web App Manifest and production offline shell
 
-The PWA paths currently assume deployment at the domain root. If the final host uses a subpath, update Vite `base`, manifest URLs and the service-worker registration together before release.
+Production builds accept a subpath through `VITE_BASE`. GitHub Pages uses `/HCI-Design-Challenge/`; the manifest, router basename and service-worker scope follow that value.
 
 The current data layer is a local storage Mock. It is deliberately isolated behind `src/data/profile-repository.ts` so it can be replaced by the `/api/v1` contract later.
 

@@ -75,6 +75,12 @@ npm run lint
 npm run build
 ```
 
+## 在线原型
+
+- GitHub Pages: <https://surpasshr.github.io/HCI-Design-Challenge/>
+- 推送到 `main` 后，`.github/workflows/pages.yml` 会自动构建并部署。
+- Pages 构建使用 `VITE_BASE=/HCI-Design-Challenge/`，并生成 SPA 路由回退页 `404.html`。
+
 ## 当前待办与决策门槛
 
 1. 完成 V3 的 3–5 人认知预测试，并确定样本与招募安排。

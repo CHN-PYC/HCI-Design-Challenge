@@ -1,12 +1,13 @@
-const CACHE_NAME = "nutripal-shell-v1";
+const BASE = new URL(self.registration.scope).pathname;
+const CACHE_NAME = "nutripal-shell-v2";
 const APP_SHELL = [
-  "/",
-  "/index.html",
-  "/manifest.webmanifest",
-  "/icons/app-icon.svg",
-  "/icons/icon-192.png",
-  "/icons/icon-512.png",
-  "/icons/apple-touch-icon.png",
+  BASE,
+  BASE + "index.html",
+  BASE + "manifest.webmanifest",
+  BASE + "icons/app-icon.svg",
+  BASE + "icons/icon-192.png",
+  BASE + "icons/icon-512.png",
+  BASE + "icons/apple-touch-icon.png",
 ];
 
 self.addEventListener("install", (event) => {
@@ -39,6 +40,21 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     (async () => {
       const cache = await caches.open(CACHE_NAME);
+
+      if (event.request.mode === "navigate") {
+        try {
+          const response = await fetch(event.request);
+          if (response.ok) {
+            await cache.put(BASE + "index.html", response.clone());
+          }
+          return response;
+        } catch {
+          const shell = await cache.match(BASE + "index.html");
+          if (shell) return shell;
+          throw new Error("Offline shell unavailable");
+        }
+      }
+
       const cached = await cache.match(event.request);
       if (cached) return cached;
 
@@ -49,10 +65,6 @@ self.addEventListener("fetch", (event) => {
         }
         return response;
       } catch (error) {
-        if (event.request.mode === "navigate") {
-          const shell = await cache.match("/index.html");
-          if (shell) return shell;
-        }
         throw error;
       }
     })(),
