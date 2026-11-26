@@ -26,6 +26,7 @@ npm run preview
 - Lucide + FoodGlyph vector icons only; no emoji icons
 - Archived 2026-11-25 Figma screens F01–F06, F03b and Me implemented as one interactive v1.1 prototype
 - Global, persisted large-text mode with semantic type tokens
+- Fixed mobile zoom: pinch zoom disabled; form controls use at least 16px type to prevent iOS focus zoom
 - Onboarding redirect for new users
 - F01 preference capture, custom avoidance sheet and Me edit mode with local Mock persistence
 - F02 recommendations with switchable picks, local dish search and expandable discovery

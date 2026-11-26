@@ -18,6 +18,7 @@ Use a clickable mobile web prototype to validate the core task flows, proactive-
 
 - **No emoji icons**: emoji in the new Figma are treated as a design-source defect. The implementation uses Lucide and FoodGlyph vector icons with readable text labels.
 - **No device chrome**: no Figma 9:41 status bar, signal/battery chrome or 44px phone frame. The web prototype uses a content column of at most 390px.
+- **Fixed mobile zoom**: pinch zoom is disabled by requirement (viewport, touch-action and iOS gesture events); single-finger scrolling and input focus remain. Every input uses at least 16px type to prevent iOS focus zoom.
 - **Large text**: the Me toggle applies globally and persists; semantic type tokens increase by roughly 2px and pages scroll instead of reproducing fixed-frame clipping.
 - **Me retains v1.0 information**: language, today’s targets, preference summary, nudge preview, Nudges entry and privacy note remain in addition to the Figma rows.
 - **Custom avoidances**: the F01 + Add action opens a local sheet for any ingredient or allergen; no backend field is added.
