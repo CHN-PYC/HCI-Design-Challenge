@@ -26,6 +26,24 @@
 
 ## 3. 严格限制
 
+### 3.1 判定依据
+
+“AI 生成”不是通过文本风格猜测，而是工作簿自身的元数据与说明：
+
+| 位置 | 原文 | 含义 |
+| --- | --- | --- |
+| 文件名 | Nourish_V3_100_Simulated_Responses_EN.xlsx | 明确标注 Simulated |
+| Summary!A1 | NOURISH V3 — SYNTHETIC DATA SUMMARY | 汇总表标题声明为合成数据 |
+| Summary!C2 | Not real participants; for analysis practice only | 明确不是真实参与者，仅用于分析练习 |
+| Notes and Validation!B2 | All 100 records are AI-generated synthetic responses, not real survey evidence. | 直接声明 100 条记录均由 AI 生成，不是真实问卷证据 |
+| Notes and Validation!B4 | This file translates the same original 100 synthetic responses; no new people or values added. | 英文版只是同一批模拟回答的翻译 |
+| Notes and Validation!B5 | Role column is an extra synthetic profile attribute and not a question in V3. | persona 列是合成属性，不属于 V3 问题 |
+| Notes and Validation!B10 | No prevalence or representative market conclusions can be drawn from simulated responses. | 不能据此推断真实比例或市场结论 |
+
+辅助迹象：Q21 的 75 条回答只有 12 种不同文本，最高重复 10 次；多选计数、年龄分布和角色分布也呈明显的模板化结构。该迹象用于佐证，但归档分类首先依据上述文件自述。
+
+如原始制作者后续说明该文件并非 AI 生成，需要提供可核验的来源与参与者记录，再另建版本重新归档；当前证据链支持“模拟数据”分类。
+
 - 100 条记录全部为 AI 生成的模拟回答，不能用于推断真实用户比例、总体分布或市场结论。
 - 不能把本数据写成“问卷已完成”或“用户研究已获得真实样本”。它只适合流程验证、统计脚本测试和展示格式演练。
 - 模拟 persona/role 列不属于 V3 问题；正式分析时应排除。

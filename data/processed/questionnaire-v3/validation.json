@@ -125,5 +125,15 @@
   ],
   "archived_on": "2026-11-26",
   "questionnaire_source": "docs/02-research/questionnaire/questionnaire-v3-participant.md",
-  "provenance_note": "English translation of the same 100 AI-generated synthetic responses; not a new sample."
+  "provenance_note": "English translation of the same 100 AI-generated synthetic responses; not a new sample.",
+  "synthetic_declaration": {
+    "summary_title": "NOURISH V3 — SYNTHETIC DATA SUMMARY",
+    "summary_note": "Not real participants; for analysis practice only",
+    "data_status": "All 100 records are AI-generated synthetic responses, not real survey evidence.",
+    "translation_note": "This file translates the same original 100 synthetic responses; no new people or values added.",
+    "persona_note": "Role column is an extra synthetic profile attribute and not a question in V3.",
+    "interpretation_note": "No prevalence or representative market conclusions can be drawn from simulated responses."
+  },
+  "q21_unique_answers": 12,
+  "q21_top_repeat_count": 10
 }
