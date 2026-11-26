@@ -121,10 +121,225 @@
 .dish-search__samples {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
   color: var(--muted);
   font-size: var(--fs-caption);
   font-weight: 800;
+}
+
+.recipe-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.recipe-result {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--ink);
+  text-align: left;
+}
+
+.recipe-result__glyph {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--yellow-soft);
+}
+
+.recipe-result:nth-child(3n + 2) .recipe-result__glyph {
+  background: var(--green-soft);
+}
+
+.recipe-result:nth-child(3n) .recipe-result__glyph {
+  background: var(--pink-soft);
+}
+
+.recipe-result__copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recipe-result__copy strong {
+  font-size: calc(15px + var(--text-boost));
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.recipe-result__copy small {
+  color: var(--muted);
+  font-size: calc(11px + var(--text-boost));
+  font-weight: 800;
+}
+
+.recipe-result__copy em {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: calc(10px + var(--text-boost));
+  font-style: normal;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recipe-result__source {
+  max-width: 70px;
+  flex: none;
+  color: var(--purple);
+  font-size: calc(9px + var(--text-boost));
+  font-weight: 900;
+  line-height: 1.2;
+  text-align: right;
+}
+
+.recipe-result__source--local {
+  color: #137a4b;
+}
+
+.search-feedback {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 18px;
+  border: 1px dashed var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: calc(13px + var(--text-boost));
+  font-weight: 800;
+}
+
+.search-feedback svg {
+  animation: recipe-search-spin 0.9s linear infinite;
+}
+
+.search-feedback--error {
+  justify-content: space-between;
+}
+
+.empty-search--suggestions {
+  align-items: stretch;
+}
+
+.empty-search--suggestions > h2,
+.empty-search--suggestions > p,
+.empty-search--suggestions > span,
+.empty-search--suggestions > .text-link {
+  align-self: center;
+}
+
+.recipe-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.recipe-detail__hero {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.recipe-detail__glyph {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  flex: none;
+  place-items: center;
+  border-radius: 20px;
+  background: var(--yellow-soft);
+}
+
+.recipe-detail__hero strong {
+  display: block;
+  font-size: calc(15px + var(--text-boost));
+  font-weight: 900;
+}
+
+.recipe-detail__hero small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: calc(12px + var(--text-boost));
+  font-weight: 700;
+}
+
+.recipe-detail__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.recipe-detail__metrics span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 99px;
+  background: var(--soft);
+  font-size: calc(11px + var(--text-boost));
+  font-weight: 800;
+}
+
+.recipe-detail h3 {
+  font-size: calc(16px + var(--text-boost));
+  font-weight: 900;
+}
+
+.ingredient-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.ingredient-chip {
+  padding: 7px 10px;
+  border-radius: 99px;
+  background: var(--green-soft);
+  color: #137a4b;
+  font-size: calc(12px + var(--text-boost));
+  font-weight: 800;
+}
+
+.recipe-attribution {
+  color: var(--muted);
+  font-size: calc(10px + var(--text-boost));
+  font-weight: 700;
+}
+
+.ui-sheet__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+@keyframes recipe-search-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .search-feedback svg {
+    animation: none;
+  }
 }
 
 .dish-search__samples .ui-chip {

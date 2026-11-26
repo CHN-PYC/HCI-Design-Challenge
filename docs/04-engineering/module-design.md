@@ -140,7 +140,7 @@ flowchart TB
 
 - 展示当天热量与蛋白质/碳水/脂肪摘要。
 - 展示 1–3 个个性化推荐及“为什么推荐”的解释。
-- 提供本地菜品搜索和 Try 芯片；输入即匹配菜名、标签与关键词，无结果显示可恢复空状态。
+- 提供基于 Supabase 兼容 Mock 的菜品搜索（91 道菜谱）；支持中英文、多词、相似结果和无结果建议。
 - 在页面内展开更多推荐；不新增食谱详情路由。
 
 **交互规则**
@@ -155,6 +155,7 @@ flowchart TB
 
 - `GET /recommendations` 返回 `RecommendationBundle`；不直接读取 RecipeProvider。
 - 偏好保存后重新请求；不自行合并本地偏好。
+- 搜索通过 RecipeRepository 查询本地 recipes 表；返回菜名、分类、地区、食材与来源，不伪造营养数据。
 
 **验收**
 
@@ -307,6 +308,10 @@ interface ShoppingListRepository {
   setPurchased(weekStart: ISODate, itemId: ID, purchased: boolean): Promise<ShoppingListItem>;
 }
 
+interface RecipeRepository {
+  search(query: string, limit?: number): Promise<RecipeSearchResponse>;
+}
+
 interface NudgeRepository {
   getNext(context: NudgeContext): Promise<Nudge | null>;
   getSettings(): Promise<NudgeSettings>;
@@ -327,6 +332,7 @@ interface DisplayPreferenceRepository {
 **存储规则**
 
 - Mock 存储只保存非敏感领域数据，键名统一为 `nutripal.v1.*`。
+- 菜谱目录是只读 bundle 数据（91 条），不写入 localStorage；替换真实 Supabase 时保持 recipes 表字段不变。
 - 页面刷新后可恢复：Profile、DietaryPreferences、HealthTargets、MealPlan、ShoppingList、NudgeSettings、FoodLogEntry。
 - 显示偏好保存为 nutripal.v1.display，记录 textSize: default | large；缺失时默认 default。
 - 不保存：原子图像、原始 GPS、完整 Provider 响应、密码/令牌。

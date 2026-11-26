@@ -29,7 +29,7 @@ Use a clickable mobile web prototype to validate the core task flows, proactive-
 
 - Unified visual tokens, components and bottom navigation.
 - Clickable flows for core tasks, with buttons connected to real screens or documented sheets/demo states.
-- Local F02 dish search, Try chips, empty result and clear-search states.
+- F02 search backed by a Supabase-compatible mock with 91 web/prototype recipes, including English, Chinese, multi-word, closest-match and suggestion states.
 - F01 custom avoidance, saving and edit-mode return to Me.
 - Me large-text toggle, language switch, preference and notification entries.
 - Accept, postpone, dismiss and explanation controls for proactive suggestions.
@@ -46,7 +46,7 @@ Use a clickable mobile web prototype to validate the core task flows, proactive-
 | Frame | Screen | Purpose | Current implementation |
 | --- | --- | --- | --- |
 | F01 | Dietary & Cultural Preferences | Cuisine, diet style, allergen/avoidance and custom add | Implemented, including edit mode |
-| F02 | Personalised Meal Recommendations | Nutrition summary, search, recommendations and See all | Implemented with local search |
+| F02 | Personalised Meal Recommendations | Nutrition summary, search, recommendations and See all | Implemented with a 91-recipe mock database |
 | F03 | Practical Meal Planning | Weekly plan, budget, cook time, pantry and shopping entry | Implemented with day/swap/edit/regenerate |
 | F03b | Shopping List | Items, budget, pantry, check-off and share | Implemented, with delivery demo |
 | F04 | Context-Aware Proactive Assistance | Lock-screen suggestion and context explanation | Implemented with gradient and all actions |

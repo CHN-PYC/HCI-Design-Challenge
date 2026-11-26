@@ -252,7 +252,7 @@ classDiagram
 | Screen | Capability | Primary module | V1 data source | Status |
 | --- | --- | --- | --- | --- |
 | F01 | Save cuisine, dietary style, allergen/avoidance and custom avoidances | Preferences | MockProfileRepository | Baseline |
-| F02 | Show daily nutrition summary, personalised recipes and local dish search | Recommendations | MockRecommendationRepository | Baseline |
+| F02 | Show daily nutrition summary, personalised recipes and a 91-recipe mock search | Recommendations | MockRecommendationRepository + mock recipes table | Baseline |
 | F03 | Generate/view a weekly meal plan with budget and cooking constraints; swap meals | Meal Planning | MockMealPlanRepository | Baseline |
 | F03b | Generate a shopping list with budget and check-off state from the meal plan | Shopping List | MockShoppingListRepository | Baseline |
 | F04 | Show contextual proactive suggestions and their reasons | Nudges | Mock nudge fixture + NotificationScheduler | Mock |

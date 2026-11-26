@@ -5,7 +5,7 @@
 > - 审计版本：NutriPal v1.1
 > - 审计日期：2026-11-26
 > - 视觉基线：[2026-11-25 Figma 归档](../../design/exports/2026-11-25-nutripal-v2/README.md)，文件 key QHOOV8NcB4Ev499ycoRtZq
-> - 自动化验收：12 条 Vitest/Testing Library 测试
+> - 自动化验收：13 条 Vitest/Testing Library 测试
 
 ## 1. 审计方法
 
@@ -31,7 +31,7 @@
 | Frame | 实现状态 | 主要结论 / 有意偏差 |
 | --- | --- | --- |
 | F01 | 通过 | 8 菜系、6 饮食方式、4 固定忌口 + 自定义 Add；移除冗余 No preference；编辑模式返回 Me |
-| F02 | 通过 | 新标题层级、渐变营养摘要、搜索、Try 芯片、空状态、推荐卡和 See all；无 emoji |
+| F02 | 通过 | 新标题层级、渐变营养摘要、91 道 Mock 菜谱搜索、详情 Sheet、空结果建议、推荐卡和 See all；无 emoji |
 | F03 | 通过 | 新周条、约束卡、5 个食材芯片、3 餐和购物入口；保留换餐/编辑/重生成 |
 | F03b | 通过 | 新 4 个采购项与预算、6 个储藏食材、勾选、Share 主操作和配送演示次操作 |
 | F04 | 通过 | 橙→粉→紫渐变、大时钟、通知卡、建议卡、Cook this/Other ideas/Not now/Why |

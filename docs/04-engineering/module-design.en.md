@@ -140,7 +140,7 @@ flowchart TB
 
 - Show today’s calorie and protein/carbohydrate/fat summary.
 - Show 1–3 personalised recommendations with a “why recommended” explanation.
-- Provide local dish search and Try chips. Input matches names, tags and keywords; empty results have a recoverable state.
+- Provide search through a Supabase-compatible mock with 91 recipes, covering English, Chinese, multi-word, closest-match and no-result suggestion states.
 - Expand more recommendations on the same page; no new recipe-detail route.
 
 **Interaction rules**
@@ -155,6 +155,7 @@ flowchart TB
 
 - `GET /recommendations` returns `RecommendationBundle`; the module does not read RecipeProvider directly.
 - Refetch after preferences are saved; do not merge local preferences manually.
+- Search goes through RecipeRepository against the local recipes table and returns title, category, area, ingredients and source; it does not fabricate nutrition data.
 
 **Acceptance**
 
@@ -307,6 +308,10 @@ interface ShoppingListRepository {
   setPurchased(weekStart: ISODate, itemId: ID, purchased: boolean): Promise<ShoppingListItem>;
 }
 
+interface RecipeRepository {
+  search(query: string, limit?: number): Promise<RecipeSearchResponse>;
+}
+
 interface NudgeRepository {
   getNext(context: NudgeContext): Promise<Nudge | null>;
   getSettings(): Promise<NudgeSettings>;
@@ -327,6 +332,7 @@ interface DisplayPreferenceRepository {
 **Storage rules**
 
 - Mock storage saves only non-sensitive domain data under keys prefixed `nutripal.v1.*`.
+- The recipe catalog is read-only bundled data (91 rows) and is not written to localStorage; a real Supabase swap keeps the recipes table fields unchanged.
 - After reload, restore Profile, DietaryPreferences, HealthTargets, MealPlan, ShoppingList, NudgeSettings, and FoodLogEntry.
 - Display preferences are stored under nutripal.v1.display as textSize: default | large; missing means default.
 - Never save raw images, raw GPS, complete provider responses, passwords, or tokens.

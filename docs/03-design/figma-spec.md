@@ -29,7 +29,7 @@
 
 - 统一视觉 token、组件和底部导航。
 - 核心任务的可点击页面流，按钮连接真实目标页面或已记录的 Sheet/演示态。
-- F02 本地菜品搜索、Try 芯片、空结果和清除搜索。
+- F02 菜品搜索接入 Supabase 兼容 Mock（91 道在线/内置菜谱），支持中英文、多词、相似结果与为空时的推荐菜谱。
 - F01 自定义忌口、保存和编辑模式返回 Me。
 - Me 的大字号开关、语言切换、偏好与通知入口。
 - 主动建议的接受、推迟、关闭和解释入口。
@@ -46,7 +46,7 @@
 | Frame | 页面 | 目的 | 当前实现 |
 | --- | --- | --- | --- |
 | F01 | Dietary & Cultural Preferences | 菜系、饮食方式、忌口/过敏与自定义添加 | 已实现，含编辑模式 |
-| F02 | Personalised Meal Recommendations | 营养摘要、搜索、推荐和 See all | 已实现，本地搜索 |
+| F02 | Personalised Meal Recommendations | 营养摘要、搜索、推荐和 See all | 已实现，91 道菜谱 Mock 搜索 |
 | F03 | Practical Meal Planning | 周餐单、预算、烹饪时间、食材和购物清单入口 | 已实现，含日期/换餐/编辑/重生成 |
 | F03b | Shopping List | 采购项、预算、已有食材、勾选与分享 | 已实现，含配送演示 |
 | F04 | Context-Aware Proactive Assistance | 锁屏式主动建议与情境解释 | 已实现，渐变背景与全部动作 |

@@ -5,7 +5,7 @@
 > - Audited release: NutriPal v1.1
 > - Audit date: 2026-11-26
 > - Visual baseline: [2026-11-25 Figma archive](../../design/exports/2026-11-25-nutripal-v2/README.en.md), file key QHOOV8NcB4Ev499ycoRtZq
-> - Automated acceptance: 12 Vitest/Testing Library tests
+> - Automated acceptance: 13 Vitest/Testing Library tests
 
 ## 1. Method
 
@@ -31,7 +31,7 @@
 | Frame | Status | Main result / intentional deviation |
 | --- | --- | --- |
 | F01 | Passed | Eight cuisines, six diet styles, four fixed avoidances + custom Add; redundant No preference removed; edit mode returns to Me |
-| F02 | Passed | New hierarchy, gradient summary, search, Try chips, empty state, recommendation cards and See all; no emoji |
+| F02 | Passed | New hierarchy, gradient summary, 91-recipe mock search, detail sheet, no-match suggestions, recommendation cards and See all; no emoji |
 | F03 | Passed | New week strip, constraint cards, five pantry chips, three meals and shopping entry; swap/edit/regenerate retained |
 | F03b | Passed | New four items and budget, six pantry items, check-off, primary Share and secondary delivery demo |
 | F04 | Passed | Orange→pink→purple gradient, large clock, notification and suggestion cards, all four actions |

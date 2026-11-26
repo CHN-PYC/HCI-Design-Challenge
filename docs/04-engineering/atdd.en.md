@@ -14,7 +14,7 @@ See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit
 | --- | --- | --- |
 | AC-01 | New user visits /home | Redirect to F01; no status bar; + Add opens and adds a custom avoidance |
 | AC-02 | User selects preferences and Continue | Preferences persist locally, F02 opens and navigation appears |
-| AC-03 | User searches in F02 | Local Tofu/Sushi filtering; empty state; clear search |
+| AC-03 | User searches in F02 | Queries 91 mock recipes; tofu/pasta return results; detail sheet opens; unknown queries show suggestions |
 | AC-04 | User enters F03/F03b | New week strip, constraints, pantry and meals; F03b has four items and budget |
 | AC-05 | User checks an F03b item | Feta starts checked; clicking Chicken thighs marks it checked |
 | AC-06 | User enters F04 | Gradient lock screen, notification and suggestion; no tab bar; all four actions available |
@@ -24,13 +24,14 @@ See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit
 | AC-10 | User enables Large text | Root data-text-size=large, persisted, all eight routes accessible |
 | AC-11 | User switches language | English/Chinese changes and survives refresh |
 | AC-12 | Whole app renders | No emoji icons |
+| AC-13 | Mock recipes and CSS regression | English/Chinese/multi-word search passes; every explicit font size follows the large-text boost |
 
 Acceptance file: [app.acceptance.test.tsx](../../src/acceptance/app.acceptance.test.tsx).
 
 ## 2. RED → GREEN record (v1.1)
 
 1. Large text failed without DisplayPreferencesProvider; added domain types, repository and provider.
-2. F02 search failed without a search field; added local filtering, Try chips and empty state.
+2. F02 search failed without a search field; upgraded to a 91-recipe Supabase-compatible mock with results, details and no-match suggestions.
 3. F01 custom avoidance failed because + Add had no destination; added the sheet and save path.
 4. F03/F03b new fixtures and Share action passed after updating data and CTA behaviour.
 5. Me retention passed after restoring language, goals, preference summary, nudge preview and privacy.
@@ -42,7 +43,7 @@ Acceptance file: [app.acceptance.test.tsx](../../src/acceptance/app.acceptance.t
 - Routing, onboarding guard, shared app shell and bottom navigation.
 - v1.1 token layer, shared UI components and page styles.
 - F01 persistence, custom avoidances and edit return.
-- F02 nutrition summary, search, Try chips, recommendations and See all.
+- F02 nutrition summary, 91-recipe mock search, detail sheet, Try chips, recommendations and See all.
 - F03 date, budget, pantry, swap, regenerate and shopping entry.
 - F03b items, budget, pantry, check-off, share and delivery demo.
 - F04/F05/F06 proactive suggestion, controls, explanation and scan calculations.

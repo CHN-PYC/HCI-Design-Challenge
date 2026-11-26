@@ -23,37 +23,9 @@ import {
   Wheat,
   type LucideIcon,
 } from "lucide-react";
+import type { FoodGlyphName } from "../domain/food-glyph";
 
-export type FoodGlyphName =
-  | "apple"
-  | "beans"
-  | "beef"
-  | "berries"
-  | "bowl"
-  | "carrot"
-  | "cheese"
-  | "chicken"
-  | "citrus"
-  | "curry"
-  | "egg"
-  | "fish"
-  | "grain"
-  | "leaf"
-  | "noodles"
-  | "onion"
-  | "pancake"
-  | "pasta"
-  | "pie"
-  | "pizza"
-  | "rice"
-  | "salad"
-  | "sauce"
-  | "stew"
-  | "sushi"
-  | "taco"
-  | "tomato"
-  | "wrap"
-  | "yogurt";
+export type { FoodGlyphName };
 
 const glyphs: Record<FoodGlyphName, LucideIcon> = {
   apple: Apple,

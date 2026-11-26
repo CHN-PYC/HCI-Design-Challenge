@@ -14,7 +14,7 @@
 | --- | --- | --- |
 | AC-01 | 新用户访问 /home | 自动进入 F01；无状态栏；可打开 + Add 并添加自定义忌口 |
 | AC-02 | 用户选择偏好并 Continue | 偏好写入本地 Mock，进入 F02，底部导航出现 |
-| AC-03 | 用户在 F02 搜索 | 本地过滤 Tofu/Sushi；无结果显示空状态；可清除搜索 |
+| AC-03 | 用户在 F02 搜索 | 查询 91 道 Mock 菜谱；tofu/pasta 有结果；详情 Sheet 可打开；无精确结果时显示推荐菜谱 |
 | AC-04 | 用户进入 F03/F03b | 显示新周条、约束、食材、三餐；F03b 显示 4 个采购项与预算 |
 | AC-05 | 用户勾选 F03b 采购项 | Feta 初始勾选；点击 Chicken thighs 后显示已勾选 |
 | AC-06 | 用户进入 F04 | 显示渐变锁屏、通知和建议；无底部导航；Cook this/Other ideas/Not now/Why 可用 |
@@ -24,13 +24,14 @@
 | AC-10 | 用户开启 Large text | 根元素 data-text-size=large，设置持久化，8 个路由均可访问 |
 | AC-11 | 用户切换语言 | 中英文界面切换并在刷新后保留 |
 | AC-12 | 全站渲染 | 无 emoji 图标 |
+| AC-13 | Mock 菜谱与 CSS 回归 | 中英文/多词搜索通过；所有显式字号跟随大字号 boost |
 
 自动验收文件：[app.acceptance.test.tsx](../../src/acceptance/app.acceptance.test.tsx)。
 
 ## 2. RED → GREEN 记录（v1.1）
 
 1. 大字号验收先因 DisplayPreferencesProvider 缺失而失败；补齐领域类型、Repository 和 Provider 后通过。
-2. F02 搜索验收先因无搜索框而失败；加入本地过滤、Try 芯片和空状态后通过。
+2. F02 搜索验收先因无搜索框而失败；升级为 91 道菜的 Supabase 兼容 Mock，支持结果、详情和空结果建议。
 3. F01 自定义忌口验收先因 + Add 无目标而失败；加入 Sheet 与保存逻辑后通过。
 4. F03/F03b 新 fixture 与 Share 主操作验收在更新页面数据和 CTA 后通过。
 5. Me 保留内容验收在恢复语言、目标、偏好摘要、预览提醒和隐私说明后通过。
@@ -42,7 +43,7 @@
 - 路由、onboarding guard、共享 App Shell 和底部导航。
 - v1.1 token 层、共享 UI 组件和页面样式。
 - F01 偏好持久化、自定义忌口、编辑返回。
-- F02 营养摘要、搜索、Try 芯片、推荐与 See all。
+- F02 营养摘要、91 道菜谱 Mock 搜索、详情 Sheet、Try 芯片、推荐与 See all。
 - F03 日期、预算、食材、换餐、重生成与购物入口。
 - F03b 采购项、预算、 pantry、勾选、分享和配送演示。
 - F04/F05/F06 主动建议、控制、解释和扫描计算。

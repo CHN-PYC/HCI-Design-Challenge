@@ -252,7 +252,7 @@ classDiagram
 | 页面 | 业务能力 | 主要模块 | 首版数据来源 | 状态 |
 | --- | --- | --- | --- | --- |
 | F01 | 保存菜系、饮食风格、过敏/忌口和自定义忌口 | Preferences | MockProfileRepository | 基线 |
-| F02 | 展示每日营养摘要、个性化食谱和本地菜品搜索 | Recommendations | MockRecommendationRepository | 基线 |
+| F02 | 展示每日营养摘要、个性化食谱和 91 道菜谱 Mock 搜索 | Recommendations | MockRecommendationRepository + mock recipes table | 基线 |
 | F03 | 生成/查看周餐单、预算与烹饪限制、替换餐食 | Meal Planning | MockMealPlanRepository | 基线 |
 | F03b | 从餐单生成购物清单、预算与勾选 | Shopping List | MockShoppingListRepository | 基线 |
 | F04 | 展示情境化主动建议及原因 | Nudges | Mock Nudge fixture + NotificationScheduler | 模拟 |

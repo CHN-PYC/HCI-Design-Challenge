@@ -1,9 +1,11 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Clock,
+  ExternalLink,
   Flame,
   Lightbulb,
+  LoaderCircle,
   Search,
   Sparkles,
   UserRound,
@@ -15,6 +17,12 @@ import {
   FoodGlyph,
   type FoodGlyphName,
 } from "../components/FoodGlyph";
+import { Sheet } from "../components/ui/Sheet";
+import {
+  recipeDatabaseInfo,
+  searchRecipes,
+} from "../data/recipe-repository";
+import type { Recipe, RecipeSearchResponse } from "../domain/recipe";
 import { useI18n } from "../i18n/useI18n";
 
 interface LocalizedText {
@@ -122,6 +130,58 @@ const dishes: Dish[] = [
   },
 ];
 
+const categoryLabels: Record<string, string> = {
+  Beef: "牛肉",
+  Breakfast: "早餐",
+  Chicken: "鸡肉",
+  Chinese: "中式",
+  Dessert: "甜点",
+  Goat: "山羊肉",
+  Lamb: "羊肉",
+  Miscellaneous: "综合",
+  Pasta: "意面",
+  Pork: "猪肉",
+  Seafood: "海鲜",
+  Side: "配菜",
+  Starter: "前菜",
+  Vegan: "纯素",
+  Vegetarian: "素食",
+};
+
+const areaLabels: Record<string, string> = {
+  Algerian: "阿尔及利亚",
+  Argentina: "阿根廷",
+  Australian: "澳大利亚",
+  British: "英国",
+  Canadian: "加拿大",
+  Chinese: "中国",
+  Greek: "希腊",
+  India: "印度",
+  Italian: "意大利",
+  Jamaican: "牙买加",
+  Japanese: "日本",
+  Kenyan: "肯尼亚",
+  Malaysian: "马来西亚",
+  Mediterranean: "地中海",
+  Mexican: "墨西哥",
+  Netherlands: "荷兰",
+  Norway: "挪威",
+  Sichuan: "四川",
+  Spanish: "西班牙",
+  Syrian: "叙利亚",
+  Thai: "泰国",
+  Turkish: "土耳其",
+  "United States": "美国",
+  Venezuela: "委内瑞拉",
+  Vietnamese: "越南",
+};
+
+type SearchState =
+  | { status: "idle" }
+  | { status: "loading" }
+  | { status: "error" }
+  | { status: "ready"; response: RecipeSearchResponse };
+
 export function HomePage() {
   const { profile } = useProfile();
   const navigate = useNavigate();
@@ -129,36 +189,59 @@ export function HomePage() {
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
   const [activeTitle, setActiveTitle] = useState(dishes[0].title.en);
-
-  const matches = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    if (!normalized) return [];
-
-    return dishes.filter((dish) => {
-      const haystack = [
-        dish.title.en,
-        dish.title.zh,
-        ...dish.keywords,
-        ...dish.tags.flatMap((tag) => [tag.en, tag.zh]),
-      ]
-        .join(" ")
-        .toLowerCase();
-
-      return haystack.includes(normalized);
-    });
-  }, [query]);
-
+  const [searchState, setSearchState] = useState<SearchState>({ status: "idle" });
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const isSearching = query.trim().length > 0;
-  const visibleDishes = isSearching
-    ? matches
-    : showAll
-      ? dishes
-      : dishes.slice(0, 3);
+  const visibleDishes = showAll ? dishes : dishes.slice(0, 3);
   const featured =
     visibleDishes.find((dish) => dish.title.en === activeTitle) ??
     visibleDishes[0];
   const localize = (value: LocalizedText) =>
     isChinese ? value.zh : value.en;
+
+  function updateQuery(next: string) {
+    setQuery(next);
+    setSearchState(
+      next.trim() ? { status: "loading" } : { status: "idle" },
+    );
+  }
+
+  useEffect(() => {
+    const normalized = query.trim();
+
+    if (!normalized) {
+      return;
+    }
+
+    let active = true;
+    const timer = window.setTimeout(() => {
+      void searchRecipes(normalized, 8)
+        .then((response) => {
+          if (active) setSearchState({ status: "ready", response });
+        })
+        .catch(() => {
+          if (active) setSearchState({ status: "error" });
+        });
+    }, 180);
+
+    return () => {
+      active = false;
+      window.clearTimeout(timer);
+    };
+  }, [query]);
+
+  const resultRecipes =
+    searchState.status === "ready" ? searchState.response.recipes : [];
+  const suggestionRecipes =
+    searchState.status === "ready" ? searchState.response.suggestions : [];
+  const searchMode =
+    searchState.status === "ready" ? searchState.response.mode : "exact";
+  const categoryLabel = (value: string) =>
+    isChinese ? (categoryLabels[value] ?? value) : value;
+  const areaLabel = (value: string) =>
+    isChinese
+      ? (areaLabels[value] ?? (value || "国际"))
+      : value || "International";
 
   return (
     <main className="home-page page">
@@ -217,7 +300,7 @@ export function HomePage() {
           </span>
           <input
             aria-label={t("Search dishes", "搜索菜品")}
-            onChange={(event) => setQuery(event.target.value)}
+            onChange={(event) => updateQuery(event.target.value)}
             placeholder={t("Search dishes", "搜索菜品")}
             type="search"
             value={query}
@@ -225,7 +308,7 @@ export function HomePage() {
           {query ? (
             <button
               aria-label={t("Clear search", "清除搜索")}
-              onClick={() => setQuery("")}
+              onClick={() => updateQuery("")}
               type="button"
             >
               <X aria-hidden="true" size={15} />
@@ -237,11 +320,13 @@ export function HomePage() {
           {[
             { en: "Tofu", zh: "豆腐" },
             { en: "Sushi", zh: "寿司" },
+            { en: "Chicken", zh: "鸡肉" },
+            { en: "Pasta", zh: "意面" },
           ].map((sample) => (
             <button
               className="ui-chip"
               key={sample.en}
-              onClick={() => setQuery(sample.en)}
+              onClick={() => updateQuery(sample.en)}
               type="button"
             >
               {isChinese ? sample.zh : sample.en}
@@ -252,9 +337,17 @@ export function HomePage() {
 
       <div className="section-bar">
         <h2 className="heading-with-icon">
-          <Sparkles aria-hidden="true" size={18} />
+          {isSearching ? (
+            <Search aria-hidden="true" size={18} />
+          ) : (
+            <Sparkles aria-hidden="true" size={18} />
+          )}
           {isSearching
-            ? t("Search results", "搜索结果")
+            ? searchMode === "suggestions"
+              ? t("Suggested recipes", "推荐菜谱")
+              : searchMode === "partial"
+                ? t("Close matches", "相近菜谱")
+                : t("Search results", "搜索结果")
             : t("Picked for you", "为你精选")}
         </h2>
         {!isSearching ? (
@@ -268,28 +361,87 @@ export function HomePage() {
           </button>
         ) : (
           <span className="result-count">
-            {matches.length}{" "}
-            {matches.length === 1 ? t("dish", "道菜") : t("dishes", "道菜")}
+            {searchState.status === "loading"
+              ? t("Searching…", "搜索中…")
+              : searchState.status === "error"
+                ? t("Unavailable", "不可用")
+                : resultRecipes.length > 0
+                  ? `${resultRecipes.length} ${
+                      resultRecipes.length === 1
+                        ? t("recipe", "道菜谱")
+                        : t("recipes", "道菜谱")
+                    }`
+                  : searchMode === "suggestions"
+                    ? `${suggestionRecipes.length} ${
+                        suggestionRecipes.length === 1
+                          ? t("suggestion", "个建议")
+                          : t("suggestions", "个建议")
+                      }`
+                    : `0 ${t("recipes", "道菜谱")}`}
           </span>
         )}
       </div>
 
-      {isSearching && matches.length === 0 ? (
-        <section className="empty-search" aria-live="polite">
-          <span aria-hidden="true">
-            <Search size={28} />
-          </span>
-          <h2>{t("No dishes found", "没有找到菜品")}</h2>
-          <p>
-            {t(
-              "Try a shorter search or clear the query.",
-              "试试更短的关键词，或清除搜索。",
-            )}
-          </p>
-          <button className="text-link" onClick={() => setQuery("")} type="button">
-            {t("Show all dishes", "显示全部菜品")}
-          </button>
-        </section>
+      {isSearching ? (
+        searchState.status === "loading" ? (
+          <section className="search-feedback" role="status">
+            <LoaderCircle aria-hidden="true" size={20} />
+            <span>
+              {t(
+                "Searching " + recipeDatabaseInfo.count + " recipes…",
+                "正在搜索 " + recipeDatabaseInfo.count + " 道菜谱…",
+              )}
+            </span>
+          </section>
+        ) : searchState.status === "error" ? (
+          <section className="search-feedback search-feedback--error" role="alert">
+            <span>
+              {t(
+                "Recipe search is temporarily unavailable.",
+                "菜谱搜索暂时不可用。",
+              )}
+            </span>
+            <button className="text-link" onClick={() => updateQuery("")} type="button">
+              {t("Show all recipes", "显示全部菜谱")}
+            </button>
+          </section>
+        ) : resultRecipes.length > 0 ? (
+          <RecipeResults
+            areaLabel={areaLabel}
+            categoryLabel={categoryLabel}
+            label={t("Matching recipes", "匹配菜谱")}
+            onOpen={setSelectedRecipe}
+            recipes={resultRecipes}
+          />
+        ) : (
+          <section className="empty-search empty-search--suggestions" aria-live="polite">
+            <span aria-hidden="true">
+              <Search size={28} />
+            </span>
+            <h2>
+              {t(
+                "No exact match for “" + query.trim() + "”",
+                "没有完全匹配“" + query.trim() + "”",
+              )}
+            </h2>
+            <p>
+              {t(
+                `Searched ${recipeDatabaseInfo.count} recipes. Try one of these instead.`,
+                `已搜索 ${recipeDatabaseInfo.count} 道菜谱，可以试试这些。`,
+              )}
+            </p>
+            <RecipeResults
+              areaLabel={areaLabel}
+              categoryLabel={categoryLabel}
+              label={t("Suggested recipes", "推荐菜谱")}
+              onOpen={setSelectedRecipe}
+              recipes={suggestionRecipes}
+            />
+            <button className="text-link" onClick={() => updateQuery("")} type="button">
+              {t("Show all recipes", "显示全部菜谱")}
+            </button>
+          </section>
+        )
       ) : featured ? (
         <>
           <article className="featured-card">
@@ -353,6 +505,173 @@ export function HomePage() {
           ) : null}
         </>
       ) : null}
+
+      {selectedRecipe ? (
+        <RecipeSheet
+          areaLabel={areaLabel}
+          categoryLabel={categoryLabel}
+          onClose={() => setSelectedRecipe(null)}
+          recipe={selectedRecipe}
+        />
+      ) : null}
     </main>
+  );
+}
+
+function RecipeResults({
+  recipes,
+  onOpen,
+  categoryLabel,
+  areaLabel,
+  label,
+}: {
+  recipes: Recipe[];
+  onOpen: (recipe: Recipe) => void;
+  categoryLabel: (value: string) => string;
+  areaLabel: (value: string) => string;
+  label: string;
+}) {
+  return (
+    <section aria-label={label} className="recipe-results">
+      {recipes.map((recipe) => (
+        <button
+          className="recipe-result"
+          key={recipe.id}
+          onClick={() => onOpen(recipe)}
+          type="button"
+        >
+          <span aria-hidden="true" className="recipe-result__glyph">
+            <FoodGlyph name={recipe.glyph} size={24} />
+          </span>
+          <span className="recipe-result__copy">
+            <strong>{recipe.title}</strong>
+            <small>
+              {categoryLabel(recipe.category)} · {areaLabel(recipe.area)}
+            </small>
+            <em>{recipe.ingredients.slice(0, 3).join(" · ")}</em>
+          </span>
+          <span
+            className={
+              recipe.origin === "nutripal"
+                ? "recipe-result__source recipe-result__source--local"
+                : "recipe-result__source"
+            }
+          >
+            {recipe.origin === "nutripal" ? "NutriPal" : recipe.sourceName}
+          </span>
+        </button>
+      ))}
+    </section>
+  );
+}
+
+function RecipeSheet({
+  recipe,
+  onClose,
+  categoryLabel,
+  areaLabel,
+}: {
+  recipe: Recipe;
+  onClose: () => void;
+  categoryLabel: (value: string) => string;
+  areaLabel: (value: string) => string;
+}) {
+  const { t } = useI18n();
+  const hasMetrics =
+    recipe.minutes !== undefined ||
+    recipe.calories !== undefined ||
+    recipe.price !== undefined;
+
+  return (
+    <Sheet
+      description={categoryLabel(recipe.category) + " · " + areaLabel(recipe.area)}
+      footer={
+        <>
+          {recipe.sourceUrl ? (
+            <a
+              className="ui-sheet__primary ui-sheet__link"
+              href={recipe.sourceUrl}
+              rel="noreferrer"
+              target="_blank"
+            >
+              {t("View source", "查看来源")}
+              <ExternalLink aria-hidden="true" size={15} />
+            </a>
+          ) : (
+            <span />
+          )}
+          <button className="ui-sheet__secondary" onClick={onClose} type="button">
+            {t("Close", "关闭")}
+          </button>
+        </>
+      }
+      onClose={onClose}
+      title={recipe.title}
+    >
+      <div className="recipe-detail">
+        <div className="recipe-detail__hero">
+          <span aria-hidden="true" className="recipe-detail__glyph">
+            <FoodGlyph name={recipe.glyph} size={34} />
+          </span>
+          <div>
+            <strong>{recipe.sourceName}</strong>
+            <small>
+              {recipe.ingredients.length} {t("ingredients", "种食材")}
+            </small>
+          </div>
+        </div>
+
+        {hasMetrics ? (
+          <p className="recipe-detail__metrics">
+            {recipe.minutes !== undefined ? (
+              <span>
+                <Clock aria-hidden="true" size={14} />
+                {recipe.minutes} {t("min", "分钟")}
+              </span>
+            ) : null}
+            {recipe.calories !== undefined ? (
+              <span>
+                <Flame aria-hidden="true" size={14} />
+                {recipe.calories} {t("kcal", "千卡")}
+              </span>
+            ) : null}
+            {recipe.price ? (
+              <span>
+                <Wallet aria-hidden="true" size={14} />
+                {recipe.price}
+              </span>
+            ) : null}
+          </p>
+        ) : null}
+
+        <h3>{t("Ingredients", "食材")}</h3>
+        <div className="ingredient-chips">
+          {recipe.ingredients.map((ingredient) => (
+            <span className="ingredient-chip" key={ingredient}>
+              {ingredient}
+            </span>
+          ))}
+        </div>
+
+        {recipe.reason ? (
+          <p className="why-card">
+            <Lightbulb aria-hidden="true" size={16} />
+            <span>{recipe.reason}</span>
+          </p>
+        ) : null}
+
+        <p className="recipe-attribution">
+          {recipe.origin === "themealdb"
+            ? t(
+                "Recipe metadata from TheMealDB; instructions are not copied into this prototype.",
+                "菜谱元数据来自 TheMealDB；原型未复制完整做法。",
+              )
+            : t(
+                "Prototype recommendation prepared for NutriPal.",
+                "NutriPal 原型内置推荐。",
+              )}
+        </p>
+      </div>
+    </Sheet>
   );
 }

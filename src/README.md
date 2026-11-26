@@ -29,7 +29,7 @@ npm run preview
 - Fixed mobile zoom: pinch zoom disabled; form controls use at least 16px type to prevent iOS focus zoom
 - Onboarding redirect for new users
 - F01 preference capture, custom avoidance sheet and Me edit mode with local Mock persistence
-- F02 recommendations with switchable picks, local dish search and expandable discovery
+- F02 recommendations with switchable picks, 91-recipe mock Supabase search and expandable discovery
 - F03 meal plan with day selection, pantry editing, swaps and regeneration
 - F03b shopping checklist, budget summary, sharing hand-off and order demo
 - F04 contextual nudge preview with alternate ideas and dismissal
@@ -49,6 +49,7 @@ The current data layer is a local storage Mock. It is deliberately isolated behi
 - `src/components/ui`: shared Chip, CuisineTile, Toggle, SegmentedControl, SettingsRow and Sheet
 - `src/domain`: domain types
 - `src/data`: local Mock repositories
+- `src/data/recipe-catalog.json`: 91 read-only recipes for the Supabase-compatible search mock
 - `src/styles`: v1.1 tokens, shared components and page overrides
 - `src/acceptance`: ATDD acceptance tests
 - `src/test`: test environment setup

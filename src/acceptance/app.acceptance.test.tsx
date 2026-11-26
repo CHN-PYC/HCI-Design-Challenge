@@ -110,7 +110,7 @@ describe("ATDD NutriPal v1.1 acceptance", () => {
     expect(stored.preferences.dietStyles).toContain("Halal");
   });
 
-  it("searches dishes locally, handles empty results and Try chips", async () => {
+  it("searches the mock Supabase recipe database with multiple queries", async () => {
     const user = userEvent.setup();
     seedOnboardedProfile();
     renderApp("/home");
@@ -118,19 +118,44 @@ describe("ATDD NutriPal v1.1 acceptance", () => {
     const search = await screen.findByRole("searchbox", { name: /search dishes/i });
     await user.type(search, "tofu");
 
-    expect(screen.getByText("Mapo Tofu & Brown Rice")).toBeInTheDocument();
-    expect(screen.queryByText("Halloumi Quinoa Bowl")).not.toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: /search results/i })).toBeInTheDocument();
+    expect(
+      await screen.findByText("Ma Po Tofu"),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /search results/i }),
+    ).toBeInTheDocument();
+
+    await user.clear(search);
+    await user.type(search, "pasta");
+    expect(
+      await screen.findByText("Fettuccine Alfredo"),
+    ).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", { name: /fettuccine alfredo/i }),
+    );
+    expect(
+      screen.getByRole("dialog", { name: /fettuccine alfredo/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /view source/i }),
+    ).toHaveAttribute("href", expect.stringContaining("themealdb.com"));
+    await user.keyboard("{Escape}");
 
     await user.clear(search);
     await user.type(search, "nothing-matches");
-    expect(screen.getByText("No dishes found")).toBeInTheDocument();
+    expect(
+      await screen.findByText(/no exact match for/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /suggested recipes/i }),
+    ).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: /show all dishes/i }));
-    expect(screen.getByText("Halloumi Quinoa Bowl")).toBeInTheDocument();
-
+    await user.click(screen.getByRole("button", { name: /clear search/i }));
     await user.click(screen.getByRole("button", { name: "Sushi" }));
-    expect(screen.getByText("Miso Salmon Rice")).toBeInTheDocument();
+    expect(
+      await screen.findByText("Sushi", { selector: ".recipe-result__copy strong" }),
+    ).toBeInTheDocument();
   });
 
   it("renders the F03 plan and opens the F03b shopping list", async () => {

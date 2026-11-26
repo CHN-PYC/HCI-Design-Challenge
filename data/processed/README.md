@@ -7,3 +7,4 @@
 ## 已归档数据
 
 - [questionnaire-v3](questionnaire-v3/README.md)：100 条 AI 生成的 Nourish V3 模拟回答，含原始 xlsx、CSV、统计速览和校验结果。**非真实参与者数据。**
+- [recipe-catalog](recipe-catalog/README.md)：从 TheMealDB 收集的 86 道公开菜谱 + 5 道原型内置推荐，供本地 Supabase Mock 搜索。
