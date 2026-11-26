@@ -234,7 +234,7 @@ export function ScanPage() {
           type="button"
         >
           <Check aria-hidden="true" size={17} />
-          {t("Add to today’s log", "添加到今日记录")}
+          {t("Log to Dinner", "记录为晚餐")}
         </button>
       </section>
     </main>

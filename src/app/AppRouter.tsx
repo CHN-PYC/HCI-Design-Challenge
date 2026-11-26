@@ -10,6 +10,7 @@ import { ShoppingListPage } from "../pages/ShoppingListPage";
 import { AppShell } from "./AppShell";
 import { useProfile } from "./profile-context";
 import { ProfileProvider } from "./ProfileProvider";
+import { DisplayPreferencesProvider } from "./DisplayPreferencesProvider";
 import { LanguageProvider } from "../i18n/LanguageProvider";
 
 function RequireOnboarding() {
@@ -54,10 +55,12 @@ function AppRoutes() {
 
 export function AppRouter() {
   return (
-    <LanguageProvider>
-      <ProfileProvider>
-        <AppRoutes />
-      </ProfileProvider>
-    </LanguageProvider>
+    <DisplayPreferencesProvider>
+      <LanguageProvider>
+        <ProfileProvider>
+          <AppRoutes />
+        </ProfileProvider>
+      </LanguageProvider>
+    </DisplayPreferencesProvider>
   );
 }

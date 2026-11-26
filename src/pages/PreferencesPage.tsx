@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import { useProfile } from "../app/profile-context";
 import {
   FoodGlyph,
   type FoodGlyphName,
 } from "../components/FoodGlyph";
+import { Chip } from "../components/ui/Chip";
+import { CuisineTile } from "../components/ui/CuisineTile";
+import { Sheet } from "../components/ui/Sheet";
 import { useI18n } from "../i18n/useI18n";
 
 const cuisines = [
@@ -30,7 +34,6 @@ const dietStyles = [
   { value: "Halal", en: "Halal", zh: "清真" },
   { value: "Low-carb", en: "Low-carb", zh: "低碳水" },
   { value: "High-protein", en: "High-protein", zh: "高蛋白" },
-  { value: "No preference", en: "No preference", zh: "无偏好" },
 ];
 
 const allergens = [
@@ -38,8 +41,15 @@ const allergens = [
   { value: "Dairy", en: "Dairy", zh: "乳制品" },
   { value: "Gluten", en: "Gluten", zh: "麸质" },
   { value: "Shellfish", en: "Shellfish", zh: "贝类" },
-  { value: "Pork", en: "Pork", zh: "猪肉" },
 ];
+
+const allergenLabels: Record<string, string> = {
+  Nuts: "坚果",
+  Dairy: "乳制品",
+  Gluten: "麸质",
+  Shellfish: "贝类",
+  Pork: "猪肉",
+};
 
 function toggleValue(values: string[], value: string) {
   return values.includes(value)
@@ -57,11 +67,31 @@ export function PreferencesPage() {
     profile.preferences.cuisines,
   );
   const [selectedDiets, setSelectedDiets] = useState(
-    profile.preferences.dietStyles,
+    profile.preferences.dietStyles.filter((item) => item !== "No preference"),
   );
   const [selectedAllergens, setSelectedAllergens] = useState(
-    profile.preferences.avoidAllergens,
+    profile.preferences.avoidAllergens.filter(
+      (item) => item !== "No preference",
+    ),
   );
+  const [isAddingAllergen, setIsAddingAllergen] = useState(false);
+  const [newAllergen, setNewAllergen] = useState("");
+  const customAllergens = selectedAllergens.filter(
+    (item) => !allergens.some((allergen) => allergen.value === item),
+  );
+
+  function addCustomAllergen() {
+    const value = newAllergen.trim();
+    if (!value) return;
+
+    setSelectedAllergens((current) =>
+      current.some((item) => item.toLowerCase() === value.toLowerCase())
+        ? current
+        : [...current, value],
+    );
+    setNewAllergen("");
+    setIsAddingAllergen(false);
+  }
 
   function handleSave() {
     savePreferences({
@@ -83,7 +113,7 @@ export function PreferencesPage() {
               onClick={() => navigate("/me")}
               type="button"
             >
-              ←
+              <ArrowLeft aria-hidden="true" size={18} />
             </button>
           ) : (
             <div
@@ -123,21 +153,17 @@ export function PreferencesPage() {
               const name = isChinese ? cuisine.zh : cuisine.en;
               const selected = selectedCuisines.includes(cuisine.value);
               return (
-                <button
-                  aria-label={name}
-                  aria-pressed={selected}
-                  className={selected ? "cuisine-tile on" : "cuisine-tile"}
+                <CuisineTile
+                  icon={<FoodGlyph name={cuisine.glyph} size={27} />}
                   key={cuisine.value}
+                  label={name}
                   onClick={() =>
                     setSelectedCuisines((current) =>
                       toggleValue(current, cuisine.value),
                     )
                   }
-                  type="button"
-                >
-                  <FoodGlyph name={cuisine.glyph} size={27} />
-                  <small>{name}</small>
-                </button>
+                  selected={selected}
+                />
               );
             })}
           </div>
@@ -150,17 +176,15 @@ export function PreferencesPage() {
               const name = isChinese ? diet.zh : diet.en;
               const selected = selectedDiets.includes(diet.value);
               return (
-                <button
-                  aria-pressed={selected}
-                  className={selected ? "choice-chip on" : "choice-chip"}
+                <Chip
                   key={diet.value}
                   onClick={() =>
                     setSelectedDiets((current) => toggleValue(current, diet.value))
                   }
-                  type="button"
+                  selected={selected}
                 >
                   {name}
-                </button>
+                </Chip>
               );
             })}
           </div>
@@ -173,21 +197,40 @@ export function PreferencesPage() {
               const name = isChinese ? allergen.zh : allergen.en;
               const selected = selectedAllergens.includes(allergen.value);
               return (
-                <button
-                  aria-pressed={selected}
-                  className={selected ? "choice-chip on" : "choice-chip"}
+                <Chip
                   key={allergen.value}
                   onClick={() =>
                     setSelectedAllergens((current) =>
                       toggleValue(current, allergen.value),
                     )
                   }
-                  type="button"
+                  selected={selected}
                 >
                   {name}
-                </button>
+                </Chip>
               );
             })}
+            {customAllergens.map((allergen) => (
+              <Chip
+                key={allergen}
+                onClick={() =>
+                  setSelectedAllergens((current) =>
+                    toggleValue(current, allergen),
+                  )
+                }
+                selected
+              >
+                {isChinese ? (allergenLabels[allergen] ?? allergen) : allergen}
+              </Chip>
+            ))}
+            <button
+              className="ui-add-chip"
+              onClick={() => setIsAddingAllergen(true)}
+              type="button"
+            >
+              <Plus aria-hidden="true" size={15} />
+              {t("Add", "添加")}
+            </button>
           </div>
         </fieldset>
 
@@ -196,7 +239,8 @@ export function PreferencesPage() {
           onClick={handleSave}
           type="button"
         >
-          {isEditing ? t("Save changes", "保存更改") : t("Continue", "继续")}
+          <span>{isEditing ? t("Save changes", "保存更改") : t("Continue", "继续")}</span>
+          <ArrowRight aria-hidden="true" size={18} />
         </button>
         <p className="preferences-note">
           {t(
@@ -205,6 +249,52 @@ export function PreferencesPage() {
           )}
         </p>
       </div>
+
+      {isAddingAllergen ? (
+        <Sheet
+          description={t(
+            "Add an ingredient or allergen you want NutriPal to avoid.",
+            "添加希望 NutriPal 避开的食材或过敏原。",
+          )}
+          footer={
+            <>
+              <button
+                className="ui-sheet__secondary"
+                onClick={() => {
+                  setNewAllergen("");
+                  setIsAddingAllergen(false);
+                }}
+                type="button"
+              >
+                {t("Cancel", "取消")}
+              </button>
+              <button
+                className="ui-sheet__primary"
+                disabled={!newAllergen.trim()}
+                onClick={addCustomAllergen}
+                type="button"
+              >
+                {t("Add", "添加")}
+              </button>
+            </>
+          }
+          onClose={() => setIsAddingAllergen(false)}
+          title={t("Add an avoidance", "添加忌口")}
+        >
+          <label className="ui-field">
+            <span>{t("Ingredient or allergen", "食材或过敏原")}</span>
+            <input
+              autoFocus
+              onChange={(event) => setNewAllergen(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") addCustomAllergen();
+              }}
+              placeholder={t("For example: Pork", "例如：猪肉")}
+              value={newAllergen}
+            />
+          </label>
+        </Sheet>
+      ) : null}
     </main>
   );
 }

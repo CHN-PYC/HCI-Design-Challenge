@@ -3,6 +3,9 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { AppRouter } from "./app/AppRouter";
 import "./styles.css";
+import "./styles/tokens.css";
+import "./styles/components.css";
+import "./styles/v11.css";
 
 const root = document.getElementById("root");
 

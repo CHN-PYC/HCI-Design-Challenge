@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
+  ChefHat,
   Clock,
   Dumbbell,
   Info,
@@ -143,14 +144,15 @@ export function NudgePreviewPage() {
           </div>
           <button
             aria-label={t(
-              "Cook this — start cooking",
-              "做这道菜——开始烹饪",
+              "Cook this",
+              "做这道菜",
             )}
             className="primary-button"
             onClick={() => navigate("/plan")}
             type="button"
           >
-            {t("Start cooking", "开始做饭")}
+            <ChefHat aria-hidden="true" size={18} />
+            {t("Cook this", "做这道菜")}
           </button>
           <div className="suggestion-actions">
             <button

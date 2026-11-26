@@ -26,12 +26,14 @@ const week = [
 ];
 
 const pantry = [
-  { glyph: "egg" as const, label: "Eggs", zh: "鸡蛋" },
-  { glyph: "leaf" as const, label: "Spinach", zh: "菠菜" },
-  { glyph: "rice" as const, label: "White rice", zh: "白米饭" },
-  { glyph: "carrot" as const, label: "Carrots", zh: "胡萝卜" },
-  { glyph: "sauce" as const, label: "Soy sauce", zh: "酱油" },
+  { glyph: "egg" as const, label: "Eggs", zh: "鸡蛋", initial: true },
+  { glyph: "leaf" as const, label: "Spinach", zh: "菠菜", initial: true },
+  { glyph: "rice" as const, label: "Rice", zh: "米饭", initial: true },
+  { glyph: "chicken" as const, label: "Chicken", zh: "鸡肉", initial: true },
+  { glyph: "tomato" as const, label: "Tomato", zh: "番茄", initial: false },
 ];
+
+const PANTRY_TOTAL = 6;
 
 interface Meal {
   time: string;
@@ -261,7 +263,7 @@ export function PlanPage() {
   const { isChinese, t } = useI18n();
   const [selectedDay, setSelectedDay] = useState("Tue");
   const [selectedPantry, setSelectedPantry] = useState(
-    () => new Set(pantry.map((item) => item.label)),
+    () => new Set(pantry.filter((item) => item.initial).map((item) => item.label)),
   );
   const [editingPantry, setEditingPantry] = useState(false);
   const [swaps, setSwaps] = useState<Record<string, number>>({});
@@ -361,7 +363,7 @@ export function PlanPage() {
         <div className="constraint constraint--pantry">
           <strong>
             <Container aria-hidden="true" size={15} />
-            {selectedPantry.size} {t("items", "项")}
+            {PANTRY_TOTAL} {t("items", "项")}
           </strong>
           <span>{t("Pantry", "食材库")}</span>
         </div>

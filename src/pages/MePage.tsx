@@ -1,7 +1,17 @@
-import { Link } from "react-router-dom";
-import { Bell, Globe2, LockKeyhole, Sparkles, UserRound } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  Accessibility,
+  Bell,
+  Globe2,
+  LockKeyhole,
+  Sparkles,
+  UserRound,
+} from "lucide-react";
+import { useDisplayPreferences } from "../app/display-context";
 import { useProfile } from "../app/profile-context";
 import { LanguageSwitcher } from "../components/LanguageSwitcher";
+import { SettingsRow } from "../components/ui/SettingsRow";
+import { Toggle } from "../components/ui/Toggle";
 import { useI18n } from "../i18n/useI18n";
 
 const preferenceLabels: Record<string, string> = {
@@ -29,35 +39,49 @@ const preferenceLabels: Record<string, string> = {
 
 export function MePage() {
   const { profile } = useProfile();
+  const { textSize, setTextSize } = useDisplayPreferences();
+  const navigate = useNavigate();
   const { isChinese, t } = useI18n();
   const preferences = profile.preferences;
   const localize = (value: string) =>
     isChinese ? (preferenceLabels[value] ?? value) : value;
+
+  const dietarySummary = [
+    ...preferences.cuisines.slice(0, 2),
+    ...preferences.dietStyles.slice(0, 1),
+  ]
+    .map(localize)
+    .join(" · ");
 
   return (
     <main className="me-page page">
       <header className="me-header">
         <div>
           <h1>{t("Me", "我")}</h1>
-          <p>{t("Your tastes, goals and settings in one place.", "你的口味、目标和设置都在这里。")}</p>
+          <p>
+            {t(
+              "Manage your preferences and reminders.",
+              "管理你的偏好与提醒。",
+            )}
+          </p>
         </div>
       </header>
 
       <section className="profile-banner" aria-label={t("Profile summary", "个人资料概览")}>
         <span aria-hidden="true" className="profile-avatar">
-          <UserRound size={29} />
+          <UserRound size={28} />
         </span>
-        <div>
+        <div className="profile-copy">
           <h2>{profile.displayName}</h2>
-          <p>{t("NutriPal prototype profile", "NutriPal 原型档案")}</p>
+          <p>{t("Make NutriPal work for you", "让 NutriPal 更懂你")}</p>
         </div>
         <span className="profile-badge">{t("Local", "本地")}</span>
       </section>
 
       <section aria-labelledby="goal-heading">
-        <div className="section-bar section-bar--tight">
-          <h2 id="goal-heading">{t("Today’s targets", "今日目标")}</h2>
-        </div>
+        <h2 className="section-heading" id="goal-heading">
+          {t("Today’s targets", "今日目标")}
+        </h2>
         <div className="goal-grid">
           <div className="goal-card goal-card--kcal">
             <strong>{profile.healthTargets.dailyCalories.toLocaleString("en-GB")}</strong>
@@ -74,59 +98,86 @@ export function MePage() {
         </div>
       </section>
 
-      <section
-        aria-label={t("Language settings", "语言设置")}
-        className="language-card"
-      >
-        <span aria-hidden="true" className="me-link-icon">
-          <Globe2 size={21} />
-        </span>
-        <div className="language-copy">
-          <strong>{t("Language", "语言")}</strong>
-          <small>{t("Choose the app language", "选择应用显示语言")}</small>
-        </div>
-        <LanguageSwitcher />
-      </section>
+      <section aria-labelledby="preferences-heading" className="me-preferences">
+        <h2 className="section-heading" id="preferences-heading">
+          {t("Preferences", "偏好")}
+        </h2>
+        <div className="settings-stack">
+          <SettingsRow
+            description={
+              dietarySummary ||
+              t("Diet, cuisines and ingredients to avoid", "饮食、菜系与忌口")
+            }
+            onClick={() => navigate("/preferences?mode=edit")}
+            title={t("Dietary & cultural preferences", "饮食与文化偏好")}
+          />
 
-      <section className="me-card">
-        <div className="me-card-heading">
-          <div>
-            <h2>{t("Food preferences", "饮食偏好")}</h2>
-            <p>{t("Used to personalise every recommendation.", "用于个性化每一条推荐。")}</p>
+          <div className="preference-summary">
+            <Group
+              emptyLabel={t("Not set yet", "尚未设置")}
+              label={t("Cuisines", "菜系")}
+              values={preferences.cuisines.map(localize)}
+            />
+            <Group
+              emptyLabel={t("Not set yet", "尚未设置")}
+              label={t("Diet style", "饮食方式")}
+              values={preferences.dietStyles.map(localize)}
+            />
+            <Group
+              emptyLabel={t("Not set yet", "尚未设置")}
+              label={t("Avoid", "忌口")}
+              values={preferences.avoidAllergens.map(localize)}
+            />
           </div>
-          <Link className="text-link" to="/preferences?mode=edit">
-            {t("Edit", "编辑")}
-          </Link>
-        </div>
-        <div className="preference-summary">
-          <Group
-            emptyLabel={t("Not set yet", "尚未设置")}
-            label={t("Cuisines", "菜系")}
-            values={preferences.cuisines.map(localize)}
+
+          <SettingsRow
+            description={t(
+              "Balanced · quiet hours 22:00–07:30",
+              "均衡 · 免打扰 22:00–07:30",
+            )}
+            onClick={() => navigate("/nudges/settings")}
+            title={t("Notification settings", "通知设置")}
           />
-          <Group
-            emptyLabel={t("Not set yet", "尚未设置")}
-            label={t("Diet style", "饮食方式")}
-            values={preferences.dietStyles.map(localize)}
-          />
-          <Group
-            emptyLabel={t("Not set yet", "尚未设置")}
-            label={t("Avoid", "忌口")}
-            values={preferences.avoidAllergens.map(localize)}
-          />
+
+          <div className="ui-settings-row settings-row-language">
+            <span aria-hidden="true" className="ui-settings-row__icon">
+              <Globe2 size={21} />
+            </span>
+            <span className="ui-settings-row__copy">
+              <strong>{t("Language", "语言")}</strong>
+              <small>{t("Choose the app language", "选择应用显示语言")}</small>
+            </span>
+            <LanguageSwitcher />
+          </div>
         </div>
       </section>
 
-      <Link className="me-link-card" to="/nudges/settings">
-        <span aria-hidden="true" className="me-link-icon">
-          <Bell size={21} />
-        </span>
-        <span>
-          <strong>{t("Nudges", "提醒")}</strong>
-          <small>{t("Balanced · quiet hours 22:00–07:30", "均衡 · 免打扰 22:00–07:30")}</small>
-        </span>
-        <b aria-hidden="true">→</b>
-      </Link>
+      <section aria-labelledby="accessibility-heading" className="me-accessibility">
+        <h2 className="section-heading" id="accessibility-heading">
+          {t("Accessibility", "无障碍")}
+        </h2>
+        <div className="ui-settings-row settings-row-accessibility">
+          <span aria-hidden="true" className="ui-settings-row__icon">
+            <Accessibility size={21} />
+          </span>
+          <span className="ui-settings-row__copy">
+            <strong>{t("Large text", "大字号")}</strong>
+            <small>
+              {t(
+                "Increase the size of on-screen text",
+                "放大屏幕上的文字",
+              )}
+            </small>
+          </span>
+          <Toggle
+            checked={textSize === "large"}
+            label={t("Large text", "大字号")}
+            onChange={() =>
+              setTextSize(textSize === "large" ? "default" : "large")
+            }
+          />
+        </div>
+      </section>
 
       <Link className="me-link-card" to="/nudges/preview">
         <span aria-hidden="true" className="me-link-icon">
@@ -134,9 +185,30 @@ export function MePage() {
         </span>
         <span>
           <strong>{t("Preview a nudge", "预览一条提醒")}</strong>
-          <small>{t("See how a contextual suggestion appears", "查看情境建议如何呈现")}</small>
+          <small>
+            {t(
+              "See how a contextual suggestion appears",
+              "查看情境建议如何呈现",
+            )}
+          </small>
         </span>
-        <b aria-hidden="true">→</b>
+        <b aria-hidden="true">›</b>
+      </Link>
+
+      <Link className="me-link-card" to="/nudges/settings">
+        <span aria-hidden="true" className="me-link-icon">
+          <Bell size={21} />
+        </span>
+        <span>
+          <strong>{t("Nudges", "提醒")}</strong>
+          <small>
+            {t(
+              "Balanced · quiet hours 22:00–07:30",
+              "均衡 · 免打扰 22:00–07:30",
+            )}
+          </small>
+        </span>
+        <b aria-hidden="true">›</b>
       </Link>
 
       <section className="privacy-note">

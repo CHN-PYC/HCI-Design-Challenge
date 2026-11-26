@@ -21,36 +21,36 @@ const shoppingItems: {
   price: string;
 }[] = [
   {
-    name: "Feta cheese",
-    zhName: "菲达奶酪",
-    glyph: "cheese",
-    note: "200 g · for Omelette",
-    zhNote: "200 克 · 用于煎蛋",
-    price: "£2.20",
-  },
-  {
     name: "Chicken thighs",
     zhName: "鸡腿肉",
     glyph: "chicken",
-    note: "500 g · for Rice Bowl",
-    zhNote: "500 克 · 用于米饭碗",
-    price: "£4.50",
+    note: "500 g · Chicken Rice Bowl",
+    zhNote: "500 克 · 鸡肉饭",
+    price: "£4.80",
   },
   {
-    name: "Tomatoes",
-    zhName: "番茄",
-    glyph: "tomato",
-    note: "6 pcs · for Stir-fry",
-    zhNote: "6 个 · 用于炒菜",
-    price: "£1.90",
-  },
-  {
-    name: "Spring onions",
-    zhName: "小葱",
-    glyph: "onion",
-    note: "1 bunch · for Stir-fry",
-    zhNote: "1 把 · 用于炒菜",
+    name: "Brown rice",
+    zhName: "糙米",
+    glyph: "rice",
+    note: "1 kg · 3 meals",
+    zhNote: "1 千克 · 3 餐",
     price: "£3.80",
+  },
+  {
+    name: "Feta cheese",
+    zhName: "菲达奶酪",
+    glyph: "cheese",
+    note: "200 g · Omelette",
+    zhNote: "200 克 · 煎蛋",
+    price: "£2.20",
+  },
+  {
+    name: "Cherry tomatoes",
+    zhName: "圣女果",
+    glyph: "tomato",
+    note: "250 g · Stir-fry",
+    zhNote: "250 克 · 炒菜",
+    price: "£1.60",
   },
 ];
 
@@ -65,7 +65,9 @@ const pantryItems = [
 
 export function ShoppingListPage() {
   const { isChinese, t } = useI18n();
-  const [checked, setChecked] = useState<Set<string>>(() => new Set());
+  const [checked, setChecked] = useState<Set<string>>(
+    () => new Set(["Feta cheese"]),
+  );
   const [shareStatus, setShareStatus] = useState("");
   const [ordered, setOrdered] = useState(false);
 
@@ -119,14 +121,7 @@ export function ShoppingListPage() {
           </h1>
           <p>{t("For Tue–Sun · 18 planned meals", "周二至周日 · 已计划 18 餐")}</p>
         </div>
-        <button
-          aria-label={t("Share list", "分享清单")}
-          className="round-action"
-          onClick={shareList}
-          type="button"
-        >
-          <ArrowUpRight aria-hidden="true" size={18} />
-        </button>
+        <span aria-hidden="true" className="shopping-header-spacer" />
       </header>
 
       <section className="budget-card" aria-label={t("Shopping budget", "购物预算")}>
@@ -199,14 +194,18 @@ export function ShoppingListPage() {
         ))}
       </div>
 
+      <button className="primary-button shopping-share" onClick={shareList} type="button">
+        {t("Share list", "分享清单")}
+        <ArrowUpRight aria-hidden="true" size={18} />
+      </button>
       <button
-        className="primary-button shopping-order"
+        className="shopping-order-secondary"
         onClick={() => setOrdered(true)}
         type="button"
       >
         {ordered
           ? t("Order placed ✓", "订单已提交 ✓")
-          : t("Order for delivery", "下单配送")}
+          : t("Order for delivery (demo)", "下单配送（演示）")}
       </button>
       <p aria-live="polite" className="inline-status">
         {shareStatus ||

@@ -21,18 +21,20 @@ npm run preview
 
 ## Current scope
 
-- Full-viewport application shell without simulated phone chrome or status bar
+- Full-viewport 390px content column without simulated phone chrome or status bar
 - English and Chinese interface with a persisted language switch in Me
-- Consistent vector icon set throughout the interface, with no emoji glyphs
-- Archived Figma screens F01–F06 and F03b implemented as one interactive prototype
+- Lucide + FoodGlyph vector icons only; no emoji icons
+- Archived 2026-11-25 Figma screens F01–F06, F03b and Me implemented as one interactive v1.1 prototype
+- Global, persisted large-text mode with semantic type tokens
 - Onboarding redirect for new users
-- F01 preference capture and Me edit mode with local Mock persistence
-- F02 recommendations with switchable picks and expandable discovery
+- F01 preference capture, custom avoidance sheet and Me edit mode with local Mock persistence
+- F02 recommendations with switchable picks, local dish search and expandable discovery
 - F03 meal plan with day selection, pantry editing, swaps and regeneration
 - F03b shopping checklist, budget summary, sharing hand-off and order demo
 - F04 contextual nudge preview with alternate ideas and dismissal
 - F05 interactive nudge settings and recent-nudge explanation
 - F06 scan result with working portion calculations and log-return flow
+- Me settings hub retaining language, targets, preference summary, nudge preview and privacy
 - Installable Web App Manifest and production offline shell
 
 Production builds accept a subpath through `VITE_BASE`. GitHub Pages uses `/HCI-Design-Challenge/`; the manifest, router basename and service-worker scope follow that value.
@@ -43,8 +45,10 @@ The current data layer is a local storage Mock. It is deliberately isolated behi
 
 - `src/app`: routing, onboarding guard, app shell and profile context
 - `src/pages`: screen-level modules
+- `src/components/ui`: shared Chip, CuisineTile, Toggle, SegmentedControl, SettingsRow and Sheet
 - `src/domain`: domain types
 - `src/data`: local Mock repositories
+- `src/styles`: v1.1 tokens, shared components and page overrides
 - `src/acceptance`: ATDD acceptance tests
 - `src/test`: test environment setup
 

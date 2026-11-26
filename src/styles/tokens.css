@@ -1,0 +1,54 @@
+:root {
+  --bg: #fff7ec;
+  --surface: #ffffff;
+  --ink: #1e1a3c;
+  --muted: #6e6a8a;
+  --line: #eee6da;
+  --purple: #7b5cff;
+  --purple-soft: #ece6ff;
+  --orange: #ff8a3d;
+  --orange-soft: #ffe3d3;
+  --pink: #ff5c8a;
+  --pink-soft: #ffe0e8;
+  --green: #22c27a;
+  --green-soft: #dff7ea;
+  --yellow: #ffc83d;
+  --yellow-soft: #fff1c7;
+  --blue: #38b6ff;
+  --blue-soft: #e0f2ff;
+  --soft: #f4f0ea;
+  --accent: var(--green);
+  --accent-soft: var(--green-soft);
+  --violet-soft: var(--purple-soft);
+  --amber: #f4a23c;
+  --amber-soft: var(--yellow-soft);
+  --coral: var(--pink);
+  --radius-lg: 26px;
+  --radius-md: 18px;
+  --shadow: 0 18px 50px rgb(31 26 61 / 12%);
+
+  --fs-display: 32px;
+  --fs-title: 28px;
+  --fs-page-title: 26px;
+  --fs-section: 19px;
+  --fs-card-title: 17px;
+  --fs-body: 15px;
+  --fs-note: 13px;
+  --fs-caption: 12px;
+  --fs-micro: 11px;
+  --lh-tight: 1.2;
+  --lh-body: 1.35;
+}
+
+:root[data-text-size="large"] {
+  --fs-display: 34px;
+  --fs-title: 30px;
+  --fs-page-title: 28px;
+  --fs-section: 21px;
+  --fs-card-title: 19px;
+  --fs-body: 17px;
+  --fs-note: 15px;
+  --fs-caption: 14px;
+  --fs-micro: 13px;
+}
+
