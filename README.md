@@ -21,6 +21,7 @@
 | 设计归档 | [2026-11-25 v2 归档](design/exports/2026-11-25-nutripal-v2/README.md)（当前视觉基线） |
 | v1.1 变更报告 | [对比 v1.0](docs/08-delivery/v1.1-change-report.md) |
 | 用户研究问卷 | [`docs/02-research/questionnaire/questionnaire-v3-participant.md`](docs/02-research/questionnaire/questionnaire-v3-participant.md)（V3 为当前第三版；预测试待完成） |
+| 问卷结果 | [V3 模拟回答归档](data/processed/questionnaire-v3/README.md)（100 条 AI 生成数据，非真实样本） |
 | 系统设计 | [`docs/04-engineering/system-design.md`](docs/04-engineering/system-design.md) |
 | 模块设计 | [`docs/04-engineering/module-design.md`](docs/04-engineering/module-design.md) |
 | English design docs | [`System Design`](docs/04-engineering/system-design.en.md) · [`Module Design`](docs/04-engineering/module-design.en.md) |

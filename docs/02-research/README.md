@@ -22,6 +22,7 @@
 | 伦理声明 | 已完成 | 线下匿名访谈与记录；课程不要求正式审批；最终仅保留匿名汇总数据 |
 | 认知预测试 | 待开始 | 计划 3–5 名目标用户，尚未执行 |
 | 正式发放与数据分析 | 待开始 | 受认知预测试与招募安排阻塞；伦理说明已完成 |
+| V3 结果归档 | 已归档（模拟数据） | 100 条 AI 生成回答；跳题、唯一 ID 与多选计数已校验；不代表真实调研 |
 | 竞品搜索与人工核对 | 要求已记录 | 第二次会议待办，负责人 @全体成员 |
 | 确定首轮基础功能 | 待确认 | 原计划在完成问卷与竞品分析后决定 |
 
@@ -30,6 +31,7 @@
 - [问卷工作区](questionnaire/README.md)
 - [V3 参与者问卷](questionnaire/questionnaire-v3-participant.md)
 - [V3 修订与设计映射报告](questionnaire/questionnaire-v3-design-report.md)
+- [V3 模拟结果归档](../../data/processed/questionnaire-v3/README.md)
 - [原始 DOCX 与文本快照](questionnaire/source/README.md)
 - [伦理声明状态](questionnaire/ethics-statement.md)
 - [竞品分析工作区](competitor-analysis/README.md)

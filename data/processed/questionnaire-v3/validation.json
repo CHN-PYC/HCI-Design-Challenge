@@ -1,0 +1,129 @@
+{
+  "source_file": "Nourish_V3_100_Simulated_Responses_EN.xlsx",
+  "source_sha256": "49e7fc7c83ef94bd61e8156e601c71f317dcafea50fb9e49d9d976abe874f597",
+  "data_status": "synthetic_responses_not_real_participants",
+  "questionnaire": "Nourish Questionnaire V3 (Q1-Q21, participant-facing part)",
+  "row_count": 100,
+  "column_count": 23,
+  "unique_simulation_ids": 100,
+  "q1_all_yes": true,
+  "age_counts": {
+    "18–24": 30,
+    "25–34": 30,
+    "45 or older": 18,
+    "35–44": 22
+  },
+  "q9_app_usage_counts": {
+    "Used in the past 30 days": 41,
+    "Heard of them but never used": 30,
+    "Used before, but not in the past 30 days": 20,
+    "Never heard of them": 9
+  },
+  "skip_logic_expected_rows": 39,
+  "skip_logic_actual_rows": 39,
+  "skip_logic_matches": true,
+  "q10_q13_valid_rows": 61,
+  "q21_answered": 75,
+  "q21_not_answered": 25,
+  "exclusive_option_conflicts": {
+    "Q5": 0,
+    "Q6": 0,
+    "Q7": 0,
+    "Q8": 0,
+    "Q10": 0,
+    "Q11": 0,
+    "Q12": 0,
+    "Q16": 0,
+    "Q17": 0,
+    "Q18": 0,
+    "Q20": 0
+  },
+  "exclusive_option_conflicts_total": 0,
+  "multiple_choice_sheet_compared_rows": 102,
+  "multiple_choice_recomputed_options": 102,
+  "multiple_choice_count_mismatches": 0,
+  "sheets": [
+    "100 Simulated Responses",
+    "Summary",
+    "Multiple Choice Counts",
+    "Notes and Validation"
+  ],
+  "columns": [
+    "Simulation ID",
+    "Simulated persona / role (not a survey question)",
+    "Q1 Are you aged 18 or over?",
+    "Q2 Age range",
+    "Q3 Main way of arranging main meals in the past 7 days",
+    "Q4 Self-described cultural background (optional)",
+    "Q5 Dietary cultures/traditions to support (multiple choice)",
+    "Q6 Current dietary goals (multiple choice)",
+    "Q7 Dietary difficulties in the past 30 days (multiple choice)",
+    "Q8 Methods used to decide the next meal in the past 30 days (multiple choice)",
+    "Q9 Healthy eating app usage",
+    "Q10 Healthy eating apps used (multiple choice)",
+    "Q11 Features used during most recent app use (multiple choice)",
+    "Q12 Problems during most recent app use (multiple choice)",
+    "Q13 Main reason for most recent app discontinuation",
+    "Q14 Days meal planning was delayed in the past 30 days",
+    "Q15 Turned off notifications after an interruption",
+    "Q16 Preferred situations for proactive advice (multiple choice)",
+    "Q17 Controls wanted for unwanted advice (multiple choice)",
+    "Q18 Potentially useful features (multiple choice)",
+    "Q19 Preferred handling of uncertain food recognition",
+    "Q20 Concerns about automatic dietary advice (multiple choice)",
+    "Q21 Open-ended response (optional)"
+  ],
+  "sheet_dimensions": {
+    "100 Simulated Responses": {
+      "rows": 101,
+      "columns": 23
+    },
+    "Summary": {
+      "rows": 12,
+      "columns": 3
+    },
+    "Multiple Choice Counts": {
+      "rows": 103,
+      "columns": 5
+    },
+    "Notes and Validation": {
+      "rows": 10,
+      "columns": 2
+    }
+  },
+  "multi_select_questions": [
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q16",
+    "Q17",
+    "Q18",
+    "Q20"
+  ],
+  "single_choice_questions": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q9",
+    "Q13",
+    "Q14",
+    "Q15",
+    "Q19"
+  ],
+  "optional_questions": [
+    "Q4",
+    "Q21"
+  ],
+  "data_use_limitations": [
+    "Not real participants",
+    "No prevalence or market inference",
+    "Appropriate only for pipeline, display and analysis-script testing"
+  ],
+  "archived_on": "2026-11-26",
+  "questionnaire_source": "docs/02-research/questionnaire/questionnaire-v3-participant.md",
+  "provenance_note": "English translation of the same 100 AI-generated synthetic responses; not a new sample."
+}

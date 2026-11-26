@@ -11,6 +11,16 @@ V3 已归档，共 21 题，是当前第三版；研究负责人、伦理说明�
 
 > 原始 DOCX 同时包含参与者问卷和内部修订报告，不能直接作为参与者问卷发放。
 
+## 结果归档
+
+V3 英文模拟结果已归档：100 条回答全部由 AI 生成，不是真实参与者，也不能作为正式调研证据。文件保留原始 xlsx、CSV、统计速览和自动校验结果。
+
+| 数据集 | 类型 | 样本 | 校验 | 入口 |
+| --- | --- | ---: | --- | --- |
+| Nourish V3 EN | AI-generated simulated responses | 100 | 100 个唯一 ID；39 条跳题；102 个多选项复算一致；0 个排他冲突 | [结果归档](../../../data/processed/questionnaire-v3/README.md) |
+
+> 用途限制：仅用于统计流程、展示格式和原型假设演练。正式问卷结果仍需在预测试与招募后进行真实收集，并单独归档。
+
 ### 版本历史
 
 | 版本 | 文件 | 题数 | 说明 |
@@ -58,6 +68,7 @@ V3 已归档，共 21 题，是当前第三版；研究负责人、伦理说明�
 - [V3 参与者版题目](questionnaire-v3-participant.md)：当前第三版，共 21 道题。
 - [V3 修订与设计映射报告](questionnaire-v3-design-report.md)：记录 Russell 常见错误检查、题目前后映射和 F01–F06 设计对应关系。
 - [原始 DOCX](source/Nourish_Questionnaire_V3_CN.docx) 与[文本快照](source/Nourish_Questionnaire_V3_CN.md)。
+- [V3 模拟问卷结果归档](../../../data/processed/questionnaire-v3/README.md)：100 条 AI 生成回答，非真实数据。
 - [伦理声明](ethics-statement.md)：已完成，包含负责人、课程审批要求、匿名线下记录、数据保留/删除规则、退出限制和联系渠道。
 - [V0 题目草案](question-bank.md)：已被 V3 取代，仅保留历史记录。
 
