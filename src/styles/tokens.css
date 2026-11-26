@@ -36,6 +36,7 @@
   --fs-note: 13px;
   --fs-caption: 12px;
   --fs-micro: 11px;
+  --text-boost: 0px;
   --lh-tight: 1.2;
   --lh-body: 1.35;
 }
@@ -50,5 +51,6 @@
   --fs-note: 15px;
   --fs-caption: 14px;
   --fs-micro: 13px;
+  --text-boost: 2px;
 }
 

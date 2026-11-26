@@ -5,7 +5,7 @@
 > - Audited release: NutriPal v1.1
 > - Audit date: 2026-11-26
 > - Visual baseline: [2026-11-25 Figma archive](../../design/exports/2026-11-25-nutripal-v2/README.en.md), file key QHOOV8NcB4Ev499ycoRtZq
-> - Automated acceptance: 11 Vitest/Testing Library tests
+> - Automated acceptance: 12 Vitest/Testing Library tests
 
 ## 1. Method
 
@@ -44,6 +44,7 @@
 - **Emoji**: the design source uses emoji as illustrative icons, treated as a design defect. All are mapped to Lucide/FoodGlyph vector icons.
 - **Device chrome**: no status bar, signal/battery or phone frame; the web content column is 390px.
 - **Large text**: both sizes use the same component tree through semantic type tokens; clipping in fixed captures is not a requirement.
+- **Large-text completeness**: all 261 directly rendered text nodes across the eight routes increase by 2px with no omissions; the search input grows from 16px to 17px.
 - **Me length**: Me is longer than Figma to retain v1.0 functions and therefore scrolls.
 - **F03b initial state**: Feta starts checked to match the archived demo state; the total remains four items.
 

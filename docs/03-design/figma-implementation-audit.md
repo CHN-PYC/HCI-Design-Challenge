@@ -5,7 +5,7 @@
 > - 审计版本：NutriPal v1.1
 > - 审计日期：2026-11-26
 > - 视觉基线：[2026-11-25 Figma 归档](../../design/exports/2026-11-25-nutripal-v2/README.md)，文件 key QHOOV8NcB4Ev499ycoRtZq
-> - 自动化验收：11 条 Vitest/Testing Library 测试
+> - 自动化验收：12 条 Vitest/Testing Library 测试
 
 ## 1. 审计方法
 
@@ -44,6 +44,7 @@
 - **emoji 处理**：Figma 使用 emoji 作为示意图标；这是设计源失误。实现全部映射为 Lucide/FoodGlyph 矢量图标。
 - **设备 chrome**：不显示状态栏、信号/电池或圆角手机框；Web 内容列为 390px。
 - **大字号**：默认/大字号使用同一组件树，通过语义字号 token 切换；固定画框中的裁切不视为实现要求。
+- **大字号完整性**：8 个路由共 261 个直接文本节点全部增加 2px，无遗漏；搜索输入框从 16px 增至 17px。
 - **Me 页长度**：为保留 v1.0 功能，Me 比 Figma 更长，需要滚动；这是有意差异。
 - **F03b 初始状态**：Feta 初始勾选，用于匹配归档演示态；总数仍显示 4 项。
 

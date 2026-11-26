@@ -11,12 +11,8 @@
 .home-header h1 {
   max-width: 270px;
   margin-top: 2px;
-  font-size: 24px;
+  font-size: calc(24px + var(--text-boost));
   line-height: 1.15;
-}
-
-:root[data-text-size="large"] .home-header h1 {
-  font-size: 26px;
 }
 
 .avatar {
@@ -68,12 +64,12 @@
 }
 
 .daily-summary--v2 .daily-macros b {
-  font-size: 16px;
+  font-size: calc(16px + var(--text-boost));
 }
 
 .daily-summary--v2 .daily-macros span {
   color: #e4dbff;
-  font-size: 12px;
+  font-size: calc(12px + var(--text-boost));
 }
 
 .dish-search {
@@ -133,7 +129,7 @@
 
 .dish-search__samples .ui-chip {
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(13px + var(--text-boost));
 }
 
 .result-count {
@@ -193,7 +189,7 @@
   border-radius: 99px;
   background: var(--orange);
   color: #fff;
-  font-size: 11px;
+  font-size: calc(11px + var(--text-boost));
   font-weight: 800;
 }
 
@@ -228,11 +224,11 @@
 }
 
 .mini-card strong {
-  font-size: 14px;
+  font-size: calc(14px + var(--text-boost));
 }
 
 .mini-card small {
-  font-size: 11px;
+  font-size: calc(11px + var(--text-boost));
 }
 
 .plan-page .page-title-row h1 {
@@ -243,7 +239,7 @@
   border-radius: 999px;
   background: var(--purple-soft);
   color: var(--purple);
-  font-size: 12px;
+  font-size: calc(12px + var(--text-boost));
   font-weight: 800;
 }
 
@@ -266,11 +262,11 @@
 }
 
 .constraint strong {
-  font-size: 15px;
+  font-size: calc(15px + var(--text-boost));
 }
 
 .constraint span {
-  font-size: 11px;
+  font-size: calc(11px + var(--text-boost));
 }
 
 .constraint--budget {
@@ -289,7 +285,7 @@
   border: 1.5px solid var(--line);
   border-radius: 999px;
   background: var(--surface);
-  font-size: 13px;
+  font-size: calc(13px + var(--text-boost));
 }
 
 .pantry-chip.on {
@@ -319,7 +315,7 @@
 }
 
 .meal-copy h3 {
-  font-size: 15px;
+  font-size: calc(15px + var(--text-boost));
 }
 
 .swap-button {
@@ -410,11 +406,11 @@
 }
 
 .preferences-heading h1 {
-  font-size: 28px;
+  font-size: calc(28px + var(--text-boost));
 }
 
 .choice-group legend {
-  font-size: 16px;
+  font-size: calc(16px + var(--text-boost));
 }
 
 .cuisine-grid {
@@ -437,7 +433,7 @@
   gap: 8px;
   border-radius: 18px;
   background: var(--ink);
-  font-size: 16px;
+  font-size: calc(16px + var(--text-boost));
 }
 
 .nudge-preview-page {
@@ -455,7 +451,7 @@
 
 .lock-clock h1 {
   color: #fff;
-  font-size: 76px;
+  font-size: calc(76px + var(--text-boost));
 }
 
 .notification-card {
@@ -584,7 +580,7 @@
 }
 
 .profile-banner h2 {
-  font-size: 20px;
+  font-size: calc(20px + var(--text-boost));
 }
 
 .profile-banner p {
@@ -638,7 +634,7 @@
   width: 84px;
   flex: none;
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px + var(--text-boost));
   font-weight: 800;
 }
 
@@ -653,12 +649,12 @@
   border-radius: 99px;
   background: var(--purple-soft);
   color: var(--ink);
-  font-size: 11px;
+  font-size: calc(11px + var(--text-boost));
 }
 
 .preference-group small {
   color: var(--muted);
-  font-size: 12px;
+  font-size: calc(12px + var(--text-boost));
 }
 
 .settings-row-language .language-switch {
