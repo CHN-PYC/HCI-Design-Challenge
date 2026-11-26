@@ -12,4 +12,5 @@ Naming recommendation: `screen-name_state_YYYY-MM-DD.png`, so report links do no
 
 ## Archived
 
+- [2026-11-25 NutriPal v2](2026-11-25-nutripal-v2/README.en.md): current visual baseline; 16 captures covering eight screens in default and large-text variants, plus component and token indexes.
 - [2026-11-24 NutriPal](2026-11-24-nutripal/README.en.md): Figma snapshot, seven screen captures, overview image, and interactive HTML copy.

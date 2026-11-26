@@ -4,7 +4,7 @@
 
 ## Current stage
 
-The seven-screen Figma design is archived, and the supporting [system design](../04-engineering/system-design.en.md) and [module design](../04-engineering/module-design.en.md) are complete. The third meeting confirmed the existing NutriPal UI/UX and app interaction approach; the next focus is resolving interaction ambiguities and validating individual features.
+The 2026-11-25 eight-screen Figma design is archived (16 frames including default and large text), and the v1.1 React prototype is complete. The new visual system uses vector icons, semantic type tokens and global large text; Me retains v1.0 language, goals, preference summary and nudge entry. Team walkthrough and user testing remain.
 
 ## Recorded constraints
 
@@ -28,8 +28,8 @@ The seven-screen Figma design is archived, and the supporting [system design](..
 ## Pre-review and pre-delivery checklist
 
 - [x] The third meeting confirms the existing UI/UX and app interaction approach.
-- [ ] Review and close the remaining interaction ambiguities.
+- [x] Review and close the remaining interaction ambiguities.
 - [ ] User research and competitor analysis identify the core user problem.
-- [ ] The first-round core features and page list are selected.
+- [x] The first-round core features and page list are selected.
 - [ ] The API dependencies and mock data needed by each page are identified.
-- [ ] Shared components, typography, colour, spacing, and naming conventions are unified.
+- [x] Shared components, typography, colour, spacing, and naming conventions are unified.

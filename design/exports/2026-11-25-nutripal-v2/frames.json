@@ -1,0 +1,111 @@
+{
+  "source": {
+    "fileKey": "QHOOV8NcB4Ev499ycoRtZq",
+    "fileName": "NutriPal – Healthy Eating App (Copy)",
+    "pageId": "0:1",
+    "pageName": "App Screens"
+  },
+  "frameSize": {
+    "width": 390,
+    "height": 844,
+    "note": "F02 default and large-text frames are 390x936; all other frames are 390x844"
+  },
+  "frames": [
+    {
+      "id": "3:6",
+      "name": "F01 · Dietary & Cultural Preferences",
+      "screen": "F01-preferences",
+      "variant": "default"
+    },
+    {
+      "id": "3:87",
+      "name": "F02 · Personalised Meal Recommendations",
+      "screen": "F02-recommendations",
+      "variant": "default"
+    },
+    {
+      "id": "4:62",
+      "name": "F03 · Practical Meal Planning",
+      "screen": "F03-meal-plan",
+      "variant": "default"
+    },
+    {
+      "id": "4:193",
+      "name": "F04 · Context-Aware Proactive Assistance",
+      "screen": "F04-proactive-assistance",
+      "variant": "default"
+    },
+    {
+      "id": "5:112",
+      "name": "F05 · Notification Control & Explanation",
+      "screen": "F05-nudge-settings",
+      "variant": "default"
+    },
+    {
+      "id": "5:226",
+      "name": "F06 · AI Food Recognition & Calorie Estimation",
+      "screen": "F06-food-recognition",
+      "variant": "default"
+    },
+    {
+      "id": "26:209",
+      "name": "F03b · Shopping List",
+      "screen": "F03b-shopping-list",
+      "variant": "default"
+    },
+    {
+      "id": "2014:269",
+      "name": "Me · Profile & Settings",
+      "screen": "ME-profile-settings",
+      "variant": "default"
+    },
+    {
+      "id": "2025:723",
+      "name": "F01 · Dietary & Cultural Preferences · Large text",
+      "screen": "F01-preferences-large-text",
+      "variant": "large-text"
+    },
+    {
+      "id": "2025:762",
+      "name": "F02 · Personalised Meal Recommendations · Large text",
+      "screen": "F02-recommendations-large-text",
+      "variant": "large-text"
+    },
+    {
+      "id": "2025:827",
+      "name": "F03 · Practical Meal Planning · Large text",
+      "screen": "F03-meal-plan-large-text",
+      "variant": "large-text"
+    },
+    {
+      "id": "2025:912",
+      "name": "F04 · Context-Aware Proactive Assistance · Large text",
+      "screen": "F04-proactive-assistance-large-text",
+      "variant": "large-text"
+    },
+    {
+      "id": "2025:955",
+      "name": "F05 · Notification Control & Explanation · Large text",
+      "screen": "F05-nudge-settings-large-text",
+      "variant": "large-text"
+    },
+    {
+      "id": "2025:1017",
+      "name": "F06 · AI Food Recognition & Calorie Estimation · Large text",
+      "screen": "F06-food-recognition-large-text",
+      "variant": "large-text"
+    },
+    {
+      "id": "2025:1075",
+      "name": "F03b · Shopping List · Large text",
+      "screen": "F03b-shopping-list-large-text",
+      "variant": "large-text"
+    },
+    {
+      "id": "2021:310",
+      "name": "Me · Large text",
+      "screen": "ME-profile-settings-large-text",
+      "variant": "large-text"
+    }
+  ]
+}

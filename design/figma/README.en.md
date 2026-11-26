@@ -6,9 +6,22 @@
 
 | Name | Link | Version/date | Status |
 | --- | --- | --- | --- |
+| NutriPal – Healthy Eating App (Copy) | <https://www.figma.com/design/QHOOV8NcB4Ev499ycoRtZq/> | 2026-11-25 | **Current visual baseline**; archived |
 | NutriPal – Healthy Eating App | <https://www.figma.com/design/FzzqscVPbxGe2X56MfWBEW/NutriPal-%E2%80%93-Healthy-Eating-App?timeline=keyframe&node-id=0-1&p=f&t=6hx1mpAIOP6H6Jma-0> | 2026-11-24 | Archived; view-only access |
 
-## Archive record
+## Current baseline (2026-11-25)
+
+- Figma file key: QHOOV8NcB4Ev499ycoRtZq
+- File: NutriPal – Healthy Eating App (Copy)
+- Page: App Screens (0:1)
+- Artboards: iPhone 390 wide; F02 is 936 high and the rest are 844 high; 8 screens × default/large text = 16 frames
+- Screens: F01–F06, F03b and Me; every screen has a large-text variant
+- Components and tokens: 10 components, 17 variables, 2 variable collections
+- Static copy, previews and acceptance record: [2026-11-25 archive](../exports/2026-11-25-nutripal-v2/README.en.md)
+- Implementation conventions: no Figma status bar or phone frame; Figma emoji icons are treated as a design-source defect and are replaced by Lucide + FoodGlyph vector icons.
+- This file records the design source of truth; the app is a v1.1 React prototype, not a pixel copy of Figma.
+
+## Previous archive (2026-11-24)
 
 - Figma file key: `FzzqscVPbxGe2X56MfWBEW`
 - Page: `App Screens`
@@ -30,8 +43,11 @@
 | F04 | Context-Aware Proactive Assistance | Lock-screen proactive suggestion; triggers include leaving the gym, meal gap, protein target, and expiring ingredients |
 | F05 | Notification Control & Explanation | Proactive toggle, snooze, frequency, quiet hours, and “why this nudge” explanation |
 | F06 | AI Food Recognition & Calorie Estimation | Photo recognition, portion adjustment, calorie/macro estimates, and adding to the daily log |
+| Me | Profile & Settings | Profile, dietary/notification setting entries and the large-text accessibility toggle |
 
-## Figma comment index
+Large-text variants (F01–F06, F03b, Me) keep the same structure with roughly 2px larger type. Clipping inside the fixed 844px captures is not an implementation requirement.
+
+## Historical Figma comment index (2026-11-24 file)
 
 | Comment | Content |
 | --- | --- |

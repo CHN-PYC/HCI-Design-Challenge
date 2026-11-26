@@ -12,4 +12,5 @@
 
 ## 已归档
 
+- [2026-11-25 NutriPal v2](2026-11-25-nutripal-v2/README.md)：当前视觉基线；8 屏默认/大字号共 16 张截图、组件与 token 索引。
 - [2026-11-24 NutriPal](2026-11-24-nutripal/README.md)：Figma 文件快照、7 个屏幕截图、总览图与自带交互的 HTML 副本。

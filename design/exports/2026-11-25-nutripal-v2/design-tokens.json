@@ -1,0 +1,128 @@
+{
+  "collections": [
+    {
+      "name": "NutriPal Colors",
+      "variables": [
+        {
+          "name": "bg",
+          "css": "--bg",
+          "type": "color",
+          "value": "#FFF7EC"
+        },
+        {
+          "name": "surface",
+          "css": "--surface",
+          "type": "color",
+          "value": "#FFFFFF"
+        },
+        {
+          "name": "ink",
+          "css": "--ink",
+          "type": "color",
+          "value": "#1E1A3C"
+        },
+        {
+          "name": "muted",
+          "css": "--muted",
+          "type": "color",
+          "value": "#6E6A8A"
+        },
+        {
+          "name": "line",
+          "css": "--line",
+          "type": "color",
+          "value": "#EEE6DA"
+        },
+        {
+          "name": "purple",
+          "css": "--purple",
+          "type": "color",
+          "value": "#7B5CFF"
+        },
+        {
+          "name": "orange",
+          "css": "--orange",
+          "type": "color",
+          "value": "#FF8A3D"
+        },
+        {
+          "name": "pink",
+          "css": "--pink",
+          "type": "color",
+          "value": "#FF5C8A"
+        },
+        {
+          "name": "green",
+          "css": "--green",
+          "type": "color",
+          "value": "#22C27A"
+        },
+        {
+          "name": "yellow",
+          "css": "--yellow",
+          "type": "color",
+          "value": "#FFC83D"
+        },
+        {
+          "name": "blue",
+          "css": "--blue",
+          "type": "color",
+          "value": "#38B6FF"
+        }
+      ]
+    },
+    {
+      "name": "F02 dish search",
+      "variables": [
+        {
+          "name": "heading",
+          "css": "--heading",
+          "type": "string",
+          "value": "Picked for you"
+        },
+        {
+          "name": "query",
+          "css": "--query",
+          "type": "string",
+          "value": "Search dishes"
+        },
+        {
+          "name": "searchActive",
+          "css": "--searchactive",
+          "type": "boolean",
+          "value": false
+        },
+        {
+          "name": "showDish",
+          "css": "--showdish",
+          "type": "boolean",
+          "value": true
+        },
+        {
+          "name": "showEmpty",
+          "css": "--showempty",
+          "type": "boolean",
+          "value": false
+        },
+        {
+          "name": "showOtherDishes",
+          "css": "--showotherdishes",
+          "type": "boolean",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "components": [
+    "Button/Primary",
+    "Checklist Item",
+    "Chip",
+    "Cuisine Tile",
+    "Me / Accessibility Toggle Row",
+    "Me / Settings Row",
+    "Segmented Control",
+    "Status Bar",
+    "Tab Bar",
+    "Toggle"
+  ]
+}
