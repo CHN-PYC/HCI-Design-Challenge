@@ -2,7 +2,7 @@
 
 **Language: [中文](module-design.md) | English**
 
-> - Status: design baseline v0.1 (2026-11-24)
+> - Status: design baseline v1.1 (2026-11-26)
 > - Parent design: [System design](system-design.en.md)
 > - Scope: module boundaries, state, interfaces, and acceptance rules; no code implementation.
 
@@ -19,6 +19,7 @@ flowchart TB
     Scan["M07 Food Scan"]
     Data["M08 Repositories and Data Access"]
     UI["M09 Shared UI and Design Tokens"]
+    Display["M10 Display and Accessibility Preferences"]
 
     Shell --> Pref
     Shell --> Home
@@ -41,6 +42,8 @@ flowchart TB
     Shop --> UI
     Nudge --> UI
     Scan --> UI
+    Shell --> Display
+    Display --> Data
 ```
 
 ### 1.1 Dependency rules
@@ -59,15 +62,16 @@ flowchart TB
 | `/preferences` | F01 | Preferences | Hidden | First launch or no preferences; Continue → `/home` |
 | `/preferences?mode=edit` | F01 | Preferences | Hidden | Me entry; save/cancel returns to source |
 | `/home` | F02 | Home & Recommendations | Home active | Preferences complete; recommendations home |
-| `/plan` | F03 | Meal Planning | Plan active | Preferences complete; F04 `Start cooking` may include `mealId` |
+| `/plan` | F03 | Meal Planning | Plan active | Preferences complete; F04 `Cook this` opens the matching plan |
 | `/plan/shopping-list` | F03b | Shopping List | Plan active | From F03 shopping-list entry; back → `/plan` |
 | `/scan` | F06 | Food Scan | Scan active | Main navigation; close → `/home`; Add to log → `/home` |
 | `/nudges/settings` | F05 | Nudges | Nudges active | Main navigation; can focus the explanation section |
 | `/nudges/preview` | F04 | Nudges | Hidden | Notification-preview/simulation entry; does not require real system notifications |
+| `/me` | Me | Display / Profile | Me active | Main navigation; profile, preference/nudge entries, language, large text, nudge preview and privacy |
 
 - If onboarding is incomplete, all routes except `/preferences` redirect to `/preferences`.
 - Unknown routes go to `/home`; if onboarding is incomplete, they go to `/preferences`.
-- `Me` does not create a new screen; it always opens `/preferences?mode=edit`.
+- `/me` is an independent settings screen; its Dietary row opens `/preferences?mode=edit`.
 - Bottom navigation contains Home, Plan, Scan, Nudges, and Me. F01 and F04 do not show it.
 
 ## 3. Module Design
@@ -76,7 +80,7 @@ flowchart TB
 
 **Responsibilities**
 
-- Provide the app frame, status bar, bottom navigation, route registration, onboarding guard, global error boundary, and offline/mock-data indication.
+- Provide the app frame, bottom navigation, route registration, onboarding guard, global error boundary and offline/mock-data indication. By v1.1 decision, no simulated status bar or phone frame is shown.
 - Maintain the current route and active navigation state; it owns no preference, meal-plan, nudge, or scan data.
 
 **Inputs/outputs**
@@ -108,8 +112,10 @@ flowchart TB
 **Interaction rules**
 
 - Cuisines are multi-select; no user preference is preselected by default.
-- Diet styles are multi-select. “No preference” is mutually exclusive with all other styles; choosing another style clears it.
+- Diet styles are multi-select. The redundant “No preference” chip is removed; an empty selection is the no-preference state.
 - Allergens/avoidances are multi-select. An empty selection means “not specified”, not “no allergies”.
+- A + Add action opens a local sheet for a custom ingredient/allergen. Values are de-duplicated and saved with Continue; no backend field is added.
+- Edit mode shows a back control to Me; first-run onboarding does not show a back control for non-existent steps.
 - Continue is never disabled just because nothing is selected; arrays may be empty.
 - `mode=edit` distinguishes editing: saving returns to the source screen and cancelling returns there too. First-run onboarding can advance only by saving.
 - A save failure preserves form values and offers retry; repeated clicks send only one request.
@@ -134,6 +140,7 @@ flowchart TB
 
 - Show today’s calorie and protein/carbohydrate/fat summary.
 - Show 1–3 personalised recommendations with a “why recommended” explanation.
+- Provide local dish search and Try chips. Input matches names, tags and keywords; empty results have a recoverable state.
 - Expand more recommendations on the same page; no new recipe-detail route.
 
 **Interaction rules**
@@ -197,7 +204,7 @@ flowchart TB
 - Back returns to F03; Plan remains the active tab.
 - Checking/unchecking is saved through PATCH; failure restores the previous value and shows a short error.
 - Budget and remaining values are returned by the service/Mock. The UI only formats those values and does not independently recalculate them. Monetary values use two decimals.
-- `Order for delivery` shows “Delivery is not connected in this demo”; it creates no order and requests no payment.
+- `Share list` is the primary action and uses Web Share or a copy notice. `Order for delivery (demo)` is a secondary action that creates no order and requests no payment.
 - An empty list says “Plan this week’s meals first” and offers a return to `/plan`.
 
 **Acceptance**
@@ -219,7 +226,7 @@ flowchart TB
 **F04 rules**
 
 - Opened only from the `NotificationScheduler` preview/simulation entry; do not request system-notification permission automatically.
-- `Start cooking` → `/plan?mealId=...`; `Other ideas` cycles to the next available Mock Nudge; `Not now` records dismissed and closes the preview.
+- `Cook this` → `/plan`; `Other ideas` cycles to the next available Mock Nudge; `Not now` records dismissed and closes the preview.
 - `Why am I seeing this?` → `/nudges/settings#why-last`.
 - A nudge is not shown during quiet hours by default; explicit preview may bypass the window but must be labelled “Preview”.
 
@@ -254,7 +261,7 @@ flowchart TB
 - `− / +` changes only the draft portion; baseline values remain immutable, and displayed values = baseline × portions.
 - When confidence is below 0.8 or the Mock sets `needsReview=true`, highlight “Please verify the dish”.
 - `Edit dish` opens a local Bottom Sheet with fixed candidate dishes; no new page.
-- `Add to today's log` is enabled only after a successful recognition; success returns to `/home`.
+- `Log to Dinner` is enabled only after a successful recognition; success returns to `/home`.
 - Closing the scan returns to `/home` and discards the temporary result.
 
 **Data rules**
@@ -310,12 +317,18 @@ interface FoodScanRepository {
   recognize(input: FoodScanInput): Promise<FoodScanResult>;
   addToLog(scanId: ID, portion: number): Promise<FoodLogEntry>;
 }
+
+interface DisplayPreferenceRepository {
+  get(): DisplayPreferences;
+  update(patch: Partial<DisplayPreferences>): DisplayPreferences;
+}
 ```
 
 **Storage rules**
 
 - Mock storage saves only non-sensitive domain data under keys prefixed `nutripal.v1.*`.
 - After reload, restore Profile, DietaryPreferences, HealthTargets, MealPlan, ShoppingList, NudgeSettings, and FoodLogEntry.
+- Display preferences are stored under nutripal.v1.display as textSize: default | large; missing means default.
 - Never save raw images, raw GPS, complete provider responses, passwords, or tokens.
 - Ignore unknown DTO fields; a missing required field yields `VALIDATION_ERROR`.
 
@@ -329,7 +342,7 @@ interface FoodScanRepository {
 
 **Responsibilities**
 
-- Provide domain-free shared components: StatusBar, BottomNav, Chip, Card, SectionHeader, PrimaryButton, Toggle, EmptyState, ErrorState, Skeleton, BottomSheet, and Toast.
+- Provide domain-free shared components: BottomNav, Chip, CuisineTile, Toggle, SegmentedControl, SettingsRow, PrimaryButton, ChecklistItem, Sheet, EmptyState, ErrorState and Toast.
 - Maintain accessibility and visual consistency.
 
 **Confirmed or approximate tokens**
@@ -339,8 +352,15 @@ interface FoodScanRepository {
 | `ink` | `#1E1A3C` | Archived HTML states it comes from Figma |
 | `muted` | `#6E6A8A` | Archived HTML states it comes from Figma |
 | `white` | `#FFFFFF` | Archived HTML states it comes from Figma |
-| `bg` | Warm light background | Approximate; verify against Figma |
-| `accent` | Green accent | Approximate; verify against Figma |
+| `bg` | `#FFF7EC` | 2026-11-25 Figma |
+| `surface` | `#FFFFFF` | 2026-11-25 Figma |
+| `line` | `#EEE6DA` | 2026-11-25 Figma |
+| `purple` | `#7B5CFF` | 2026-11-25 Figma |
+| `orange` | `#FF8A3D` | 2026-11-25 Figma |
+| `pink` | `#FF5C8A` | 2026-11-25 Figma |
+| `green` | `#22C27A` | 2026-11-25 Figma |
+| `yellow` | `#FFC83D` | 2026-11-25 Figma |
+| `blue` | `#38B6FF` | 2026-11-25 Figma |
 | Radii | 16–26px cards/panels; pill chips | From archived HTML; needs visual review |
 | Touch | Minimum 44×44px | Accessibility baseline |
 
@@ -350,6 +370,29 @@ interface FoodScanRepository {
 - Bottom navigation and F04/F05 toggles must have accessible names and keyboard operation.
 - Under `prefers-reduced-motion`, remove unnecessary transitions.
 - Colour contrast must meet WCAG AA; status also uses text or graphics, not colour alone.
+- Icons use Lucide + FoodGlyph only; Figma emoji are not adopted.
+
+### M10 Display and Accessibility Preferences
+
+**Screen**: the Accessibility block in Me.
+
+**Responsibilities**
+
+- Persist and apply global text size.
+- Set data-text-size on the root element to drive semantic type tokens.
+- Read no third-party data and change neither dietary preferences nor nudge settings.
+
+**Interaction rules**
+
+- Default is default; enabling Large text selects large.
+- Write nutripal.v1.display and apply immediately to every page and sheet.
+- Allow vertical scrolling when type grows; never clip or hide key controls.
+
+**Acceptance**
+
+- Large text survives refresh.
+- All eight routes work in both sizes.
+- Turning large text off restores default tokens.
 
 ## 4. Cross-module State and Invalidation Rules
 
@@ -382,12 +425,16 @@ All modules use `loading / success / empty / error`; pages may add derived state
 | Gap | V1 decision |
 | --- | --- |
 | F01 shows `2 / 4`, but other onboarding steps are missing | V1 implements only the archived preference screen; saving completes onboarding without inventing steps 1/3/4 |
-| `Me` has no dedicated screen | Reuse F01 edit mode; no new screen |
+| Me screen | Implemented as an independent settings screen; the Dietary row reuses F01 edit mode |
+| F01 `+ Add` has no expanded design | Local sheet adds a custom ingredient/allergen and saves it with preferences |
+| F02 search has no empty-state design | Filter in place; empty results offer clear search |
+| Figma uses emoji icons | Treated as a design-source defect; map to Lucide + FoodGlyph |
+| Figma status bar/phone frame | Not implemented; keep the web content column |
 | F02 `See all` has no destination | Expand more recommendations inline |
 | F03 `Edit` has no destination | Shared Bottom Sheet for budget/time/pantry |
 | F05 feedback link has no destination | Local feedback Bottom Sheet; send no external data |
 | F06 `Edit dish` has no destination | Local candidate-dish Bottom Sheet |
-| F03b `Order for delivery` has no flow | Demo notice; no ordering or payment |
+| F03b `Order for delivery` has no flow | Secondary demo action after Share; no ordering or payment |
 | F04 has no real background trigger | Preview/simulation only; Provider interface reserved |
 | No recipe-detail screen | V1 creates no detail page; recommendation cards show only summary and reason |
 | Real notification/camera permissions are not designed | V1 requests no permissions; real capability needs a separate privacy and failure flow |
@@ -398,7 +445,7 @@ These decisions keep the first version bounded and avoid hiding missing interact
 
 ### 7.1 Current documentation acceptance
 
-- All seven frames have a route, module, data source, and acceptance entry.
+- All eight screens (16 default/large-text frames) have a route, module, data source and acceptance entry.
 - Routes and navigation state are consistent between system and module designs.
 - All DTOs use the same names in the API contract, Repository, and module state.
 - Mermaid diagrams render; Markdown links are valid; Mock capabilities are not described as live.
@@ -413,9 +460,11 @@ These decisions keep the first version bounded and avoid hiding missing interact
 5. Checked F03b items survive refresh.
 6. Turning off proactive suggestions in F05 prevents non-preview F04 nudges.
 7. When quiet hours cover the current time, the mock scheduler returns no Nudge.
-8. F04 `Not now` prevents immediate repetition; `Start cooking` focuses the corresponding meal.
+8. F04 `Not now` prevents immediate repetition; `Cook this` focuses the corresponding meal.
 9. F06 portion 1→3 scales calories/macros proportionally; adding the log updates F02.
 10. Mock timeout, empty data, and provider-unavailable states are recoverable and never show fabricated data.
+11. F02 Tofu/Sushi search, empty results and clear search all work.
+12. Me large text persists, and all eight routes work in both sizes.
 
 ### 7.3 Module definition of done
 

@@ -2,73 +2,79 @@
 
 **Language: [中文](atdd.md) | English**
 
-> - Status: scaffold complete and automated acceptance checks pass; **Figma visual/interaction fidelity is not complete**.
-> - Date: 2026-11-24
+> - Status: v1.1 automated acceptance passing; visuals follow the 2026-11-25 Figma structure
+> - Date: 2026-11-26
 > - Stack: React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
 
-> See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit.en.md) for the screen-by-screen gaps. The six tests validate scaffold routing, the minimal flow, F03 and F06, not full Figma restoration.
+See the [Figma prototype fidelity audit](../03-design/figma-implementation-audit.en.md).
 
-## 1. Acceptance Scope
+## 1. Current acceptance scope
 
 | ID | User behaviour | Acceptance condition |
 | --- | --- | --- |
-| AC-01 | A new user opens `/home` | Redirect to F01 preferences; primary navigation is hidden |
-| AC-02 | User selects preferences and clicks Continue | Preferences persist to the local Mock; F02 opens with primary navigation |
-| AC-03 | An onboarded user uses bottom navigation | Plan, Shopping List, Scan, Nudges and Me are reachable |
-| AC-04 | An onboarded user opens `/nudges/preview` | F04 proactive-preview state appears without primary navigation |
-| AC-05 | An onboarded user opens `/plan` | Restores the selected F03 Figma content: week, constraints, pantry, meals and shopping-list entry |
-| AC-06 | An onboarded user opens `/scan` | Restores F06; portion changes recalculate calories/macros and Log to Dinner returns home |
+| AC-01 | New user visits /home | Redirect to F01; no status bar; + Add opens and adds a custom avoidance |
+| AC-02 | User selects preferences and Continue | Preferences persist locally, F02 opens and navigation appears |
+| AC-03 | User searches in F02 | Local Tofu/Sushi filtering; empty state; clear search |
+| AC-04 | User enters F03/F03b | New week strip, constraints, pantry and meals; F03b has four items and budget |
+| AC-05 | User checks an F03b item | Feta starts checked; clicking Chicken thighs marks it checked |
+| AC-06 | User enters F04 | Gradient lock screen, notification and suggestion; no tab bar; all four actions available |
+| AC-07 | User enters F05 | Master toggle, snooze, frequency, categories, explanation and feedback |
+| AC-08 | User enters F06 | Recognition, portion, macros, Log to Dinner and return Home |
+| AC-09 | User enters Me | New setting rows, language, goals, preference summary, nudge preview, privacy and large-text switch |
+| AC-10 | User enables Large text | Root data-text-size=large, persisted, all eight routes accessible |
+| AC-11 | User switches language | English/Chinese changes and survives refresh |
+| AC-12 | Whole app renders | No emoji icons |
 
-Automated acceptance file: [`src/acceptance/app.acceptance.test.tsx`](../../src/acceptance/app.acceptance.test.tsx).
+Acceptance file: [app.acceptance.test.tsx](../../src/acceptance/app.acceptance.test.tsx).
 
-## 2. RED → GREEN Log
+## 2. RED → GREEN record (v1.1)
 
-1. AC-01 first failed because `AppRouter` did not exist; a minimal router and onboarding guard made it pass.
-2. AC-02 first failed because F01 had no Cuisine/Diet controls; preference selection and local persistence made it pass.
-3. AC-03 first failed because `/plan` and the other routes were missing; page shells and navigation made it pass.
-4. AC-04 first failed because the F04 route was missing; the preview page made it pass.
-5. AC-05 first failed because F03 was still a placeholder; it passed after implementing the Figma node read via TemPad (`4:62`, content `4:74`).
-6. AC-06 first failed because F06 was still a placeholder; it passed after implementing the Figma `5:226` scan-result screen, calculation and log-return flow.
+1. Large text failed without DisplayPreferencesProvider; added domain types, repository and provider.
+2. F02 search failed without a search field; added local filtering, Try chips and empty state.
+3. F01 custom avoidance failed because + Add had no destination; added the sheet and save path.
+4. F03/F03b new fixtures and Share action passed after updating data and CTA behaviour.
+5. Me retention passed after restoring language, goals, preference summary, nudge preview and privacy.
+6. The no-emoji check remains to prevent the Figma source defect from entering production.
 
-## 3. Scaffold Contents
+## 3. Implemented
 
 - React/Vite/TypeScript project, lockfile and Node requirement.
-- Routes, onboarding guard, shared App Shell and bottom navigation.
-- F01 preference selection and `localStorage` Mock persistence.
-- F02 nutrition summary and one recommendation-card example.
-- F03 and F06 are implemented from their Figma nodes; F03b, F04 and F05 remain accessible page shells.
-- Vitest + Testing Library acceptance-test environment.
-- Web App Manifest, 192/512 icons, Apple touch icon and an offline-shell Service Worker.
-- ESLint, TypeScript checks, production build and CI.
+- Routing, onboarding guard, shared app shell and bottom navigation.
+- v1.1 token layer, shared UI components and page styles.
+- F01 persistence, custom avoidances and edit return.
+- F02 nutrition summary, search, Try chips, recommendations and See all.
+- F03 date, budget, pantry, swap, regenerate and shopping entry.
+- F03b items, budget, pantry, check-off, share and delivery demo.
+- F04/F05/F06 proactive suggestion, controls, explanation and scan calculations.
+- Me with complete v1.0 content plus the new Accessibility large-text setting.
+- PWA manifest, icons, Apple touch icon and offline shell.
 
-## 4. Verification Commands
+## 4. Verification commands
 
-```bash
 npm test
 npm run lint
 npm run build
-```
 
-## 5. Next ATDD Cycles
+## 5. ATDD loop
 
-1. F01 edit mode returns to the source page.
-2. F02 See all expands recommendations.
-3. F03 Regenerate, meal swapping and constraint editing.
-4. F03b shopping-list generation and persisted checks.
-5. F05 persisted settings and quiet-hours precedence.
-6. F04 simulated proactive nudge.
-7. F06 “Edit dish” feedback sheet and real scan integration.
+1. Add one user behaviour under src/acceptance.
+2. Run it and confirm the expected failure.
+3. Add the minimum implementation.
+4. Run all tests, lint and build.
+5. Compare at 390 × 844 with the 2026-11-25 archive and record intentional deviations.
 
-## 6. Confirmed Implementation Baselines
+## 6. Execution baseline
 
-- **Visuals and copy:** use the [Figma seven-screen archive](../../design/exports/2026-11-24-nutripal/README.en.md) as the sole prototype baseline, including its page structure, copy and approximate visual tokens; do not wait for another asset-approval round.
-- **Images and brand:** reuse the archive’s emoji, placeholder imagery and `NutriPal` name; use provisional same-palette icons where the archive has no dedicated asset and keep them replaceable.
-- **Backend:** use only local Mock data and reserved Repository/API contracts during the prototype phase; do not wait for login, a database, API keys or third-party authorisation.
-- **Permissions and privacy:** follow common mobile/Web practice by requesting permission only after a user action, explaining the purpose first, and handling denial and service failure. The prototype does not request real camera, location or notification permissions or use sensitive real data.
-- **Research and MVP:** implement the Figma hypotheses and label them as assumptions; never describe Mock results as validated findings or medical advice.
-- **PWA:** include a manifest, app icons, theme colours and an offline shell that can be installed/previewed locally. Binding a production domain and deployment account remains an owner-level release action.
+- Visuals and copy: [2026-11-25 Figma archive](../../design/exports/2026-11-25-nutripal-v2/README.en.md).
+- Icons: Lucide + FoodGlyph; Figma emoji are a design defect and are not implemented.
+- Device chrome: no status bar, signal/battery or phone frame.
+- Backend: local Mock and reserved Repository/API contracts only.
+- Permissions and privacy: no real camera, location or notification permissions.
+- PWA: manifest, theme colours and offline shell; production deployment remains with the project owner.
 
-## 7. Remaining Manual Release Steps
+## 7. Remaining manual work
 
-- Connect the production domain and deployment account; local PWA preview and CI do not depend on this.
-- If real third-party services replace Mock later, provide the relevant API credentials and authorisation.
+- Team click-through and target-user prototype testing.
+- Real third-party credentials and authorisation.
+- Real-device font rendering checks beyond system emoji.
+

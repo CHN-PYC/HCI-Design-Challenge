@@ -2,83 +2,79 @@
 
 **语言：[中文](atdd.md) | [English](atdd.en.md)**
 
-> - 状态：脚手架已完成，自动验收通过；**Figma 视觉/交互还原未完成**。
-> - 日期：2026-11-24
-> - 实现栈：React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
+> - 状态：v1.1 自动化验收通过；视觉按 2026-11-25 Figma 结构实现
+> - 日期：2026-11-26
+> - 技术栈：React 19 + Vite 8 + TypeScript 5.9 + Vitest + Testing Library
 
-> 当前差距与逐屏清单见 [Figma 原型实现一致性审计](../03-design/figma-implementation-audit.md)。6 条测试验证的是脚手架路由、最小流程、F03 和 F06，不代表完整 Figma 还原。
+当前视觉审计见 [Figma 原型实现一致性审计](../03-design/figma-implementation-audit.md)。
 
-## 1. 本轮验收范围
+## 1. 当前验收范围
 
 | ID | 用户行为 | 验收条件 |
 | --- | --- | --- |
-| AC-01 | 新用户访问 `/home` | 自动进入 F01 偏好页，底部主导航不可见 |
-| AC-02 | 用户选择偏好并点击 Continue | 偏好写入本地 Mock，进入 F02，显示主导航 |
-| AC-03 | 已完成引导的用户使用底部导航 | Plan、Shopping List、Scan、Nudges 和 Me 均可到达 |
-| AC-04 | 已完成引导的用户进入 `/nudges/preview` | 显示 F04 主动建议预览，且不显示主导航 |
-| AC-05 | 已完成引导的用户进入 `/plan` | 还原 Figma 选中的 F03 内容：周日期、预算/时间/储藏物、食材、三餐与购物清单入口 |
-| AC-06 | 已完成引导的用户进入 `/scan` | 还原 Figma F06 结果页；份量调整同步热量/营养素，Log to Dinner 返回首页 |
+| AC-01 | 新用户访问 /home | 自动进入 F01；无状态栏；可打开 + Add 并添加自定义忌口 |
+| AC-02 | 用户选择偏好并 Continue | 偏好写入本地 Mock，进入 F02，底部导航出现 |
+| AC-03 | 用户在 F02 搜索 | 本地过滤 Tofu/Sushi；无结果显示空状态；可清除搜索 |
+| AC-04 | 用户进入 F03/F03b | 显示新周条、约束、食材、三餐；F03b 显示 4 个采购项与预算 |
+| AC-05 | 用户勾选 F03b 采购项 | Feta 初始勾选；点击 Chicken thighs 后显示已勾选 |
+| AC-06 | 用户进入 F04 | 显示渐变锁屏、通知和建议；无底部导航；Cook this/Other ideas/Not now/Why 可用 |
+| AC-07 | 用户进入 F05 | 总开关、Snooze、频率、类别、解释和反馈可用 |
+| AC-08 | 用户进入 F06 | 识别结果、份量调整、营养条、Log to Dinner 与返回 Home |
+| AC-09 | 用户进入 Me | 新设置行、语言、今日目标、偏好摘要、预览提醒、隐私说明和大字号开关均存在 |
+| AC-10 | 用户开启 Large text | 根元素 data-text-size=large，设置持久化，8 个路由均可访问 |
+| AC-11 | 用户切换语言 | 中英文界面切换并在刷新后保留 |
+| AC-12 | 全站渲染 | 无 emoji 图标 |
 
-自动验收文件：[`src/acceptance/app.acceptance.test.tsx`](../../src/acceptance/app.acceptance.test.tsx)。
+自动验收文件：[app.acceptance.test.tsx](../../src/acceptance/app.acceptance.test.tsx)。
 
-## 2. RED → GREEN 记录
+## 2. RED → GREEN 记录（v1.1）
 
-1. AC-01 首次运行因 `AppRouter` 尚不存在而失败；实现最小路由和 onboarding guard 后通过。
-2. AC-02 首次运行因 F01 没有 Cuisine/Diet 控件而失败；实现偏好选择和本地持久化后通过。
-3. AC-03 首次运行因 `/plan` 等路由缺失而失败；补齐页面壳与导航后通过。
-4. AC-04 首次运行因 F04 路由缺失而失败；补充预览页后通过。
-5. AC-05 首次运行因 F03 仍是占位页而失败；按 TemPad 读取的 Figma 节点 `4:62` / 内容节点 `4:74` 实现后通过。
-6. AC-06 首次运行因 F06 仍是占位页而失败；按 Figma 节点 `5:226` 实现扫描结果、份量计算与日志返回后通过。
+1. 大字号验收先因 DisplayPreferencesProvider 缺失而失败；补齐领域类型、Repository 和 Provider 后通过。
+2. F02 搜索验收先因无搜索框而失败；加入本地过滤、Try 芯片和空状态后通过。
+3. F01 自定义忌口验收先因 + Add 无目标而失败；加入 Sheet 与保存逻辑后通过。
+4. F03/F03b 新 fixture 与 Share 主操作验收在更新页面数据和 CTA 后通过。
+5. Me 保留内容验收在恢复语言、目标、偏好摘要、预览提醒和隐私说明后通过。
+6. 无 emoji 验收保持通过，防止 Figma 设计源偏差进入实现。
 
-## 3. 已搭建内容
+## 3. 已实现内容
 
 - React/Vite/TypeScript 工程、锁文件和 Node 版本要求。
 - 路由、onboarding guard、共享 App Shell 和底部导航。
-- F01 偏好选择与 `localStorage` Mock 持久化。
-- F02 营养摘要与一张推荐卡示例。
-- F03 与 F06 已按 Figma 节点实现；F03b、F04、F05 仍为可访问页面壳。
-- Vitest + Testing Library 验收测试环境。
-- Web App Manifest、192/512 图标、Apple touch icon 和离线 shell Service Worker。
-- ESLint、TypeScript 检查、生产构建和 CI。
+- v1.1 token 层、共享 UI 组件和页面样式。
+- F01 偏好持久化、自定义忌口、编辑返回。
+- F02 营养摘要、搜索、Try 芯片、推荐与 See all。
+- F03 日期、预算、食材、换餐、重生成与购物入口。
+- F03b 采购项、预算、 pantry、勾选、分享和配送演示。
+- F04/F05/F06 主动建议、控制、解释和扫描计算。
+- Me 的完整 v1.0 内容 + 新 Accessibility 大字号。
+- PWA manifest、图标、Apple touch icon 和离线 shell。
 
 ## 4. 验证命令
 
-```bash
 npm test
 npm run lint
 npm run build
-```
 
 ## 5. 后续 ATDD 循环
 
-每个功能按同一顺序实现：
-
-1. 在 `src/acceptance/app.acceptance.test.tsx` 或新增 acceptance 文件中写一个用户行为。
-2. 运行测试并确认失败原因是功能缺失。
+1. 在 src/acceptance 或新增 acceptance 文件写一个用户行为。
+2. 运行并确认失败原因。
 3. 写最小实现。
 4. 运行全部测试、lint 和 build。
-5. 再追加下一个行为。
+5. 在 390 × 844 与 2026-11-25 归档比对，记录有意偏差。
 
-建议顺序：
+## 6. 执行基线
 
-1. F01 编辑模式返回来源页。
-2. F02 See all 展开推荐。
-3. F03 的 Regenerate、餐单替换和编辑约束交互。
-4. F03b 从餐单生成购物清单并保存勾选。
-5. F05 设置持久化与免打扰优先级。
-6. F04 模拟主动建议。
-7. F06 的“Edit dish”反馈弹层与真实扫描接入。
+- 视觉与文案：以 [2026-11-25 Figma 归档](../../design/exports/2026-11-25-nutripal-v2/README.md) 为基线。
+- 图标：Lucide + FoodGlyph；Figma emoji 视为设计失误，不进入实现。
+- 设备外观：不显示状态栏、信号/电池或手机框。
+- 后端：只使用本地 Mock 和预留 Repository/API 契约。
+- 权限与隐私：不请求真实相机、定位或通知权限。
+- PWA：manifest、主题色和离线外壳可用；正式部署仍由项目所有者完成。
 
-## 6. 已确认的执行基线
+## 7. 仍需人工
 
-- **视觉与文案**：以 [Figma 7 屏归档](../../design/exports/2026-11-24-nutripal/README.md) 为唯一原型基线；直接使用其中的页面结构、文案和近似视觉 token，不再等待另一轮资产确认。
-- **图片与品牌**：沿用归档中的 emoji、占位图和 `NutriPal` 名称；缺少的图标使用同色系临时资源，并在实现中保持可替换。
-- **后端**：原型阶段只使用本地 Mock 和预留 Repository/API 契约；不等待登录、数据库、API Key 或第三方授权。
-- **权限与隐私**：按常见移动/Web 产品实践执行——只在用户触发功能时请求权限、先解释用途、处理后拒绝和服务失败；原型不请求真实相机、定位或通知权限，不使用敏感真实数据。
-- **研究与 MVP**：原型按 Figma 假设实现并标注已知假设；不把 Mock 结果描述为验证结论或医疗建议。
-- **PWA**：提供 manifest、应用图标、主题色和离线外壳；本地可安装/预览。生产域名与部署账户属于发布动作，仍需要项目所有者完成。
+- 团队点击走查和目标用户原型测试。
+- 真实第三方服务凭据与授权。
+- 真实设备字体和系统 emoji 以外的跨平台渲染检查。
 
-## 7. 仍需人工的发布步骤
-
-- 绑定正式生产域名和部署账户（本地 PWA 与 CI 不依赖此步骤）。
-- 若未来从 Mock 切换到真实第三方服务，提供相应 API 凭据和授权。

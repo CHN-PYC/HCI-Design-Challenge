@@ -2,7 +2,7 @@
 
 **语言：[中文](module-design.md) | [English](module-design.en.md)**
 
-> - 状态：设计基线 v0.1（2026-11-24）
+> - 状态：设计基线 v1.1（2026-11-26）
 > - 上位设计：[系统设计](system-design.md)
 > - 实现范围：模块边界、状态、接口和验收规则；不包含代码实现。
 
@@ -19,6 +19,7 @@ flowchart TB
     Scan["M07 Food Scan"]
     Data["M08 Repositories and Data Access"]
     UI["M09 Shared UI and Design Tokens"]
+    Display["M10 Display and Accessibility Preferences"]
 
     Shell --> Pref
     Shell --> Home
@@ -41,6 +42,8 @@ flowchart TB
     Shop --> UI
     Nudge --> UI
     Scan --> UI
+    Shell --> Display
+    Display --> Data
 ```
 
 ### 1.1 依赖规则
@@ -59,15 +62,16 @@ flowchart TB
 | `/preferences` | F01 | Preferences | 隐藏 | 首次启动或无偏好；Continue → `/home` |
 | `/preferences?mode=edit` | F01 | Preferences | 隐藏 | Me 入口；保存/取消 → 来源页 |
 | `/home` | F02 | Home & Recommendations | Home 激活 | 已完成偏好；推荐主入口 |
-| `/plan` | F03 | Meal Planning | Plan 激活 | 已完成偏好；从 F04 `Start cooking` 可带 `mealId` |
+| `/plan` | F03 | Meal Planning | Plan 激活 | 已完成偏好；从 F04 `Cook this` 进入对应餐单 |
 | `/plan/shopping-list` | F03b | Shopping List | Plan 激活 | 从 F03 的购物清单入口进入；返回 `/plan` |
 | `/scan` | F06 | Food Scan | Scan 激活 | 主导航；关闭 → `/home`；加入日志 → `/home` |
 | `/nudges/settings` | F05 | Nudges | Nudges 激活 | 主导航；解释最近提醒的锚点 |
 | `/nudges/preview` | F04 | Nudges | 隐藏 | 仅通知预览/模拟入口；不依赖真实系统通知 |
+| `/me` | Me | Display / Profile | Me 激活 | 主导航；个人资料、偏好/通知入口、语言、大字号、预览提醒和隐私说明 |
 
 - 未完成引导时，除 `/preferences` 外的路由重定向到 `/preferences`。
 - 未知路由回到 `/home`；若未完成引导则去 `/preferences`。
-- `Me` 不创建新页面；固定进入 `/preferences?mode=edit`。
+- `/me` 是独立设置页；Dietary & cultural preferences 行进入 `/preferences?mode=edit`。
 - 底部导航只展示 Home、Plan、Scan、Nudges、Me；F01 和 F04 不展示底部导航。
 
 ## 3. 模块设计
@@ -76,7 +80,7 @@ flowchart TB
 
 **职责**
 
-- 提供应用框架、状态栏、底部导航、路由注册、 onboarding guard、全局错误边界和离线/模拟数据提示。
+- 提供应用框架、底部导航、路由注册、onboarding guard、全局错误边界和离线/模拟数据提示；按 v1.1 决策不显示模拟状态栏或手机框。
 - 维护当前路由和导航激活态；不拥有偏好、餐单、提醒或扫描数据。
 
 **输入/输出**
@@ -110,6 +114,8 @@ flowchart TB
 - 菜系多选；默认不预设用户偏好。
 - 饮食风格多选；“No preference”与其他选项互斥，选择其他项时自动取消它。
 - 过敏/忌口多选；未选择表示未填写，不表示“没有过敏”。
+- 固定忌口之外提供 + Add，通过本地 Sheet 添加任意食材/过敏原；去重后随 Continue 保存，不新增后端字段。
+- 编辑模式显示返回按钮并回到 /me；首次引导不显示返回，避免伪造不存在的 onboarding 步骤。
 - Continue 不因未选择而禁用；允许先跳过，所有数组可为空。
 - 编辑模式由 `mode=edit` 区分：保存后返回来源页，取消则返回来源页；首次引导只能通过保存前进。
 - 保存失败保留表单值并显示重试；重复点击只发一个请求。
@@ -134,6 +140,7 @@ flowchart TB
 
 - 展示当天热量与蛋白质/碳水/脂肪摘要。
 - 展示 1–3 个个性化推荐及“为什么推荐”的解释。
+- 提供本地菜品搜索和 Try 芯片；输入即匹配菜名、标签与关键词，无结果显示可恢复空状态。
 - 在页面内展开更多推荐；不新增食谱详情路由。
 
 **交互规则**
@@ -197,7 +204,7 @@ flowchart TB
 - 返回 F03；Plan Tab 保持激活。
 - 勾选/取消勾选通过 PATCH 保存；请求失败则恢复旧值并显示短暂错误提示。
 - 预算与剩余金额由服务端/Mock 返回，UI 不做独立计算以外的舍入决策；所有金额保留两位小数。
-- `Order for delivery` 在首版显示“演示版未接入配送”的提示，不创建订单、不请求支付。
+- `Share list` 是主操作，使用 Web Share 或复制提示；`Order for delivery (demo)` 作为次级按钮显示演示提示，不创建订单、不请求支付。
 - 空清单显示“先规划本周餐单”，提供返回 `/plan`。
 
 **验收**
@@ -219,7 +226,7 @@ flowchart TB
 **F04 规则**
 
 - 仅由 `NotificationScheduler` 的预览或模拟入口打开；不自动申请系统通知权限。
-- `Start cooking` → `/plan?mealId=...`；`Other ideas` 循环到下一个可用 Mock Nudge；`Not now` 记录 dismissed 并关闭预览。
+- `Cook this` → `/plan`；`Other ideas` 循环到下一个可用 Mock Nudge；`Not now` 记录 dismissed 并关闭预览。
 - `Why am I seeing this?` → `/nudges/settings#why-last`。
 - 默认不展示在免打扰时段；显式预览模式可绕过时段限制，但必须标注“预览”。
 
@@ -254,7 +261,7 @@ flowchart TB
 - `− / +` 只修改当前草稿的份量；原始基准值保持不可变，显示值 = 基准值 × 份量。
 - 置信度低于 0.8 或 Mock 标记 `needsReview=true` 时，突出“请核对菜品”。
 - `Edit dish` 打开本地 Bottom Sheet，从固定候选菜品中选择；不新增页面。
-- `Add to today's log` 只有在识别成功后可用；成功后返回 `/home`。
+- `Log to Dinner` 只有在识别成功后可用；成功后返回 `/home`。
 - 关闭扫描回到 `/home`，不保存临时结果。
 
 **数据规则**
@@ -310,12 +317,18 @@ interface FoodScanRepository {
   recognize(input: FoodScanInput): Promise<FoodScanResult>;
   addToLog(scanId: ID, portion: number): Promise<FoodLogEntry>;
 }
+
+interface DisplayPreferenceRepository {
+  get(): DisplayPreferences;
+  update(patch: Partial<DisplayPreferences>): DisplayPreferences;
+}
 ```
 
 **存储规则**
 
 - Mock 存储只保存非敏感领域数据，键名统一为 `nutripal.v1.*`。
 - 页面刷新后可恢复：Profile、DietaryPreferences、HealthTargets、MealPlan、ShoppingList、NudgeSettings、FoodLogEntry。
+- 显示偏好保存为 nutripal.v1.display，记录 textSize: default | large；缺失时默认 default。
 - 不保存：原子图像、原始 GPS、完整 Provider 响应、密码/令牌。
 - 未知 DTO 字段忽略；缺必填字段视为 `VALIDATION_ERROR`。
 
@@ -329,7 +342,7 @@ interface FoodScanRepository {
 
 **职责**
 
-- 提供无领域逻辑的共享组件：StatusBar、BottomNav、Chip、Card、SectionHeader、PrimaryButton、Toggle、EmptyState、ErrorState、Skeleton、BottomSheet、Toast。
+- 提供无领域逻辑的共享组件：BottomNav、Chip、CuisineTile、Toggle、SegmentedControl、SettingsRow、PrimaryButton、ChecklistItem、Sheet、EmptyState、ErrorState 和 Toast。
 - 维护可访问性和视觉一致性。
 
 **已确认或近似的 tokens**
@@ -339,8 +352,15 @@ interface FoodScanRepository {
 | `ink` | `#1E1A3C` | 归档 HTML 声明来自 Figma |
 | `muted` | `#6E6A8A` | 归档 HTML 声明来自 Figma |
 | `white` | `#FFFFFF` | 归档 HTML 声明来自 Figma |
-| `bg` | 温暖浅色背景 | 近似值，实施前回看 Figma |
-| `accent` | 绿色强调色 | 近似值，实施前回看 Figma |
+| `bg` | `#FFF7EC` | 2026-11-25 Figma |
+| `surface` | `#FFFFFF` | 2026-11-25 Figma |
+| `line` | `#EEE6DA` | 2026-11-25 Figma |
+| `purple` | `#7B5CFF` | 2026-11-25 Figma |
+| `orange` | `#FF8A3D` | 2026-11-25 Figma |
+| `pink` | `#FF5C8A` | 2026-11-25 Figma |
+| `green` | `#22C27A` | 2026-11-25 Figma |
+| `yellow` | `#FFC83D` | 2026-11-25 Figma |
+| `blue` | `#38B6FF` | 2026-11-25 Figma |
 | 圆角 | 卡片/面板圆角 16–26px，芯片为 pill | 来自归档 HTML，需视觉评审 |
 | 触控 | 最小 44×44px | 可及性基线 |
 
@@ -350,6 +370,29 @@ interface FoodScanRepository {
 - 底部导航和 F04/F05 的开关必须提供可访问名称和键盘操作。
 - `prefers-reduced-motion` 下取消非必要过渡。
 - 颜色对比达到 WCAG AA；状态同时使用文本/图形，不只靠颜色。
+- 图标统一使用 Lucide + FoodGlyph；不采用 Figma 中的 emoji。
+
+### M10 Display and Accessibility Preferences
+
+**页面**：Me 的 Accessibility 区块。
+
+**职责**
+
+- 保存并应用全局字号偏好。
+- 在根元素设置 data-text-size，驱动语义字号 token。
+- 不读取第三方数据，不改变饮食偏好或提醒设置。
+
+**交互规则**
+
+- 默认字号为 default；开启 Large text 后为 large。
+- 设置写入 nutripal.v1.display 并立即作用于所有页面和 Sheet。
+- 字号增大后允许纵向滚动，不裁切或隐藏关键控件。
+
+**验收**
+
+- 刷新后保持大字号。
+- 所有 8 个路由在两种字号下均可访问。
+- 关闭大字号恢复默认 token。
 
 ## 4. 跨模块状态与失效规则
 
@@ -382,12 +425,16 @@ interface FoodScanRepository {
 | 缺口 | 首版决定 |
 | --- | --- |
 | F01 显示 `2 / 4`，其余 onboarding 步骤缺失 | v1 只实现归档的偏好页；保存即完成 onboarding，不虚构第 1/3/4 步 |
-| `Me` 无独立页面 | 复用 F01 编辑模式，不新增页面 |
+| Me 页面 | 已作为独立设置页实现；Dietary 行复用 F01 编辑模式 |
+| F01 `+ Add` 无展开稿 | 本地 Sheet 添加自定义食材/过敏原，随偏好保存 |
+| F02 搜索无结果态设计 | 同页过滤，空结果提供清除搜索 |
+| Figma 使用 emoji 图标 | 视为设计源失误，映射为 Lucide + FoodGlyph |
+| Figma 状态栏/手机框 | 不实现，保持 Web 内容列 |
 | F02 `See all` 无目标页 | 同页展开更多推荐 |
 | F03 `Edit` 无目标页 | 共享 Bottom Sheet 编辑预算/时间/储藏物 |
 | F05 反馈入口无目标页 | 本地反馈 Bottom Sheet，不发送外部数据 |
 | F06 `Edit dish` 无目标页 | 本地候选菜品 Bottom Sheet |
-| F03b `Order for delivery` 无流程 | 演示提示，不创建订单/支付 |
+| F03b `Order for delivery` 无流程 | 作为 Share 之后的次级演示按钮，不创建订单/支付 |
 | F04 真实后台触发无来源 | 只做预览与模拟；Provider 接口预留 |
 | 食谱详情无页面 | 首版不创建详情页，推荐卡只显示摘要与理由 |
 | 真实通知/相机权限未设计 | 首版不请求权限；真实能力需单独设计隐私与失败流程 |
@@ -398,7 +445,7 @@ interface FoodScanRepository {
 
 ### 7.1 当前文档验收
 
-- 7 个 frame 均有路由、模块、数据来源和验收条目。
+- 8 个页面（默认/大字号共 16 个 Frame）均有路由、模块、数据来源和验收条目。
 - 所有路由与导航状态在系统设计和模块设计中一致。
 - 所有 DTO 在 API 契约、Repository 和模块状态中使用相同名称。
 - Mermaid 图可渲染；Markdown 链接有效；没有将 Mock 能力写成真实已实现。
@@ -413,9 +460,11 @@ interface FoodScanRepository {
 5. F03b 勾选采购项后刷新仍保留状态。
 6. F05 关闭主动建议后，F04 不再生成非预览 Nudge。
 7. F05 免打扰时段覆盖当前时间时，模拟调度器不返回 Nudge。
-8. F04 `Not now` 后当前 Nudge 不再重复出现；`Start cooking` 定位到对应餐单。
+8. F04 `Not now` 后当前 Nudge 不再重复出现；`Cook this` 定位到对应餐单。
 9. F06 份量 1→3，热量和三大营养素按比例变化；加入日志后 F02 摘要更新。
 10. Mock 超时、空数据、Provider 不可用时，页面均可恢复且不展示虚假数据。
+11. F02 搜索 Tofu/Sushi、无结果和清除搜索均可用。
+12. Me 大字号开关持久化，8 个路由在两种字号下均可访问。
 
 ### 7.3 模块完成标准
 

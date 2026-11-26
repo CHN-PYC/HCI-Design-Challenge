@@ -4,7 +4,7 @@
 
 ## Current status
 
-The **system design → module design** engineering baseline is complete, and the React/Vite/TypeScript prototype scaffold has been initialised. The third meeting confirmed front-end/back-end separation, TypeScript + component-based front-end development, and reserved backend interfaces. The front-end framework and local Mock are now in place; the real backend, database, and third-party services remain undecided.
+The **system design → module design** engineering baseline is complete, and the NutriPal v1.1 React/Vite/TypeScript prototype is released. It includes eight interactive screens, Mock Repositories, display preferences and 11 acceptance tests; the real backend, database and third-party services remain undecided.
 
 ## Design order
 

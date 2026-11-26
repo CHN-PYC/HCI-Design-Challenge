@@ -3,7 +3,7 @@
 **语言：[中文](system-design.md) | [English](system-design.en.md)**
 
 > - 状态：设计基线 v0.1（2026-11-24）
-> - 设计基线：[Figma 7 屏归档](../../design/figma/README.md)
+> - 设计基线：[Figma 8 屏 v2 归档](../../design/exports/2026-11-25-nutripal-v2/README.md)
 > - 后续文档：[模块设计](module-design.md)
 > - 说明：本文定义逻辑架构与契约，不代表已经存在后端、数据库或真实 AI 服务。
 
@@ -251,14 +251,14 @@ classDiagram
 
 | 页面 | 业务能力 | 主要模块 | 首版数据来源 | 状态 |
 | --- | --- | --- | --- | --- |
-| F01 | 保存菜系、饮食风格、过敏/忌口（当前唯一归档的引导偏好页） | Preferences | MockProfileRepository | 基线 |
-| F02 | 展示每日营养摘要和个性化食谱 | Recommendations | MockRecommendationRepository | 基线 |
+| F01 | 保存菜系、饮食风格、过敏/忌口和自定义忌口 | Preferences | MockProfileRepository | 基线 |
+| F02 | 展示每日营养摘要、个性化食谱和本地菜品搜索 | Recommendations | MockRecommendationRepository | 基线 |
 | F03 | 生成/查看周餐单、预算与烹饪限制、替换餐食 | Meal Planning | MockMealPlanRepository | 基线 |
 | F03b | 从餐单生成购物清单、预算与勾选 | Shopping List | MockShoppingListRepository | 基线 |
 | F04 | 展示情境化主动建议及原因 | Nudges | Mock Nudge fixture + NotificationScheduler | 模拟 |
 | F05 | 开关建议、延后、频率、免打扰、解释最近提醒 | Nudges | MockNudgeRepository | 基线 |
 | F06 | 识别/模拟识别食物、调整份量、加入当天记录 | Food Scan | MockFoodScanProvider | 模拟 |
-| 底部 Me | 重新进入 F01 的偏好编辑 | Preferences | 同一偏好 Repository | 复用 F01；无独立页面 |
+| Me | 个人资料、偏好/通知入口、语言、大字号、预览提醒和隐私说明 | Display / Profile | MockProfileRepository + DisplayPreferenceRepository | v1.1 独立页面 |
 
 以下能力仍是设计缺口，不新增页面：
 
@@ -597,7 +597,7 @@ Figma 中出现的具体数值用于视觉回归和演示，不作为真实健�
 
 ## 11. 验收
 
-- 7 个 Figma frame 全部在追溯矩阵中对应到模块，且无 UI 模块越层访问第三方接口。
+- 8 个 Figma 页面（16 个默认/大字号 Frame）全部在追溯矩阵中对应到模块，且无 UI 模块越层访问第三方接口。
 - 所有 DTO 在 API 端点、Repository 和模块设计中同名、同字段语义。
 - 主动建议有设置、解释、推迟和关闭路径；扫描结果可修正且不作为医疗依据。
 - Mock 离线场景能完整演示 F01→F02→F03→F03b 主链路，以及 F04/F05/F06 的模拟流程。

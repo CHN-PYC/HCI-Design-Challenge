@@ -3,7 +3,7 @@
 **Language: [中文](system-design.md) | English**
 
 > - Status: design baseline v0.1 (2026-11-24)
-> - Design baseline: [Figma seven-screen archive](../../design/figma/README.en.md)
+> - Design baseline: [Figma eight-screen v2 archive](../../design/exports/2026-11-25-nutripal-v2/README.en.md)
 > - Next document: [Module design](module-design.en.md)
 > - Note: this document defines the logical architecture and contracts. It does not imply that a backend, database, or real AI service already exists.
 
@@ -251,14 +251,14 @@ classDiagram
 
 | Screen | Capability | Primary module | V1 data source | Status |
 | --- | --- | --- | --- | --- |
-| F01 | Save cuisine, dietary style, and allergen/avoidance preferences (the only archived onboarding preference screen) | Preferences | MockProfileRepository | Baseline |
-| F02 | Show daily nutrition summary and personalised recipes | Recommendations | MockRecommendationRepository | Baseline |
+| F01 | Save cuisine, dietary style, allergen/avoidance and custom avoidances | Preferences | MockProfileRepository | Baseline |
+| F02 | Show daily nutrition summary, personalised recipes and local dish search | Recommendations | MockRecommendationRepository | Baseline |
 | F03 | Generate/view a weekly meal plan with budget and cooking constraints; swap meals | Meal Planning | MockMealPlanRepository | Baseline |
 | F03b | Generate a shopping list with budget and check-off state from the meal plan | Shopping List | MockShoppingListRepository | Baseline |
 | F04 | Show contextual proactive suggestions and their reasons | Nudges | Mock nudge fixture + NotificationScheduler | Mock |
 | F05 | Enable/disable suggestions, snooze, frequency, quiet hours, and explain the latest nudge | Nudges | MockNudgeRepository | Baseline |
 | F06 | Recognise or simulate food, adjust portion, and add to the daily log | Food Scan | MockFoodScanProvider | Mock |
-| Bottom-tab Me | Re-enter F01 preference editing | Preferences | Same preference Repository | Reuses F01; no separate screen |
+| Me | Profile, preference/nudge entries, language, large text, nudge preview and privacy | Display / Profile | MockProfileRepository + DisplayPreferenceRepository | Independent v1.1 screen |
 
 The following capabilities remain design gaps and do not create new pages:
 
@@ -597,7 +597,7 @@ When no local Profile exists, Mock creates an anonymous profile: `displayName="A
 
 ## 11. Acceptance
 
-- All seven Figma frames map to modules in the traceability matrix, and no UI module bypasses the data-access layer for third-party APIs.
+- All eight Figma screens (16 default/large-text frames) map to modules, and no UI module bypasses the data-access layer for third-party APIs.
 - All DTOs use the same names and field semantics in API endpoints, Repositories, and module design.
 - Proactive suggestions have settings, explanation, postponement, and dismissal paths; scan results can be corrected and are not medical evidence.
 - The offline Mock can demonstrate the F01→F02→F03→F03b main journey and simulated F04/F05/F06 flows end to end.
