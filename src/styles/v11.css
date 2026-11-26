@@ -102,7 +102,8 @@
   outline: 0;
   background: transparent;
   color: var(--ink);
-  font-size: var(--fs-body);
+  /* iOS Safari zooms a focused input below 16px. */
+  font-size: max(16px, var(--fs-body));
   font-weight: 700;
 }
 
